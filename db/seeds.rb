@@ -1,6 +1,6 @@
 require "faker"
 
-ActiveRecord::Base.connection.execute('DELETE FROM roles_users')
+ActiveRecord::Base.connection.execute('DELETE FROM users_to_roles')
 
 Role.delete_all
 
@@ -16,7 +16,10 @@ Rake::Task['users:add_test'].invoke
   u = User.new
   u.email = Faker::Internet.email
   u.password = Faker::Lorem.characters 15
-  u.roles << Role.find_by_name('patient')
   u.save!
+  ur = UsersToRoles.new
+  ur.user = u
+  ur.role = Role.find_by_name 'patient'
+  ur.save!
 end
 
