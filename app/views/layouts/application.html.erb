@@ -2,13 +2,31 @@
 <html>
 <head>
   <title>Shm</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+<div class="container-fluid">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="/">SHM</a>
+        <ul class="nav">
+          <li><%= link_to 'Admin panel', '/admin' %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="span4 well">
+      <h1>Sidebar</h1>
+      <%= yield :sidebar %>
+    </div>
+    <div class="span8 well">
+      <%= yield %>
+    </div>
+  </div>
+</div>
 </body>
 </html>
