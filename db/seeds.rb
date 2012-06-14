@@ -1,5 +1,7 @@
 require "faker"
 
+ActiveRecord::Base.connection.execute('DELETE FROM roles_users')
+
 Role.delete_all
 
 Role.create :name => 'patient'
