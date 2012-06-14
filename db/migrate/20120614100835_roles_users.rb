@@ -3,6 +3,7 @@ class RolesUsers < ActiveRecord::Migration
     create_table :roles_users do |t|
       t.references :user
       t.references :role
+      t.timestamps
     end
 
     add_foreign_key :roles_users, :users
