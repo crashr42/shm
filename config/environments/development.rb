@@ -36,5 +36,5 @@ Shm::Application.configure do
   config.assets.debug = true
 
   # Handle error in controllers
-  config.handle_errors = false
+  config.handle_errors = true
 end
