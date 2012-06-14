@@ -1,5 +1,11 @@
 require "faker"
 
+Role.delete_all
+
+Role.create :name => 'patient'
+Role.create :name => 'doctor'
+Role.create :name => 'admin'
+
 User.delete_all
 
 Rake::Task['users:add_test'].invoke
@@ -8,6 +14,7 @@ Rake::Task['users:add_test'].invoke
   u = User.new
   u.email = Faker::Internet.email
   u.password = Faker::Lorem.characters 15
+  u.roles << Role.find_by_name('patient')
   u.save!
 end
 
