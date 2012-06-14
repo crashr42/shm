@@ -1,23 +1,21 @@
 require "minitest/autorun"
 require "minitest/rails"
-
-# Uncomment if you want awesome colorful output
-# require "minitest/pride"
+require "minitest/pride"
 
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 
-class MiniTest::Rails::Spec
-  # Uncomment if you want to support fixtures for all specs
-  # or
-  # place within spec class you want to support fixtures for
-  # include MiniTest::Rails::Fixtures
+require 'minitest/reporters'
+MiniTest::Unit.runner = MiniTest::SuiteRunner.new
+MiniTest::Unit.runner.reporters << MiniTest::Reporters::RubyMineReporter.new
 
+class MiniTest::Rails::Spec
   # Add methods to be used by all specs here
 end
 
 class MiniTest::Rails::Model
-  # Add methods to be used by model specs here
+  # make fixtures available within models spec
+  include MiniTest::Rails::Fixtures
 end
 
 class MiniTest::Rails::Controller
