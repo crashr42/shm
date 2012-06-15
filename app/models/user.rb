@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :users_to_roleses, :class_name => 'UsersToRoles'
-  has_many :roles, :through => :users_to_roleses
+  has_many :roles, :through => :users_to_roleses, :readonly => false
 
   attr_protected :created_at, :current_sign_in_at, :current_sign_in_ip, :encrypted_password,
                  :id, :last_sign_in_at, :last_sign_in_ip, :remember_created_at,
