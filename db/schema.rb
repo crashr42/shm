@@ -11,7 +11,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614074460) do
+ActiveRecord::Schema.define(:version => 20120616071114) do
+
+  create_table "calendars", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name",        :null => false
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "calendars", ["user_id"], :name => "index_calendars_on_user_id"
+
+  create_table "events", :force => true do |t|
+    t.integer  "calendar_id"
+    t.datetime "dtstart",     :default => '2012-06-16 07:51:35', :null => false
+    t.string   "description"
+    t.string   "status",      :default => "CONFIRMED",           :null => false
+    t.string   "summary",                                        :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+  end
+
+  add_index "events", ["calendar_id"], :name => "index_events_on_calendar_id"
 
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"
@@ -25,6 +47,28 @@ ActiveRecord::Schema.define(:version => 20120614074460) do
   end
 
   add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
+
+  create_table "recurrence_rules", :force => true do |t|
+    t.integer  "event_id"
+    t.string   "frequency",                    :null => false
+    t.integer  "count"
+    t.datetime "end_date"
+    t.integer  "interval"
+    t.string   "seconds"
+    t.string   "minutes"
+    t.string   "hours"
+    t.string   "week_days"
+    t.string   "month_days"
+    t.string   "year_days"
+    t.string   "weeks"
+    t.string   "months"
+    t.string   "position"
+    t.string   "week_start", :default => "MO", :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  add_index "recurrence_rules", ["event_id"], :name => "index_recurrence_rules_on_event_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -43,5 +87,11 @@ ActiveRecord::Schema.define(:version => 20120614074460) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  add_foreign_key "calendars", "users", :name => "calendars_user_id_fk"
+
+  add_foreign_key "events", "calendars", :name => "events_calendar_id_fk"
+
+  add_foreign_key "recurrence_rules", "events", :name => "recurrence_rules_event_id_fk"
 
 end
