@@ -1,7 +1,8 @@
 class RecurrenceRule < ActiveRecord::Base
   belongs_to :event
 
-  attr_accessible :count, :end_date, :frequency, :interval, :week_start
+  attr_protected :created_at, :hours, :minutes, :month_days, :months,
+                 :position, :seconds, :updated_at, :week_days, :weeks, :year_days
 
   %w{
     seconds minutes hours week_days
