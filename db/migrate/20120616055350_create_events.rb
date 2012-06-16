@@ -1,5 +1,5 @@
 class CreateEvents < ActiveRecord::Migration
-  def change
+  def up
     create_table :events do |t|
       t.references :calendar
 
@@ -10,5 +10,12 @@ class CreateEvents < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_foreign_key :events, :calendars
+    add_index :events, [:calendar_id]
+  end
+
+  def down
+    drop_table :events
   end
 end

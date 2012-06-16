@@ -8,6 +8,9 @@ class CreateCalendars < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_foreign_key :calendars, :users
+    add_index :calendars, [:user_id]
   end
 
   def down
