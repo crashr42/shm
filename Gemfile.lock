@@ -88,10 +88,13 @@ GEM
     faker (1.0.1)
       i18n (~> 0.4)
     ffi (1.0.11)
+    foreigner (1.1.6)
+      activerecord (>= 3.0.0)
     haml (3.1.6)
     hike (1.2.1)
     hpricot (0.8.6)
     i18n (0.6.0)
+    icalendar (1.1.6)
     journey (1.0.3)
     jquery-rails (2.0.2)
       railties (>= 3.2.0, < 5.0)
@@ -211,6 +214,7 @@ GEM
     uglifier (1.2.4)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
+    uuidtools (2.1.2)
     warden (1.1.1)
       rack (>= 1.0)
     xpath (0.1.4)
@@ -225,6 +229,8 @@ DEPENDENCIES
   devise
   execjs
   faker
+  foreigner
+  icalendar
   jquery-rails
   minitest-rails!
   minitest-rails-shoulda!
@@ -237,3 +243,4 @@ DEPENDENCIES
   thin
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
+  uuidtools
