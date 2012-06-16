@@ -11,7 +11,58 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120616071114) do
+ActiveRecord::Schema.define(:version => 20120614074460) do
+
+  create_table "rails_admin_histories", :force => true do |t|
+    t.text     "message"
+    t.string   "username"
+    t.integer  "item"
+    t.string   "table"
+    t.integer  "month",      :limit => 2
+    t.integer  "year",       :limit => 8
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
+
+  create_table "users", :force => true do |t|
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "roles", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "users_to_roles", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "users_to_roles", ["role_id"], :name => "index_users_to_roles_on_role_id"
+  add_index "users_to_roles", ["user_id"], :name => "index_users_to_roles_on_user_id"
+
+  add_foreign_key "users_to_roles", "roles", :name => "users_to_roles_role_id_fk"
+  add_foreign_key "users_to_roles", "users", :name => "users_to_roles_user_id_fk"
+
 
   create_table "calendars", :force => true do |t|
     t.integer  "user_id"
@@ -35,19 +86,6 @@ ActiveRecord::Schema.define(:version => 20120616071114) do
 
   add_index "events", ["calendar_id"], :name => "index_events_on_calendar_id"
 
-  create_table "rails_admin_histories", :force => true do |t|
-    t.text     "message"
-    t.string   "username"
-    t.integer  "item"
-    t.string   "table"
-    t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 8
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
-  end
-
-  add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
-
   create_table "recurrence_rules", :force => true do |t|
     t.integer  "event_id"
     t.string   "frequency",                        :null => false
@@ -70,28 +108,10 @@ ActiveRecord::Schema.define(:version => 20120616071114) do
 
   add_index "recurrence_rules", ["event_id"], :name => "index_recurrence_rules_on_event_id"
 
-  create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-  end
-
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-
   add_foreign_key "calendars", "users", :name => "calendars_user_id_fk"
 
   add_foreign_key "events", "calendars", :name => "events_calendar_id_fk"
 
   add_foreign_key "recurrence_rules", "events", :name => "recurrence_rules_event_id_fk"
-
+  
 end

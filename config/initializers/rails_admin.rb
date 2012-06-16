@@ -2,6 +2,7 @@
 # See github.com/sferik/rails_admin for more informations
 
 RailsAdmin.config do |config|
+  config.authorize_with :cancan
 
   # If your default_local is different from :en, uncomment the following 2 lines and set your default locale here:
   # require 'i18n'
@@ -31,7 +32,7 @@ RailsAdmin.config do |config|
 
   #  ==> Included models
   # Add all excluded models here:
-  # config.excluded_models = []
+  config.excluded_models = [UsersToRoles]
 
   # Add models here if you want to go 'whitelist mode':
   # config.included_models = []

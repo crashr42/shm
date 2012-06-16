@@ -7,4 +7,8 @@ class ErrorController < ApplicationController
     @path = params[:from]
     render :template => "/error/render_not_found", :status => 404
   end
+
+  def render_access_denied
+    render :template => "/error/render_access_denied", :status => 403
+  end
 end
