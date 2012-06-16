@@ -8,16 +8,16 @@ class CreateRecurrenceRules < ActiveRecord::Migration
       t.datetime  :end_date
       t.integer   :interval
 
-      t.string  :seconds                                      # byseclist
-      t.string  :minutes                                      # byminlist
-      t.string  :hours                                        # byhrlist
-      t.string  :week_days                                    # bywdaylist
-      t.string  :month_days                                   # bymodaylist
-      t.string  :year_days                                    # byyrdaylist
-      t.string  :weeks                                        # bywknolist
-      t.string  :months                                       # bymolist
-      t.string  :position                                     # bysplist
-      t.string  :week_start, :null => false, :default => 'MO' # wkst
+      t.string  :seconds                                          # byseclist
+      t.string  :minutes                                          # byminlist
+      t.string  :hours                                            # byhrlist
+      t.string  :week_days                                        # bywdaylist
+      t.string  :month_days                                       # bymodaylist
+      t.string  :year_days                                        # byyrdaylist
+      t.string  :weeks                                            # bywknolist
+      t.string  :months                                           # bymolist
+      t.string  :position                                         # bysplist
+      t.string  :week_start, :null => false, :default => 'monday' # wkst
 
       t.timestamps
     end
