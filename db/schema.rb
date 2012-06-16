@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20120616071114) do
 
   create_table "events", :force => true do |t|
     t.integer  "calendar_id"
-    t.datetime "dtstart",     :default => '2012-06-16 07:51:35', :null => false
+    t.datetime "date_start",  :default => '2012-06-16 09:18:58', :null => false
     t.string   "description"
     t.string   "status",      :default => "CONFIRMED",           :null => false
     t.string   "summary",                                        :null => false
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(:version => 20120616071114) do
 
   create_table "recurrence_rules", :force => true do |t|
     t.integer  "event_id"
-    t.string   "frequency",                    :null => false
+    t.string   "frequency",                        :null => false
     t.integer  "count"
     t.datetime "end_date"
     t.integer  "interval"
@@ -63,9 +63,9 @@ ActiveRecord::Schema.define(:version => 20120616071114) do
     t.string   "weeks"
     t.string   "months"
     t.string   "position"
-    t.string   "week_start", :default => "MO", :null => false
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.string   "week_start", :default => "monday", :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   add_index "recurrence_rules", ["event_id"], :name => "index_recurrence_rules_on_event_id"
