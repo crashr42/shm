@@ -3,10 +3,13 @@ class CreateEvents < ActiveRecord::Migration
     create_table :events do |t|
       t.references :calendar
 
-      t.datetime  :date_start,     :null => false, :default => DateTime.now
+      t.date      :date_start,  :null => false
+      t.time      :time_start,  :null => false
       t.string    :description
       t.string    :status,      :null => false, :default => 'CONFIRMED'
       t.string    :summary,     :null => false
+      t.date      :date_end
+      t.time      :time_end
 
       t.timestamps
     end
