@@ -1,0 +1,19 @@
+<% if User.current.present? %>
+    <% if User.current.roles.count == 1 %>
+        <% User.current.roles.each do |r| %>
+            <li><%= link_to 'Cabinet', :use_route => "cabinet_#{r.name}_root" %></li>
+        <% end %>
+    <% else %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Cabinets
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <% User.current.roles.each do |r| %>
+                <li><%= link_to r.name.capitalize, :use_route => "cabinet_#{r.name}_root" %></li>
+            <% end %>
+          </ul>
+        </li>
+    <% end %>
+<% end %>
