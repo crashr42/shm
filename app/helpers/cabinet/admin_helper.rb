@@ -1,0 +1,2 @@
+module Cabinet::AdminHelper
+end

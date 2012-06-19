@@ -4,11 +4,37 @@ Shm::Application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
-  devise_for :users
+  devise_for :users, :controllers => {
+      :sessions => "admin/sessions"
+  }
 
   match '/error/500', :to => 'error#render_error'
   match '/error/404', :to => 'error#render_not_found'
   match '/error/403', :to => 'error#render_access_denied'
+
+  match '/doctor(/:path)', :to => redirect {|params, request| "/cabinet/doctor/#{params[:path]}"}
+  match '/patient(/:path)', :to => redirect {|params, request| "/cabinet/patient/#{params[:path]}"}
+  match '/admin(/:path)', :to => redirect {|params, request| "/cabinet/admin/#{params[:path]}"}
+  match '/manager(/:path)', :to => redirect {|params, request| "/cabinet/manager/#{params[:path]}"}
+
+  namespace :cabinet do
+    namespace :doctor do
+      root :to => 'index#index'
+      match '/' => 'index#index'
+    end
+    namespace :patient do
+      root :to => 'index#index'
+      match '/' => 'index#index'
+    end
+    namespace :admin do
+      root :to => 'index#index'
+      match '/' => 'index#index'
+    end
+    namespace :manager do
+      root :to => 'index#index'
+      match '/' => 'index#index'
+    end
+  end
 
   match ':controller(/:action(/:id))(.:format)'
 
