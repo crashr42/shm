@@ -4,9 +4,7 @@ Shm::Application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
-  devise_for :users, :controllers => {
-      :sessions => "admin/sessions"
-  }
+  devise_for :users
 
   match '/error/500', :to => 'error#render_error'
   match '/error/404', :to => 'error#render_not_found'
