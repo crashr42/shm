@@ -10,6 +10,13 @@ class User < ActiveRecord::Base
                  :id, :last_sign_in_at, :last_sign_in_ip, :remember_created_at,
                  :reset_password_sent_at, :reset_password_token, :sign_in_count, :updated_at, :users_to_roleses
 
+  def self.current
+    Thread.current[:user]
+  end
+  def self.current=(user)
+    Thread.current[:user] = user
+  end
+
   def role?(name)
     self.roles.find_by_name(name)
   end
