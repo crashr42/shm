@@ -7,6 +7,7 @@ Role.delete_all
 Role.create :name => 'patient'
 Role.create :name => 'doctor'
 Role.create :name => 'admin'
+Role.create :name => 'manager'
 
 User.delete_all
 
