@@ -12,6 +12,17 @@ User.delete_all
 
 Rake::Task['users:add_test'].invoke
 
+Role.all.each do |role|
+  user = User.new
+  user.email = "#{role.name.downcase}@shm.com"
+  user.password = 123456
+  user.save!
+  ur = UsersToRoles.new
+  ur.user = user
+  ur.role = role
+  ur.save
+end
+
 (0..50).each do
   u = User.new
   u.email = Faker::Internet.email
