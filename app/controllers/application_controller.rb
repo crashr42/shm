@@ -9,20 +9,17 @@ class ApplicationController < ActionController::Base
   end
 
   if ::Rails.application.config.handle_errors
-    rescue_from Exception, :with => :render_error
-    rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
-    rescue_from CanCan::AccessDenied, :with => :render_access_denied
+    rescue_from Exception do |exception|
+      redirect_to "/error/500"
+    end
+
+    rescue_from ActiveRecord::RecordNotFound do |exception|
+      redirect_to "/error/404?from#{request.url}"
+    end
+
+    rescue_from CanCan::AccessDenied do |exception|
+      redirect_to "/error/403"
+    end
   end
 
-  def render_error(exception)
-    redirect_to "/error/500"
-  end
-
-  def render_not_found(exception)
-    redirect_to "/error/404?from#{request.url}"
-  end
-
-  def render_access_denied
-    redirect_to "/error/403"
-  end
 end
