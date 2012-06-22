@@ -25,15 +25,20 @@ ActiveRecord::Schema.define(:version => 20120616071114) do
 
   create_table "events", :force => true do |t|
     t.integer  "calendar_id"
-    t.datetime "date_start",  :default => '2012-06-16 11:47:59', :null => false
+    t.integer  "user_id"
+    t.date     "date_start",                           :null => false
+    t.time     "time_start",                           :null => false
     t.string   "description"
-    t.string   "status",      :default => "CONFIRMED",           :null => false
-    t.string   "summary",                                        :null => false
-    t.datetime "created_at",                                     :null => false
-    t.datetime "updated_at",                                     :null => false
+    t.string   "status",      :default => "CONFIRMED", :null => false
+    t.string   "summary",                              :null => false
+    t.date     "date_end"
+    t.time     "time_end"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   add_index "events", ["calendar_id"], :name => "index_events_on_calendar_id"
+  add_index "events", ["user_id"], :name => "index_events_on_user_id"
 
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"
@@ -107,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20120616071114) do
   add_foreign_key "calendars", "users", :name => "calendars_user_id_fk"
 
   add_foreign_key "events", "calendars", :name => "events_calendar_id_fk"
+  add_foreign_key "events", "users", :name => "events_user_id_fk"
 
   add_foreign_key "recurrence_rules", "events", :name => "recurrence_rules_event_id_fk"
 
