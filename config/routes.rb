@@ -31,6 +31,7 @@ Shm::Application.routes.draw do
     namespace :manager do
       root :to => 'index#index'
       match '/' => 'index#index'
+      match '/event' => 'event#index'
     end
   end
 
