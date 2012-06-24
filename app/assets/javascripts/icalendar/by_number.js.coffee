@@ -2,7 +2,7 @@ Classes = exports ? this
 $ = jQuery
 
 class Classes.ByNumber
-  constructor: (@min, @max, @title) ->
+  constructor: (@numbers, @title) ->
     @elements = []
     @createBody()
 
@@ -26,12 +26,12 @@ class Classes.ByNumber
 
   addElement: (element) ->
     unless @checkExits element
-      if $(element).val() >= @min && $(element).val() <= @max
+      if @numbers.indexOf(parseInt($(element).val())) >= 0
         @elements.push $(element).val()
         $(@elementsContainer).append element
         @show @elementsContainer
       else
-        alert "Element must be from " + @min + " to " + @max
+        alert "Element must be from " + @numbers.join(',')
     else
       alert "Element already exists"
 
@@ -62,29 +62,29 @@ class Classes.ByNumber
 
 class Classes.BySecond extends ByNumber
   constructor: (@key = 'seconds') ->
-    super 1, 59, 'seconds'
+    super [1...60], 'seconds'
 
 class Classes.ByMinute extends ByNumber
   constructor: (@key = 'minutes') ->
-    super 1, 59, 'minutes'
+    super [1...60], 'minutes'
 
 class Classes.ByHour extends ByNumber
   constructor: ->
-    super 1, 23, 'hours'
+    super [1...24], 'hours'
 
 class Classes.ByMonthDay extends ByNumber
-  constructor: (@key = 'years') ->
-    super 1, 31, 'years'
+  constructor: (@key = 'month_days') ->
+    super [-31...0].concat([1...32]), 'month_days'
 
 class Classes.ByYearDay extends ByNumber
   constructor: (@key = 'days') ->
-    super 1, 366, 'days'
+    super [-366...0].concat([1...367]), 'days'
 
 class Classes.ByWeekNumber extends ByNumber
   constructor: (@key = 'weeks') ->
-    super 1, 53, 'weeks'
+    super [1...54], 'weeks'
 
 class Classes.ByPosition extends ByNumber
   constructor: (@key = 'positions') ->
-    super 1, 366, 'positions'
+    super [1...367], 'positions'
 
