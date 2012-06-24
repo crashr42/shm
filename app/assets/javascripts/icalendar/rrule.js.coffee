@@ -30,7 +30,8 @@ class Classes.RRule
       new ByYearDay(),
       new ByWeekNumber(),
       new ByPosition(),
-      new ByMonth()
+      new ByMonth(),
+      new ByWeekDays()
     ]
     @byManager = new ByManager(@elements)
     @controls = [
