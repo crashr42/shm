@@ -29,8 +29,8 @@ class Classes.RRule
       new ByMonthDay(),
       new ByYearDay(),
       new ByWeekNumber(),
-      new ByPosition()#,
-#      new ByMonth()
+      new ByPosition(),
+      new ByMonth()
     ]
     @byManager = new ByManager(@elements)
     @controls = [
@@ -45,11 +45,9 @@ class Classes.RRule
 
   getData: (event) ->
     obj = event.data.obj
-    data = []
+    data = new Object()
     for control in obj.controls
-      d = {}
-      d[control.key] = control.getData()
-      data.push d
+      eval("data." + control.key + " = control.getData()")
     console.log(data)
     return data
 

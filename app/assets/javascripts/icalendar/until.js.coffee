@@ -2,17 +2,15 @@ Classes = exports ? this
 $ = jQuery
 
 class Classes.Until extends Element
-  constructor: (@mode, @until_value = "") ->
+  constructor: (@mode, @until_value = "", @key = 'until') ->
     @createBody()
     @setMode(@mode)
 
   createBody: ->
     @body = $('<div></div>')
     @label = $('<label class="control-label">Until</label>')
-    @hiddenUntilValue = $('<input type="hidden" name="until_value">').val(@until_value)
-    ;
-    @hiddenUntilType = $('<input type="hidden" name="until_type">').val(@mode)
-    ;
+    @hiddenUntilValue = $('<input type="hidden">').val(@until_value)
+    @hiddenUntilType = $('<input type="hidden">').val(@mode)
     @radioGroup = $('<div class="btn-group" data-toggle="buttons-radio"></div>')
     @radioNoEndDate =
       $('<button class="btn" data-type="no">no end date</button>').click({obj: @}, @noEndDateClick)
@@ -97,7 +95,4 @@ class Classes.Until extends Element
     value
 
   getData: ->
-    {'until': {
-      'type': @getType(),
-      'value': @getValue()
-    }}
+    {'type': @getType(), 'value': @getValue()}

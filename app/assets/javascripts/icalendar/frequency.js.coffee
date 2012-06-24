@@ -2,7 +2,7 @@ Classes = exports ? this
 $ = jQuery
 
 class Classes.Frequency extends Element
-  constructor: -> @createBody()
+  constructor: (@key = 'frequency') -> @createBody()
 
   frequencies = ["SECONDLY", "MINUTELY", "HOURLY", "DAILY", "WEEKLY", "MONTHLY", "YEARLY"]
 
@@ -16,4 +16,4 @@ class Classes.Frequency extends Element
     return @body
 
   getData: ->
-    {'frequency': $(@body).find('option:selected').val()}
+    $(@body).find('option:selected').val()

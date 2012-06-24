@@ -28,22 +28,20 @@ class Classes.ByArray
 
   addElement: (element) ->
     unless @checkExits element
-      @elements.push element
+      @elements.push $(element).val()
       $(@elementsContainer).append element
       @show @elementsContainer
     else
       alert "Element already exists"
 
   removeElement: (element) ->
-    for i in [0...@elements.length]
-      delete @elements[i] if $(@elements[i]).attr('data-value') == $(element).attr('data-value')
-    $(element).remove()
-    @hide @elementsContainer if $(@elementsContainer).children().length == 0
+    if @checkExits element
+      @elements.splice(@elements.indexOf($(element).val()), 1)
+      $(element).remove()
+    @hide @elementsContainer if @elements.length == 0
 
   checkExits: (element) ->
-    for e in @elements
-      return true if $(e).attr('data-value') == $(element).attr('data-value')
-    return false
+    @elements.indexOf($(element).val()) >= 0
 
   addButtonClick: (event) ->
     obj = event.data.obj
@@ -53,15 +51,18 @@ class Classes.ByArray
     element = $(obj.element).
     clone().
     text(text).
-    attr('data-value', value).
+    val(value).
     click({obj: obj}, obj.elementClick)
     obj.addElement element
 
   elementClick: (event) ->
     event.data.obj.removeElement @
 
+  getData: ->
+    @elements
+
 class Classes.ByMonth extends ByArray
-  constructor: ->
+  constructor: (@key = 'months') ->
     super [
       "January", "February", "March", "April", "May", "June", "July",
       "August", "September", "October", "November", "December"

@@ -26,8 +26,8 @@ class Classes.ByNumber
 
   addElement: (element) ->
     unless @checkExits element
-      if $(element).attr('data-value') >= @min && $(element).attr('data-value') <= @max
-        @elements.push $(element).attr('data-value')
+      if $(element).val() >= @min && $(element).val() <= @max
+        @elements.push $(element).val()
         $(@elementsContainer).append element
         @show @elementsContainer
       else
@@ -37,13 +37,12 @@ class Classes.ByNumber
 
   removeElement: (element) ->
     if @checkExits element
-      # TODO: косяк с удалением
-      delete @elements[@elements.indexOf($(element).attr('data-value'))]
+      @elements.splice(@elements.indexOf($(element).val()), 1)
       $(element).remove()
-    @hide @elementsContainer if $(@elementsContainer).children().length == 0
+    @hide @elementsContainer if @elements.length == 0
 
   checkExits: (element) ->
-    @elements.indexOf($(element).attr('data-value')) != -1
+    @elements.indexOf($(element).val()) != -1
 
   addButtonClick: (event) ->
     obj = event.data.obj
@@ -51,7 +50,7 @@ class Classes.ByNumber
     element = $(obj.element).
     clone().
     text(value).
-    attr('data-value', value).
+    val(value).
     click({obj: obj}, obj.elementClick)
     obj.addElement element
 
@@ -59,14 +58,14 @@ class Classes.ByNumber
     event.data.obj.removeElement @
 
   getData: ->
-    @elements.join(',')
+    @elements
 
 class Classes.BySecond extends ByNumber
-  constructor: ->
+  constructor: (@key = 'seconds') ->
     super 1, 59, 'seconds'
 
 class Classes.ByMinute extends ByNumber
-  constructor: ->
+  constructor: (@key = 'minutes') ->
     super 1, 59, 'minutes'
 
 class Classes.ByHour extends ByNumber
@@ -74,18 +73,18 @@ class Classes.ByHour extends ByNumber
     super 1, 23, 'hours'
 
 class Classes.ByMonthDay extends ByNumber
-  constructor: ->
+  constructor: (@key = 'years') ->
     super 1, 31, 'years'
 
 class Classes.ByYearDay extends ByNumber
-  constructor: ->
+  constructor: (@key = 'days') ->
     super 1, 366, 'days'
 
 class Classes.ByWeekNumber extends ByNumber
-  constructor: ->
+  constructor: (@key = 'weeks') ->
     super 1, 53, 'weeks'
 
 class Classes.ByPosition extends ByNumber
-  constructor: ->
+  constructor: (@key = 'positions') ->
     super 1, 366, 'positions'
 

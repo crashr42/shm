@@ -2,7 +2,7 @@ Classes = exports ? this
 $ = jQuery
 
 class Classes.ByManager
-  constructor: (@parts) ->
+  constructor: (@parts, @key = 'parts') ->
     @createBody()
 
   createBody: ->
@@ -88,11 +88,8 @@ class Classes.ByManager
     $($(@buttonsGroup).find('button').get(key)).hasClass('active')
 
   getData: ->
-    data = []
+    data = new Object()
     for part, key in @parts when @partIsActive key
-      d = {}
-      d[part.title] = part.getData()
-      data.push d
+      eval("data." + part.key + " = part.getData()")
     return data
-
 
