@@ -6,7 +6,7 @@ class Classes.Interval extends Element
 
   createBody: ->
     @element = $('<input type="text" name="interval">')
-    @label = $('<label class="control-label">Interval</label>')
+    @label = $('<label>Interval</label>')
     @body = $('<div></div>').append(@groupping(@label, @element))
     return @body
 

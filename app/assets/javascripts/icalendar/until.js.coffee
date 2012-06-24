@@ -8,7 +8,7 @@ class Classes.Until extends Element
 
   createBody: ->
     @body = $('<div></div>')
-    @label = $('<label class="control-label">Until</label>')
+    @label = $('<label>Until</label>')
     @hiddenUntilValue = $('<input type="hidden">').val(@until_value)
     @hiddenUntilType = $('<input type="hidden">').val(@mode)
     @radioGroup = $('<div class="btn-group" data-toggle="buttons-radio"></div>')

@@ -21,11 +21,11 @@ class Classes.ByManager
     return @body
 
   groupping: (label, controls...)->
-    group = $('<div class="control-group"></div>').append(label)
-    controlsGroup = $('<div class="controls"></div>')
-    controlsGroup.append control for control in controls
-    group.append controlsGroup
-    return group
+    @group = $('<div class="control-group"></div>').append(label)
+    @controlsGroup = $('<div class="controls"></div>')
+    @controlsGroup.append control for control in controls
+    @group.append @controlsGroup
+    return @group
 
   hide: (element) ->
     $(element).addClass('hide').removeClass('active')
@@ -50,11 +50,12 @@ class Classes.ByManager
     @tabHeader = $('<ul class="nav nav-tabs"></ul>').addClass('hide')
     @tabBody = $('<div class="tab-content"></div>')
     for part, key in @parts
+      id = @randomString()
       $(@tabHeader).append(
         $('<li></li>').addClass('hide').
         append($('<a></a>').
         attr({
-          href: '#by-part-' + key,
+          href: '#by-part-' + id,
           'data-toggle': 'tab'
           }).
         text(part.title ? key))
@@ -63,11 +64,19 @@ class Classes.ByManager
         $('<div class="tab-pane"></div>').
         addClass('hide').
         attr({
-          id: 'by-part-' + key
+          id: 'by-part-' + id
           }).
         append(part.body)
       )
     @tabs = $('<div></div>').append(@tabHeader).append(@tabBody)
+
+  randomString: (length = 5) ->
+    chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('')
+    length = Math.floor(Math.random() * chars.length) if !length
+    str = '';
+    for i in [0...length]
+      str += chars[Math.floor(Math.random() * chars.length)]
+    return str + (new Date().getTime()).toString();
 
   partClick: (event) ->
     obj = event.data.obj

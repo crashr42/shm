@@ -2,7 +2,7 @@ Classes = exports ? this
 $ = jQuery
 
 class Classes.ByArrayNumber
-  constructor: (@data, @min, @max, @title) ->
+  constructor: (@data, @numbers, @title) ->
     @elements = []
     @createBody()
 
@@ -29,12 +29,12 @@ class Classes.ByArrayNumber
 
   addElement: (element) ->
     unless @checkExits element
-      if $(element).attr("data-key") >= @min && $(element).attr("data-key") <= @max
+      if @numbers.indexOf(parseInt($(element).attr("data-key"))) >= 0
         @elements.push $(element).attr("data-key") + "_" + $(element).attr("data-value")
         $(@elementsContainer).append element
         @show @elementsContainer
       else
-        alert "Element must be from " + @min + " to " + @max
+        alert "Element must be from " + @numbers.join(',')
     else
       alert "Element already exists"
 
@@ -79,7 +79,7 @@ class Classes.ByWeekDays extends ByArrayNumber
     days[5] = "Friday"
     days[6] = "Saturday"
     days[7] = "Sunday"
-    super days, 1, 53, 'week_days'
+    super days, [-53...0].concat([1...54]), 'week_days'
 
   getData: ->
     data = []

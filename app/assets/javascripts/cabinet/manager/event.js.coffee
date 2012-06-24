@@ -1,4 +1,4 @@
 $ = jQuery
 
 $(document).ready ->
-  $('#irrule').irrule()
+  $('#irrule').ievent()

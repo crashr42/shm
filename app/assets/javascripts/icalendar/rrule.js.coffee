@@ -40,7 +40,6 @@ class Classes.RRule
       new Interval(),
       @byManager
     ]
-    $(@body).append($('<button>Get data</button>').click({obj: @}, @getData))
     for control in @controls
       @body.append(control.body)
 
@@ -49,6 +48,5 @@ class Classes.RRule
     data = new Object()
     for control in obj.controls
       eval("data." + control.key + " = control.getData()")
-    console.log(data)
     return data
 
