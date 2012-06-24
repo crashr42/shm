@@ -22,14 +22,20 @@ class Classes.ByArray
     @element =
       $('<button class="btn btn-primary"></button>')
     @elementsSelector = $('<select></select>')
-    for key, value in @data
-      $(@elementsSelector).append($('<option></option>').val(value).text(key))
+    for key, value of @data
+      $(@elementsSelector).append($('<option></option>').val(key).text(value))
     $(@body).append(@elementsContainer, @elementsSelector, @addButton)
 
   addElement: (element) ->
     unless @checkExits element
       @elements.push $(element).val()
       $(@elementsContainer).append element
+      $(@elementsSelector).find('option[value=' + $(element).val() + ']').addClass('hide')
+      if $(@elementsSelector).find('option:not(.hide)').length != 0
+        $(@elementsSelector).find('option:not(.hide):first').attr('selected', 'selected')
+      else
+        $(@elementsSelector).addClass('hide')
+        $(@addButton).addClass('hide')
       @show @elementsContainer
     else
       alert "Element already exists"
@@ -37,6 +43,9 @@ class Classes.ByArray
   removeElement: (element) ->
     if @checkExits element
       @elements.splice(@elements.indexOf($(element).val()), 1)
+      $(@elementsSelector).removeClass('hide')
+      $(@addButton).removeClass('hide')
+      $(@elementsSelector).find('option[value=' + $(element).val() + ']').removeClass('hide')
       $(element).remove()
     @hide @elementsContainer if @elements.length == 0
 
@@ -63,7 +72,17 @@ class Classes.ByArray
 
 class Classes.ByMonth extends ByArray
   constructor: (@key = 'months') ->
-    super [
-      "January", "February", "March", "April", "May", "June", "July",
-      "August", "September", "October", "November", "December"
-    ], 'months'
+    months = new Array()
+    months[1] = "January"
+    months[2] = "February"
+    months[3] = "March"
+    months[4] = "April"
+    months[5] = "May"
+    months[6] = "June"
+    months[7] = "July"
+    months[8] = "August"
+    months[9] = "September"
+    months[10] = "October"
+    months[11] = "November"
+    months[12] = "December"
+    super months, 'months'
