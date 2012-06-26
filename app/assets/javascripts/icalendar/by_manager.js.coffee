@@ -38,6 +38,7 @@ class Classes.ByManager
     for part, key in @parts
       $(@buttonsGroup).append(
         $('<button class="btn btn-primary"></button>').
+        addClass(part.title).
         attr({
           'data-part': key
           }).
@@ -52,7 +53,7 @@ class Classes.ByManager
     for part, key in @parts
       id = @randomString()
       $(@tabHeader).append(
-        $('<li></li>').addClass('hide').
+        $('<li></li>').addClass('hide').addClass(part.title).
         append($('<a></a>').
         attr({
           href: '#by-part-' + id,
@@ -62,7 +63,7 @@ class Classes.ByManager
       )
       $(@tabBody).append(
         $('<div class="tab-pane"></div>').
-        addClass('hide').
+        addClass('hide').addClass(part.key).
         attr({
           id: 'by-part-' + id
           }).
@@ -95,6 +96,17 @@ class Classes.ByManager
 
   partIsActive: (key) ->
     $($(@buttonsGroup).find('button').get(key)).hasClass('active')
+
+  bindFrequency: (frequency) ->
+    $(frequency.select).change {obj: @}, (event) ->
+      obj = event.data.obj
+      for part in obj.parts
+        if part.excludeFrequencies.indexOf($(@).val()) >= 0
+          obj.hide $(obj.tabs).find('.' + part.key).first()
+          obj.hide $(obj.selector).find('.' + part.key).first()
+        else
+          obj.show $(obj.selector).find('.' + part.key).first()
+          $(obj.tabHeader).find('li:not(.hide):first a').tab('show')
 
   getData: ->
     data = new Object()

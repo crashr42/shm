@@ -4,6 +4,7 @@ $ = jQuery
 class Classes.ByArray
   constructor: (@data, @title) ->
     @elements = []
+    @excludeFrequencies = []
     @createBody()
 
   hide: (element) ->

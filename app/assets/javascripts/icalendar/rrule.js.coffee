@@ -33,9 +33,11 @@ class Classes.RRule
       new ByMonth(),
       new ByWeekDays()
     ]
+    @frequency = new Frequency()
     @byManager = new ByManager(@elements)
+    @byManager.bindFrequency @frequency
     @controls = [
-      new Frequency(),
+      @frequency,
       new Until('no'),
       new Interval(),
       @byManager

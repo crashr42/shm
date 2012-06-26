@@ -4,6 +4,7 @@ $ = jQuery
 class Classes.ByNumber
   constructor: (@numbers, @title) ->
     @elements = []
+    @excludeFrequencies = []
     @createBody()
 
   hide: (element) ->
@@ -75,14 +76,17 @@ class Classes.ByHour extends ByNumber
 class Classes.ByMonthDay extends ByNumber
   constructor: (@key = 'month_days') ->
     super [-31...0].concat([1...32]), 'month_days'
+    @excludeFrequencies = ['WEEKLY']
 
 class Classes.ByYearDay extends ByNumber
   constructor: (@key = 'days') ->
     super [-366...0].concat([1...367]), 'days'
+    @excludeFrequencies = ['DAILY', 'WEEKLY', 'MONTHLY']
 
 class Classes.ByWeekNumber extends ByNumber
   constructor: (@key = 'weeks') ->
     super [1...54], 'weeks'
+    @excludeFrequencies = ['SECONDLY', 'MINUTELY', 'HOURLY', 'DAILY', 'WEEKLY', 'MONTHLY']
 
 class Classes.ByPosition extends ByNumber
   constructor: (@key = 'positions') ->
