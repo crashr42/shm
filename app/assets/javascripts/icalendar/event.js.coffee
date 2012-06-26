@@ -1,9 +1,6 @@
 Classes = exports ? this
 $ = jQuery
 
-Classes = exports ? this
-$ = jQuery
-
 $.fn.extend
   ievent: (options) ->
     settings =
@@ -49,21 +46,32 @@ class Classes.Event extends Element
     append(@buttonHasTime).
     append(@recurrenceButton).
     append(@addRRuleButton)
-    @createRRuleBox()
+    @createRuleTable()
     $(@body).
     append(@groupping(@summaryLabel, @summary)).
     append(@groupping(@descriptionLabel, @description)).
     append(@groupping(@dateStartLabel, @dateStart, @timeStart)).
     append(@groupping(@dateEndLabel, @dateEnd, @timeEnd)).
     append(@groupping(null, @buttonsGroup)).
-    append(@rrulesBody)
+    append(@ruleTable)
 
-  createRRuleBox: ->
-    @rrulesBody = $('<div class="hide"></div>')
-    @tabBody = $('<div class="span3"></div>')
-    @rruleBody = $('<div class="span9"></div>')
-    @rrulesTabs = $('<ul class="nav nav-tabs nav-stacked"></ul>')
-    $(@rrulesBody).append($(@tabBody).append(@rrulesTabs)).append(@rruleBody)
+  createRuleTable: ->
+    @ruleTable = $('<table class="hide table table-bordered table-striped"></table>')
+    $(@ruleTable).append(
+      $('<tr></tr>').
+      append('<td>Summary</td>').
+      append('<td>Function</td>')
+    )
+
+  createModalEdit: ->
+    modal = $('<div style="width: 1000px; margin-left: -500px;" class="modal"></div>')
+    modalHeader = $('<div class="modal-header"></div>')
+    modalBody = $('<div class="modal-body form-horizontal"></div>')
+    modalFooter = $('<div class="modal-footer"></div>')
+    modalHeaderCloseButton = $('<button class="close" type="button" data-dismiss="modal">X</button>')
+    $(modalHeader).append(modalHeaderCloseButton).append($('<h3></h3>'))
+    $(modal).append(modalHeader).append(modalBody).append(modalFooter)
+    return modal
 
   hasTimeClick: (event) ->
     obj = event.data.obj
@@ -78,10 +86,10 @@ class Classes.Event extends Element
     obj = event.data.obj
     if $(@).hasClass('active')
       $(obj.addRRuleButton).addClass('hide')
-      $(obj.rrulesBody).addClass('hide')
+      $(obj.ruleTable).addClass('hide')
     else
       $(obj.addRRuleButton).removeClass('hide')
-      $(obj.rrulesBody).removeClass('hide')
+      $(obj.ruleTable).removeClass('hide') if $(obj.ruleTable).find('tr').length > 1
 
   addRRuleClick: (event) ->
     obj = event.data.obj
@@ -93,22 +101,44 @@ class Classes.Event extends Element
     $(rrule.body).removeClass('hide')
 
   createRRule: ->
-    $(@rrulesBody).removeClass('hide')
+    $(@ruleTable).removeClass('hide')
     rrule = new RRule()
     @rrules.push rrule
-    $(@rruleBody).append(rrule.body)
-    for li in $(@tabBody).find('li')
-      $(li).removeClass('active')
-    @tabButton =
-      $('<li class="active"><a>RRule' + @rrules.length + '</a></li>').
-      click({obj: @, r: rrule}, @tabClick)
-    $(@rrulesTabs).append(@tabButton)
-    @selectRRule rrule
+    $(@ruleTable).removeClass('hide').append(
+      $('<tr></tr>').
+      append($('<td></td>')).
+      append($('<td></td>').append(
+        $('<button class="btn btn-danger">Edit</button>').
+        click({obj: @, rule: rrule}, @editButtonClick)
+      ).append(
+        $('<button class="btn btn-primary">Delete</button>').
+        click({obj: @, rule: rrule}, @deleteButtonClick)
+      ))
+    )
+    modal = @createModalEdit()
+    $(modal).find('.modal-header').first().children('h3').first().text('Rule #' + @rrules.length)
+    $(modal).find('.modal-body').first().html(rrule.body)
+    $(modal).modal('show')
 
-  tabClick: (event) ->
-    rrule = event.data.r
+  editButtonClick: (event) ->
     obj = event.data.obj
-    obj.selectRRule rrule
-    for li in $(obj.tabBody).find('li')
-      $(li).removeClass('active')
-    $(@).addClass('active')
+    rule = event.data.rule
+    obj.editRule rule
+
+  deleteButtonClick: (event) ->
+    obj = event.data.obj
+    rule = event.data.rule
+    obj.deleteRule rule
+
+  editRule: (rule) ->
+    index = @rrules.indexOf rule
+    modal = @createModalEdit()
+    $(modal).find('.modal-header').first().children('h3').first().text('Rule #' + (index + 1))
+    $(modal).find('.modal-body').first().html(rule.body)
+    $(modal).modal('show')
+
+  deleteRule: (rule) ->
+    index = @rrules.indexOf(rule)
+    $($(@ruleTable).find('tr').get(@rrules.length - index)).remove()
+    @rrules.splice(index, 1)
+    $(@ruleTable).addClass('hide') if $(@ruleTable).find('tr').length <= 1
