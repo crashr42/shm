@@ -42,6 +42,9 @@ class Classes.Event extends Element
     @addRRuleButton =
       $('<button class="btn btn-success hide">Add rrule</button>').
       click({obj: @}, @addRRuleClick)
+    @getDataButton =
+      $('<button class="btn btn-primary">Get data</button>').
+      click({obj: @}, @getDataClick)
     @buttonsGroup.
     append(@buttonHasTime).
     append(@recurrenceButton).
@@ -52,6 +55,7 @@ class Classes.Event extends Element
     append(@groupping(@descriptionLabel, @description)).
     append(@groupping(@dateStartLabel, @dateStart, @timeStart)).
     append(@groupping(@dateEndLabel, @dateEnd, @timeEnd)).
+    append(@groupping(null, @getDataButton)).
     append(@groupping(null, @buttonsGroup)).
     append(@ruleTable)
 
@@ -142,3 +146,14 @@ class Classes.Event extends Element
     $($(@ruleTable).find('tr').get(@rrules.length - index)).remove()
     @rrules.splice(index, 1)
     $(@ruleTable).addClass('hide') if $(@ruleTable).find('tr').length <= 1
+
+  getDataClick: (event) ->
+    obj = event.data.obj
+    obj.validate()
+
+  validate: ->
+    @validateSummary()
+
+  validateSummary: ->
+    if $(@summary).text() == ''
+      $(@summary).attr('placeholder', 'Please enter summary').parent().parent().addClass('error')

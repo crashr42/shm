@@ -24,10 +24,12 @@ class Classes.Until extends Element
     @elementCount =
       $('<input type="text" placeholder="count"/>').
       keyup({obj: @}, @elementCountKeyUp)
+    @helpBlock = $('<p class="help-block"></p>')
     @elementGroup = @groupping(
       null,
       @elementEndDate,
-      @elementCount
+      @elementCount,
+      @helpBlock
     )
     @body.append(@groupping(
       @label,
@@ -65,6 +67,7 @@ class Classes.Until extends Element
     obj.hide obj.elementGroup
     obj.setValue null
     obj.setType 'no'
+    $(obj.helpBlock).text('')
 
   endDateClick: (event)->
     obj = event.data.obj
@@ -73,6 +76,7 @@ class Classes.Until extends Element
     obj.show obj.elementGroup
     obj.setValue $(obj.elementEndDate).val()
     obj.setType 'date'
+    $(obj.helpBlock).text('Please select date when recurrence rule must be active.')
 
   countClick: (event)->
     obj = event.data.obj
@@ -81,6 +85,7 @@ class Classes.Until extends Element
     obj.show obj.elementGroup
     obj.setValue $(obj.elementCount).val()
     obj.setType 'count'
+    $(obj.helpBlock).text('Please enter the number of times when recurrence rule must be active.')
 
   elementEndDateKeyUp: (event)->
     obj = event.data.obj

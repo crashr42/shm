@@ -7,7 +7,8 @@ class Classes.Interval extends Element
   createBody: ->
     @element = $('<input type="text" name="interval">')
     @label = $('<label>Interval</label>')
-    @body = $('<div></div>').append(@groupping(@label, @element))
+    @helpBlock = $('<p class="help-block"></p>').text('Interval must be a positive number.')
+    @body = $('<div></div>').append(@groupping(@label, @element, @helpBlock))
     return @body
 
   getData: ->

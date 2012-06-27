@@ -26,7 +26,8 @@ class Classes.ByArrayNumber
     @enterValue = $('<input type="text">')
     for key, value of @data
       $(@elementsSelector).append($('<option></option>').val(key).text(value))
-    $(@body).append(@elementsContainer, @enterValue, @elementsSelector, @addButton)
+    @helpBlock = $('<p class="help-block"></p>').text(@helpMessage)
+    $(@body).append(@elementsContainer, @enterValue, @elementsSelector, @addButton, @helpBlock)
 
   addElement: (element) ->
     unless @checkExits element
@@ -80,6 +81,8 @@ class Classes.ByWeekDays extends ByArrayNumber
     days[5] = "Friday"
     days[6] = "Saturday"
     days[7] = "Sunday"
+    @validationMessage = "Week day must be from -53 to 53 include, exclude 0."
+    @helpMessage = @validationMessage
     super days, [-53...0].concat([1...54]), 'week_days'
 
   getData: ->

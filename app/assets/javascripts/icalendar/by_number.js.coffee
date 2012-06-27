@@ -3,8 +3,8 @@ $ = jQuery
 
 class Classes.ByNumber
   constructor: (@numbers, @title) ->
-    @elements = []
-    @excludeFrequencies = []
+    @elements = @elements ? []
+    @excludeFrequencies = @excludeFrequencies ? []
     @createBody()
 
   hide: (element) ->
@@ -23,7 +23,8 @@ class Classes.ByNumber
     @element =
       $('<button class="btn btn-primary"></button>')
     @enterValue = $('<input type="text">')
-    $(@body).append(@elementsContainer, @enterValue, @addButton)
+    @helpBlock = $('<p class="help-block"></p>').text(@helpMessage)
+    $(@body).append(@elementsContainer, @enterValue, @addButton, @helpBlock)
 
   addElement: (element) ->
     unless @checkExits element
@@ -32,7 +33,7 @@ class Classes.ByNumber
         $(@elementsContainer).append element
         @show @elementsContainer
       else
-        alert "Element must be from " + @numbers.join(',')
+        alert @validationMessage
     else
       alert "Element already exists"
 
@@ -63,32 +64,46 @@ class Classes.ByNumber
 
 class Classes.BySecond extends ByNumber
   constructor: (@key = 'seconds') ->
+    @validationMessage = 'Seconds must be from 1 to 59 include.'
+    @helpMessage = @validationMessage
     super [1...60], 'seconds'
 
 class Classes.ByMinute extends ByNumber
   constructor: (@key = 'minutes') ->
+    @validationMessage = 'Minutes must be from 1 to 59 include.'
+    @helpMessage = @validationMessage
     super [1...60], 'minutes'
 
 class Classes.ByHour extends ByNumber
   constructor: ->
+    @validationMessage = 'Hours must be from 1 to 23 include.'
+    @helpMessage = @validationMessage
     super [1...24], 'hours'
 
 class Classes.ByMonthDay extends ByNumber
   constructor: (@key = 'month_days') ->
-    super [-31...0].concat([1...32]), 'month_days'
+    @validationMessage = 'Month days must be from -31 to 31 include, exclude 0.'
+    @helpMessage = @validationMessage
     @excludeFrequencies = ['WEEKLY']
+    super [-31...0].concat([1...32]), 'month_days'
 
 class Classes.ByYearDay extends ByNumber
   constructor: (@key = 'days') ->
-    super [-366...0].concat([1...367]), 'days'
     @excludeFrequencies = ['DAILY', 'WEEKLY', 'MONTHLY']
+    @validationMessage = 'Year days must be from -366 to 366 include, exclude 0.'
+    @helpMessage = @validationMessage
+    super [-366...0].concat([1...367]), 'days'
 
 class Classes.ByWeekNumber extends ByNumber
   constructor: (@key = 'weeks') ->
-    super [1...54], 'weeks'
     @excludeFrequencies = ['SECONDLY', 'MINUTELY', 'HOURLY', 'DAILY', 'WEEKLY', 'MONTHLY']
+    @validationMessage = 'Seconds must be from 1 to 53 include.'
+    @helpMessage = @validationMessage
+    super [1...54], 'weeks'
 
 class Classes.ByPosition extends ByNumber
   constructor: (@key = 'positions') ->
+    @validationMessage = 'Seconds must be from 1 to 366 include.'
+    @helpMessage = @validationMessage
     super [1...367], 'positions'
 

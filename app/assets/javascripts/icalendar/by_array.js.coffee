@@ -25,7 +25,8 @@ class Classes.ByArray
     @elementsSelector = $('<select></select>')
     for key, value of @data
       $(@elementsSelector).append($('<option></option>').val(key).text(value))
-    $(@body).append(@elementsContainer, @elementsSelector, @addButton)
+    @helpBlock = $('<p class="help-block"></p>').text(@helpMessage)
+    $(@body).append(@elementsContainer, @elementsSelector, @addButton, @helpBlock)
 
   addElement: (element) ->
     unless @checkExits element
@@ -86,4 +87,6 @@ class Classes.ByMonth extends ByArray
     months[10] = "October"
     months[11] = "November"
     months[12] = "December"
+    @validationMessage = "Month number must be from 1 to 12 include."
+    @helpMessage = @validationMessage
     super months, 'months'
