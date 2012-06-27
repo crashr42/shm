@@ -45,26 +45,29 @@ class Classes.Event extends Element
     @getDataButton =
       $('<button class="btn btn-primary">Get data</button>').
       click({obj: @}, @getDataClick)
-    @buttonsGroup.
-    append(@buttonHasTime).
-    append(@recurrenceButton).
-    append(@addRRuleButton)
+    @buttonsGroup.append(
+      @buttonHasTime,
+      @recurrenceButton,
+      @addRRuleButton
+    )
     @createRuleTable()
-    $(@body).
-    append(@groupping(@summaryLabel, @summary)).
-    append(@groupping(@descriptionLabel, @description)).
-    append(@groupping(@dateStartLabel, @dateStart, @timeStart)).
-    append(@groupping(@dateEndLabel, @dateEnd, @timeEnd)).
-    append(@groupping(null, @getDataButton)).
-    append(@groupping(null, @buttonsGroup)).
-    append(@ruleTable)
+    $(@body).append(
+      @groupping(@summaryLabel, @summary),
+      @groupping(@descriptionLabel, @description),
+      @groupping(@dateStartLabel, @dateStart, @timeStart),
+      @groupping(@dateEndLabel, @dateEnd, @timeEnd),
+      @groupping(null, @getDataButton),
+      @groupping(null, @buttonsGroup)
+      @ruleTable
+    )
 
   createRuleTable: ->
     @ruleTable = $('<table class="hide table table-bordered table-striped"></table>')
     $(@ruleTable).append(
-      $('<tr></tr>').
-      append('<td>Summary</td>').
-      append('<td>Function</td>')
+      $('<tr></tr>').append(
+        $('<td>Summary</td>'),
+        $('<td>Function</td>')
+      )
     )
 
   createModalEdit: ->
@@ -73,8 +76,8 @@ class Classes.Event extends Element
     modalBody = $('<div class="modal-body form-horizontal"></div>')
     modalFooter = $('<div class="modal-footer"></div>')
     modalHeaderCloseButton = $('<button class="close" type="button" data-dismiss="modal">X</button>')
-    $(modalHeader).append(modalHeaderCloseButton).append($('<h3></h3>'))
-    $(modal).append(modalHeader).append(modalBody).append(modalFooter)
+    $(modalHeader).append(modalHeaderCloseButton, $('<h3></h3>'))
+    $(modal).append(modalHeader, modalBody, modalFooter)
     return modal
 
   hasTimeClick: (event) ->
@@ -109,15 +112,13 @@ class Classes.Event extends Element
     rrule = new RRule()
     @rrules.push rrule
     $(@ruleTable).removeClass('hide').append(
-      $('<tr></tr>').
-      append($('<td></td>')).
-      append($('<td></td>').append(
-        $('<button class="btn btn-danger">Edit</button>').
-        click({obj: @, rule: rrule}, @editButtonClick)
-      ).append(
-        $('<button class="btn btn-primary">Delete</button>').
-        click({obj: @, rule: rrule}, @deleteButtonClick)
-      ))
+      $('<tr></tr>').append(
+        $('<td></td>'),
+        $('<td></td>').append(
+          $('<button class="btn btn-danger">Edit</button>').click({obj: @, rule: rrule}, @editButtonClick),
+          $('<button class="btn btn-primary">Delete</button>').click({obj: @, rule: rrule}, @deleteButtonClick)
+        )
+      )
     )
     modal = @createModalEdit()
     $(modal).find('.modal-header').first().children('h3').first().text('Rule #' + @rrules.length)

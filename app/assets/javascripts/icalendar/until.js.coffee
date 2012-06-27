@@ -31,15 +31,19 @@ class Classes.Until extends Element
       @elementCount,
       @helpBlock
     )
-    @body.append(@groupping(
-      @label,
-      @radioGroup.
-      append(@radioNoEndDate).
-      append(@radioEndDate).
-      append(@radioCount),
-      @hiddenUntilValue,
-      @hiddenUntilType
-    )).append(@elementGroup)
+    @body.append(
+      @groupping(
+        @label,
+        @radioGroup.append(
+          @radioNoEndDate,
+          @radioEndDate,
+          @radioCount
+        ),
+        @hiddenUntilValue,
+        @hiddenUntilType
+      ),
+      @elementGroup
+    )
     return @body
 
   setMode: (@mode) ->

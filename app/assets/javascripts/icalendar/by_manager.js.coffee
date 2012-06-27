@@ -9,10 +9,11 @@ class Classes.ByManager
     @createSelector()
     @createTabs()
     label = $('<label class="control-label">Parts</label>')
-    @body = $('<div></div>').append(@groupping(
-      label,
-      @selector
-    )).append(
+    @body = $('<div></div>').append(
+      @groupping(
+        label,
+        @selector
+      ),
       @groupping(
         null,
         @tabs
@@ -53,7 +54,7 @@ class Classes.ByManager
     for part, key in @parts
       id = @randomString()
       $(@tabHeader).append(
-        $('<li></li>').addClass('hide').addClass(part.title).
+        $('<li></li>').addClass('hide', part.title).
         append($('<a></a>').
         attr({
           href: '#by-part-' + id,
