@@ -18,7 +18,7 @@ $.fn.extend
 class Classes.Event extends Element
   constructor: ->
     @createBody()
-    @rrules = []
+    @rules = []
 
   createBody: ->
     @body = $('<div></div>')
@@ -39,16 +39,16 @@ class Classes.Event extends Element
     @recurrenceButton =
       $('<button class="btn btn-primary" data-toggle="button">Periodical?</button>').
       click({obj: @}, @periodicalClick)
-    @addRRuleButton =
-      $('<button class="btn btn-success hide">Add rrule</button>').
-      click({obj: @}, @addRRuleClick)
+    @addRuleButton =
+      $('<button class="btn btn-success hide">Add rule</button>').
+      click({obj: @}, @addRuleClick)
     @getDataButton =
       $('<button class="btn btn-primary">Get data</button>').
       click({obj: @}, @getDataClick)
     @buttonsGroup.append(
       @buttonHasTime,
       @recurrenceButton,
-      @addRRuleButton
+      @addRuleButton
     )
     @createRuleTable()
     $(@body).append(
@@ -92,37 +92,37 @@ class Classes.Event extends Element
   periodicalClick: (event) ->
     obj = event.data.obj
     if $(@).hasClass('active')
-      $(obj.addRRuleButton).addClass('hide')
+      $(obj.addRuleButton).addClass('hide')
       $(obj.ruleTable).addClass('hide')
     else
-      $(obj.addRRuleButton).removeClass('hide')
+      $(obj.addRuleButton).removeClass('hide')
       $(obj.ruleTable).removeClass('hide') if $(obj.ruleTable).find('tr').length > 1
 
-  addRRuleClick: (event) ->
+  addRuleClick: (event) ->
     obj = event.data.obj
-    obj.createRRule()
+    obj.createRule()
 
-  selectRRule: (rrule) ->
+  selectRule: (rule) ->
     for div in $(@rruleBody).children('div')
       $(div).addClass('hide')
-    $(rrule.body).removeClass('hide')
+    $(rule.body).removeClass('hide')
 
-  createRRule: ->
+  createRule: ->
     $(@ruleTable).removeClass('hide')
-    rrule = new Rule()
-    @rrules.push rrule
+    rule = new Rule()
+    @rules.push rule
     $(@ruleTable).removeClass('hide').append(
       $('<tr></tr>').append(
         $('<td></td>'),
         $('<td></td>').append(
-          $('<button class="btn btn-danger">Edit</button>').click({obj: @, rule: rrule}, @editButtonClick),
-          $('<button class="btn btn-primary">Delete</button>').click({obj: @, rule: rrule}, @deleteButtonClick)
+          $('<button class="btn btn-danger">Edit</button>').click({obj: @, rule: rule}, @editButtonClick),
+          $('<button class="btn btn-primary">Delete</button>').click({obj: @, rule: rule}, @deleteButtonClick)
         )
       )
     )
     modal = @createModalEdit()
-    $(modal).find('.modal-header').first().children('h3').first().text('Rule #' + @rrules.length)
-    $(modal).find('.modal-body').first().html(rrule.body)
+    $(modal).find('.modal-header').first().children('h3').first().text('Rule #' + @rules.length)
+    $(modal).find('.modal-body').first().html(rule.body)
     $(modal).modal('show')
 
   editButtonClick: (event) ->
@@ -136,16 +136,16 @@ class Classes.Event extends Element
     obj.deleteRule rule
 
   editRule: (rule) ->
-    index = @rrules.indexOf rule
+    index = @rules.indexOf rule
     modal = @createModalEdit()
     $(modal).find('.modal-header').first().children('h3').first().text('Rule #' + (index + 1))
     $(modal).find('.modal-body').first().html(rule.body)
     $(modal).modal('show')
 
   deleteRule: (rule) ->
-    index = @rrules.indexOf(rule)
-    $($(@ruleTable).find('tr').get(@rrules.length - index)).remove()
-    @rrules.splice(index, 1)
+    index = @rules.indexOf(rule)
+    $($(@ruleTable).find('tr').get(@rules.length - index)).remove()
+    @rules.splice(index, 1)
     $(@ruleTable).addClass('hide') if $(@ruleTable).find('tr').length <= 1
 
   getDataClick: (event) ->
@@ -161,6 +161,6 @@ class Classes.Event extends Element
     data.timeStart = $(@timeStart).val() if !$(@buttonHasTime).hasClass('active')
     data.timeEnd = $(@timeEnd).val() if !$(@buttonHasTime).hasClass('active')
     data.rules = []
-    data.rules.push rule.getData() for rule in @rrules
+    data.rules.push rule.getData() for rule in @rules
     console.log data
 
