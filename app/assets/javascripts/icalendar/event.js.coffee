@@ -149,12 +149,18 @@ class Classes.Event extends Element
     $(@ruleTable).addClass('hide') if $(@ruleTable).find('tr').length <= 1
 
   getDataClick: (event) ->
-    obj = event.data.obj
-    obj.validate()
+    event.data.obj.getData()
 
-  validate: ->
-    @validateSummary()
+  getData: ->
+    data =
+      summary: $(@summary).val()
+      description: $(@description).val()
+      dateStart: $(@dateStart).val()
+      dateEnd: $(@dateEnd).val()
 
-  validateSummary: ->
-    if $(@summary).text() == ''
-      $(@summary).attr('placeholder', 'Please enter summary').parent().parent().addClass('error')
+    data.timeStart = $(@timeStart).val() if !$(@buttonHasTime).hasClass('active')
+    data.timeEnd = $(@timeEnd).val() if !$(@buttonHasTime).hasClass('active')
+    data.rules = []
+    data.rules.push rule.getData() for rule in @rrules
+    console.log data
+

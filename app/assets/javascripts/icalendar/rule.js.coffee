@@ -46,9 +46,8 @@ class Classes.Rule
       @body.append(control.body)
 
   getData: (event) ->
-    obj = event.data.obj
-    data = new Object()
-    for control in obj.controls
+    data = {}
+    for control in @controls
       eval("data." + control.key + " = control.getData()")
     return data
 
