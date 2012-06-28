@@ -160,7 +160,8 @@ class Classes.Event extends Element
 
     data.timeStart = $(@timeStart).val() if !$(@buttonHasTime).hasClass('active')
     data.timeEnd = $(@timeEnd).val() if !$(@buttonHasTime).hasClass('active')
-    data.rules = []
-    data.rules.push rule.getData() for rule in @rules
+    if @rules.length > 0
+      data.rules = []
+      data.rules.push rule.getData() for rule in @rules
     console.log data
 
