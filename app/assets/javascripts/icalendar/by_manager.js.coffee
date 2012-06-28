@@ -109,9 +109,9 @@ class Classes.ByManager
           obj.show $(obj.selector).find('.' + part.key).first()
           $(obj.tabHeader).find('li:not(.hide):first a').tab('show')
 
-  getData: ->
+  serialize: ->
     data = new Object()
     for part, key in @parts when @partIsActive key
-      eval("data." + part.key + " = part.getData()")
+      eval("data." + part.key + " = part.serialize()")
     return data
 

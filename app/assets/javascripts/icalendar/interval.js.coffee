@@ -11,5 +11,5 @@ class Classes.Interval extends Element
     @body = $('<div></div>').append(@groupping(@label, @element, @helpBlock))
     return @body
 
-  getData: ->
+  serialize: ->
     $(@element).val()

@@ -59,7 +59,7 @@ class Classes.ByNumber
   elementClick: (event) ->
     event.data.obj.removeElement @
 
-  getData: ->
+  serialize: ->
     @elements
 
 class Classes.BySecond extends ByNumber

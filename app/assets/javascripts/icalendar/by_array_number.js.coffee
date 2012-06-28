@@ -68,7 +68,7 @@ class Classes.ByArrayNumber
   elementClick: (event) ->
     event.data.obj.removeElement @
 
-  getData: ->
+  serialize: ->
     @elements
 
 class Classes.ByWeekDays extends ByArrayNumber
@@ -85,7 +85,7 @@ class Classes.ByWeekDays extends ByArrayNumber
     @helpMessage = @validationMessage
     super days, [-53...0].concat([1...54]), 'week_days'
 
-  getData: ->
+  serialize: ->
     data = []
     for element in @elements
       data.push {number: element.split('_')[0], day: element.split('_')[1]}

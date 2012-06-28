@@ -42,9 +42,9 @@ class Classes.Event extends Element
     @addRuleButton =
       $('<button class="btn btn-success hide">Add rule</button>').
       click({obj: @}, @addRuleClick)
-    @getDataButton =
+    @serializeButton =
       $('<button class="btn btn-primary">Get data</button>').
-      click({obj: @}, @getDataClick)
+      click({obj: @}, @serializeClick)
     @buttonsGroup.append(
       @buttonHasTime,
       @recurrenceButton,
@@ -56,7 +56,7 @@ class Classes.Event extends Element
       @groupping(@descriptionLabel, @description),
       @groupping(@dateStartLabel, @dateStart, @timeStart),
       @groupping(@dateEndLabel, @dateEnd, @timeEnd),
-      @groupping(null, @getDataButton),
+      @groupping(null, @serializeButton),
       @groupping(null, @buttonsGroup)
       @ruleTable
     )
@@ -148,10 +148,10 @@ class Classes.Event extends Element
     @rules.splice(index, 1)
     $(@ruleTable).addClass('hide') if $(@ruleTable).find('tr').length <= 1
 
-  getDataClick: (event) ->
-    event.data.obj.getData()
+  serializeClick: (event) ->
+    event.data.obj.serialize()
 
-  getData: ->
+  serialize: ->
     data =
       summary: $(@summary).val()
       description: $(@description).val()
@@ -162,6 +162,6 @@ class Classes.Event extends Element
     data.timeEnd = $(@timeEnd).val() if !$(@buttonHasTime).hasClass('active')
     if @rules.length > 0
       data.rules = []
-      data.rules.push rule.getData() for rule in @rules
+      data.rules.push rule.serialize() for rule in @rules
     console.log data
 

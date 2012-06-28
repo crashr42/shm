@@ -45,9 +45,9 @@ class Classes.Rule
     for control in @controls
       @body.append(control.body)
 
-  getData: (event) ->
+  serialize: (event) ->
     data = {}
     for control in @controls
-      eval("data." + control.key + " = control.getData()")
+      eval("data." + control.key + " = control.serialize()")
     return data
 

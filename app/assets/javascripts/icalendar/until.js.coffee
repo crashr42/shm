@@ -103,5 +103,5 @@ class Classes.Until extends Element
     obj.setValue(value)
     value
 
-  getData: ->
+  serialize: ->
     {'type': @getType(), 'value': @getValue()}

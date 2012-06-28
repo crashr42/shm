@@ -69,7 +69,7 @@ class Classes.ByArray
   elementClick: (event) ->
     event.data.obj.removeElement @
 
-  getData: ->
+  serialize: ->
     @elements
 
 class Classes.ByMonth extends ByArray

@@ -15,5 +15,5 @@ class Classes.Frequency extends Element
     @body = $('<div></div>').append(@groupping(@label, @select))
     return @body
 
-  getData: ->
+  serialize: ->
     $(@body).find('option:selected').val()
