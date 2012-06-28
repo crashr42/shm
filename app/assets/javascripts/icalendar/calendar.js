@@ -4,4 +4,4 @@
 //= require ./by_number
 //= require ./by_array
 //= require ./by_manager
-//= require ./rrule
+//= require ./rule

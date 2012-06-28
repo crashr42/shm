@@ -12,11 +12,11 @@ $.fn.extend
       console?.log msg if settings.debug
 
     return @each ()->
-      rrule = new RRule()
+      rrule = new Rule()
       $(@).append rrule.body
 
 
-class Classes.RRule
+class Classes.Rule
   constructor: ->
     @createBody()
 

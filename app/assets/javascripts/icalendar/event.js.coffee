@@ -75,7 +75,7 @@ class Classes.Event extends Element
     modalHeader = $('<div class="modal-header"></div>')
     modalBody = $('<div class="modal-body form-horizontal"></div>')
     modalFooter = $('<div class="modal-footer"></div>')
-    modalHeaderCloseButton = $('<button class="close" type="button" data-dismiss="modal">X</button>')
+    modalHeaderCloseButton = $('<button class="close" type="button" data-dismiss="modal">x</button>')
     $(modalHeader).append(modalHeaderCloseButton, $('<h3></h3>'))
     $(modal).append(modalHeader, modalBody, modalFooter)
     return modal
@@ -109,7 +109,7 @@ class Classes.Event extends Element
 
   createRRule: ->
     $(@ruleTable).removeClass('hide')
-    rrule = new RRule()
+    rrule = new Rule()
     @rrules.push rrule
     $(@ruleTable).removeClass('hide').append(
       $('<tr></tr>').append(
