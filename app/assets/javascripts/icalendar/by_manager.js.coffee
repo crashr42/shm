@@ -115,3 +115,7 @@ class Classes.ByManager
       eval("data." + part.key + " = part.serialize()")
     return data
 
+  deserialize: (data) ->
+    for part, key in @parts
+      part.deserialize data
+    return @

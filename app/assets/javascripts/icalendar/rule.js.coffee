@@ -2,7 +2,7 @@ Classes = exports ? this
 $ = jQuery
 
 $.fn.extend
-  irrule: (options) ->
+  rule: (options) ->
     settings =
       debug: false
 
@@ -12,8 +12,8 @@ $.fn.extend
       console?.log msg if settings.debug
 
     return @each ()->
-      rrule = new Rule()
-      $(@).append rrule.body
+      rule = new Rule()
+      $(@).append rule.body
 
 
 class Classes.Rule
@@ -34,12 +34,14 @@ class Classes.Rule
       new ByWeekDays()
     ]
     @frequency = new Frequency()
+    @untils = new Until('no')
+    @interval = new Interval()
     @byManager = new ByManager(@elements)
     @byManager.bindFrequency @frequency
     @controls = [
       @frequency,
-      new Until('no'),
-      new Interval(),
+      @untils,
+      @interval,
       @byManager
     ]
     for control in @controls
@@ -48,6 +50,14 @@ class Classes.Rule
   serialize: (event) ->
     data = {}
     for control in @controls
-      eval("data." + control.key + " = control.serialize()")
+      d = control.serialize()
+      for property of d
+        eval 'data.' + property + '="' + d[property] + '"'
     return data
 
+  deserialize: (data) ->
+    @frequency.deserialize data
+    @untils.deserialize data
+    @interval.deserialize data
+    @byManager.deserialize data
+    return @

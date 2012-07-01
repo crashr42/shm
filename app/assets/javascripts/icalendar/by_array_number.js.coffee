@@ -71,6 +71,8 @@ class Classes.ByArrayNumber
   serialize: ->
     @elements
 
+  deserialize: (data) ->
+
 class Classes.ByWeekDays extends ByArrayNumber
   constructor: (@key = 'week_days') ->
     days = new Array()

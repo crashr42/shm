@@ -1,2 +1,7 @@
 <h2>Event</h2>
+<div class="json-event">
+  <script type="text/javascript">
+      window.data = <%= @result.to_json.html_safe %>;
+  </script>
+</div>
 <div id="irrule" class="form-horizontal"></div>

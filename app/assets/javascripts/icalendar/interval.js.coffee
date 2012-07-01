@@ -12,4 +12,8 @@ class Classes.Interval extends Element
     return @body
 
   serialize: ->
-    $(@element).val()
+    {interval: $(@element).val()}
+
+  deserialize: (data) ->
+    $(@element).val data.interval if data.hasOwnProperty 'interval'
+    return @

@@ -27,11 +27,11 @@ class Classes.Event extends Element
     @descriptionLabel = $('<label>Description</label>')
     @description = $('<input type="text" placeholder="description">')
     @dateStartLabel = $('<label>Date start</label>')
-    @dateStart = $('<input type="text" placeholder="date start">')
-    @timeStart = $('<input type="text" placeholder="time start">')
+    @date_start = $('<input type="text" placeholder="date start">')
+    @time_start = $('<input type="text" placeholder="time start">')
     @dateEndLabel = $('<label>Date end</label>')
-    @dateEnd = $('<input type="text" placeholder="date end">')
-    @timeEnd = $('<input type="text" placeholder="time end">')
+    @date_end = $('<input type="text" placeholder="date end">')
+    @time_end = $('<input type="text" placeholder="time end">')
     @buttonsGroup = $('<div class="btn-group">')
     @buttonHasTime =
       $('<button class="btn btn-primary" data-toggle="button">Whole day?</button>').
@@ -54,8 +54,8 @@ class Classes.Event extends Element
     $(@body).append(
       @groupping(@summaryLabel, @summary),
       @groupping(@descriptionLabel, @description),
-      @groupping(@dateStartLabel, @dateStart, @timeStart),
-      @groupping(@dateEndLabel, @dateEnd, @timeEnd),
+      @groupping(@dateStartLabel, @date_start, @time_start),
+      @groupping(@dateEndLabel, @date_end, @time_end),
       @groupping(null, @serializeButton),
       @groupping(null, @buttonsGroup)
       @ruleTable
@@ -83,11 +83,11 @@ class Classes.Event extends Element
   hasTimeClick: (event) ->
     obj = event.data.obj
     if $(@).hasClass('active')
-      $(obj.timeStart).removeClass('hide')
-      $(obj.timeEnd).removeClass('hide')
+      $(obj.time_start).removeClass('hide')
+      $(obj.time_end).removeClass('hide')
     else
-      $(obj.timeStart).addClass('hide')
-      $(obj.timeEnd).addClass('hide')
+      $(obj.time_start).addClass('hide')
+      $(obj.time_end).addClass('hide')
 
   periodicalClick: (event) ->
     obj = event.data.obj
@@ -149,19 +149,38 @@ class Classes.Event extends Element
     $(@ruleTable).addClass('hide') if $(@ruleTable).find('tr').length <= 1
 
   serializeClick: (event) ->
-    event.data.obj.serialize()
+    s = event.data.obj.serialize(event.data.obj)
+#    s.summary = 123
+#    s.date_end = 'date_end'
+#    console.log s
+    console.log s
+    event.data.obj.deserialize(window.data)
 
   serialize: ->
     data =
       summary: $(@summary).val()
       description: $(@description).val()
-      dateStart: $(@dateStart).val()
-      dateEnd: $(@dateEnd).val()
+      date_start: $(@date_start).val()
+      date_end: $(@date_end).val()
 
-    data.timeStart = $(@timeStart).val() if !$(@buttonHasTime).hasClass('active')
-    data.timeEnd = $(@timeEnd).val() if !$(@buttonHasTime).hasClass('active')
+    data.time_start = $(@time_start).val() if !$(@buttonHasTime).hasClass('active')
+    data.time_end = $(@time_end).val() if !$(@buttonHasTime).hasClass('active')
     if @rules.length > 0
       data.rules = []
       data.rules.push rule.serialize() for rule in @rules
-    console.log data
+    data
 
+  deserialize: (data) ->
+    for property of data
+      if @hasOwnProperty(property) && @[property].hasOwnProperty("deserialize") && typeof @[property].deserialize == "function"
+        @[property] = @[property].deserialize property
+      else
+        $(@[property]).val data[property]
+
+    if data.hasOwnProperty 'rules'
+      rule = new Rule()
+      for r in data.rules
+        @rules.push rule.deserialize r
+      $(@recurrenceButton).removeClass('active').click()
+
+    return @

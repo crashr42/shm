@@ -2,108 +2,141 @@ Classes = exports ? this
 $ = jQuery
 
 class Classes.ByNumber
-  constructor: (@numbers, @title) ->
-    @elements = @elements ? []
+  constructor: (@numbers, @key_name) ->
+    @numbers = @numbers ? []
+    @elements = []
     @excludeFrequencies = @excludeFrequencies ? []
-    @createBody()
 
-  hide: (element) ->
+  getValue: (key) ->
+    return key if @numbers instanceof Array
+    return @numbers[key] if typeof @numbers == 'object' && @numbers.hasOwnProperty key
+
+  allowElement: (key) ->
+    (@numbers instanceof Array && @numbers.indexOf(key) >= 0) || (typeof(@numbers) == 'object' && @numbers.hasOwnProperty key)
+
+  addElement: (element) ->
+    element = parseInt element
+    throw {message: "already_exists"} if @checkExits element
+    throw {message: "element_not_alowed"} unless @allowElement element
+    @elements.push element
+
+  removeElement: (element) ->
+    element = parseInt(element) if @elements instanceof Array
+    @elements.splice(@elements.indexOf(element), 1) if @checkExits element
+
+  checkExits: (element) ->
+    @elements.indexOf(element) >= 0
+
+  serialize: ->
+    data = {}
+    eval('data.' + @key_name + '=this.elements')
+    return data
+
+  deserialize: (data) ->
+    @datas = data[@key_name] ? []
+    for d in @datas
+      @addElement d
+    return @
+
+class Classes.ByNumberRenderer
+  render: (@data) ->
+    unless @data instanceof ByNumber
+      throw
+        message: 'instance_type_not_alowed'
+
+    @_createBody()
+    @_renderElements()
+
+    return @body
+
+  _hide: (element) ->
     $(element).addClass('hide').removeClass('active')
 
-  show: (element) ->
+  _show: (element) ->
     $(element).addClass('active').removeClass('hide')
 
-  createBody: ->
+  _createBody: ->
     @body = $('<div></div>')
-    @addButton =
-      $('<button class="btn btn-success">Add value</button>').
-      click({obj: @}, @addButtonClick)
+    @addButton =$('<button class="btn btn-success">Add value</button>').click({obj: @}, @_addButtonClick)
     @elementsContainer = $('<div class="well-small"></div>')
-    @hide @elementsContainer
-    @element =
-      $('<button class="btn btn-primary"></button>')
+    @_hide @elementsContainer
+    @element = $('<button class="btn btn-primary"></button>')
     @enterValue = $('<input type="text">')
     @helpBlock = $('<p class="help-block"></p>').text(@helpMessage)
     $(@body).append(@elementsContainer, @enterValue, @addButton, @helpBlock)
 
-  addElement: (element) ->
-    unless @checkExits element
-      if @numbers.indexOf(parseInt($(element).val())) >= 0
-        @elements.push $(element).val()
-        $(@elementsContainer).append element
-        @show @elementsContainer
-      else
-        alert @validationMessage
-    else
-      alert "Element already exists"
+  _renderElements: ->
+    for element in @data.elements
+      $(@elementsContainer).append(@_createElement(element))
 
-  removeElement: (element) ->
-    if @checkExits element
-      @elements.splice(@elements.indexOf($(element).val()), 1)
-      $(element).remove()
-    @hide @elementsContainer if @elements.length == 0
+  _createElement: (element) ->
+    $(@element).clone().text(element).val(element).click({obj: @}, @_elementClick)
 
-  checkExits: (element) ->
-    @elements.indexOf($(element).val()) != -1
+  _addElement: (element) ->
+    value = $(@enterValue).val()
+    try
+      @data.addElement value
+      @_createElement value
+      @_show @elementsContainer
+      $(@enterValue).removeClass('error')
+    catch e
+      $(@enterValue).addClass('error')
 
-  addButtonClick: (event) ->
-    obj = event.data.obj
-    value = $(obj.enterValue).val()
-    element = $(obj.element).
-    clone().
-    text(value).
-    val(value).
-    click({obj: obj}, obj.elementClick)
-    obj.addElement element
+  _removeElement: (element) ->
+    @data.removeElement $(element).val()
+    $(element).remove()
+    @_hide @elementsContainer if @data.elements.length == 0
 
-  elementClick: (event) ->
-    event.data.obj.removeElement @
+  _addButtonClick: (event) ->
+    event.data.obj._addElement @
 
-  serialize: ->
-    @elements
+  _elementClick: (event) ->
+    event.data.obj._removeElement @
 
 class Classes.BySecond extends ByNumber
   constructor: (@key = 'seconds') ->
-    @validationMessage = 'Seconds must be from 1 to 59 include.'
-    @helpMessage = @validationMessage
     super [1...60], 'seconds'
 
 class Classes.ByMinute extends ByNumber
   constructor: (@key = 'minutes') ->
-    @validationMessage = 'Minutes must be from 1 to 59 include.'
-    @helpMessage = @validationMessage
     super [1...60], 'minutes'
 
 class Classes.ByHour extends ByNumber
-  constructor: ->
-    @validationMessage = 'Hours must be from 1 to 23 include.'
-    @helpMessage = @validationMessage
+  constructor: (@key = 'hours') ->
     super [1...24], 'hours'
 
 class Classes.ByMonthDay extends ByNumber
   constructor: (@key = 'month_days') ->
-    @validationMessage = 'Month days must be from -31 to 31 include, exclude 0.'
-    @helpMessage = @validationMessage
     @excludeFrequencies = ['WEEKLY']
     super [-31...0].concat([1...32]), 'month_days'
 
 class Classes.ByYearDay extends ByNumber
-  constructor: (@key = 'days') ->
+  constructor: (@key = 'year_days') ->
     @excludeFrequencies = ['DAILY', 'WEEKLY', 'MONTHLY']
-    @validationMessage = 'Year days must be from -366 to 366 include, exclude 0.'
-    @helpMessage = @validationMessage
-    super [-366...0].concat([1...367]), 'days'
+    super [-366...0].concat([1...367]), 'year_days'
 
 class Classes.ByWeekNumber extends ByNumber
   constructor: (@key = 'weeks') ->
     @excludeFrequencies = ['SECONDLY', 'MINUTELY', 'HOURLY', 'DAILY', 'WEEKLY', 'MONTHLY']
-    @validationMessage = 'Seconds must be from 1 to 53 include.'
-    @helpMessage = @validationMessage
     super [1...54], 'weeks'
 
 class Classes.ByPosition extends ByNumber
   constructor: (@key = 'positions') ->
-    @validationMessage = 'Seconds must be from 1 to 366 include.'
-    @helpMessage = @validationMessage
     super [1...367], 'positions'
 
+class Classes.ByMonth extends ByNumber
+  constructor: (@key = 'months') ->
+    months =
+      1:  "January"
+      2:  "February"
+      3:  "March"
+      4:  "April"
+      5:  "May"
+      6:  "June"
+      7:  "July"
+      8:  "August"
+      9:  "September"
+      10: "October"
+      11: "November"
+      12: "December"
+    super months, 'months'
