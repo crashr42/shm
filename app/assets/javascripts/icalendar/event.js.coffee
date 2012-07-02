@@ -12,8 +12,11 @@ $.fn.extend
       console?.log msg if settings.debug
 
     return @each ()->
-      event = new Event()
-      $(@).append event.body
+#      event = new Event()
+#      $(@).append event.body
+      m = new BySecond()
+      r = new ByNumberRenderer()
+      $(@).append(r.render(m))
 
 class Classes.Event extends Element
   constructor: ->

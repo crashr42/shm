@@ -29,6 +29,7 @@ describe 'ByNumber', ->
     number = new ByNumber({1:'January', 2:'Febriary'}, 'key')
     number.addElement(1)
     expect(number.elements.length).toEqual(1)
+    expect(number.numbers).toEqual({1:'January', 2:'Febriary'})
 
   it 'work with object, duplicate element', ->
     number = new ByNumber({1:'January', 2:'Febriary'}, 'key')

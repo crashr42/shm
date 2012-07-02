@@ -24,10 +24,10 @@ describe 'ByNumberRenderer', ->
   it 'should be add element', ->
     number = new ByNumber([1, 2, 3], 'key')
     renderer = new ByNumberRenderer()
-    $(renderer.render number)
+    renderer.render number
     $(renderer.enterValue).val(1)
     $(renderer.addButton).click()
-    expect($(renderer.render number).find('button[class="btn btn-primary"]').length).toEqual(1)
+    expect($(renderer.elementsContainer).find('button[class="btn btn-primary"]').length).toEqual(1)
     expect(number.elements.length).toEqual(1)
 
   it 'should be not add element', ->

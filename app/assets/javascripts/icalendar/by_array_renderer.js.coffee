@@ -5,7 +5,7 @@ class Classes.ByArrayRenderer
   render: (@data) ->
     unless @data instanceof ByNumber
       throw
-      message: 'instance_type_not_alowed'
+        message: 'instance_type_not_alowed'
 
     @_createBody()
     @_renderElements()
@@ -24,15 +24,17 @@ class Classes.ByArrayRenderer
     @_hide @elementsContainer
     @element = $('<button class="btn btn-primary"></button>')
     @elementsSelector = $('<select></select>')
-    $(@elementsSelector).append($('<option></option>').val(key).text(value)) for key, value of @data
+    $(@elementsSelector).append($('<option></option>').val(key).text(value)) for key, value of @data.numbers
     @helpBlock = $('<p class="help-block"></p>').text(@helpMessage)
     $(@body).append(@elementsContainer, @elementsSelector, @addButton, @helpBlock)
 
   _renderElements: ->
     for element in @data.elements
-      el = @_createElement(element)
+      key = element
+      value = @data.getValue key
+      el = @_createElement(key, value)
       $(@elementsContainer).append(el)
-      $(@elementsSelector).find("option[value=#{value}]").addClass('hide')
+      $(@elementsSelector).find("option[value=#{key}]").addClass('hide')
       if $(@elementsSelector).find('option:not(.hide)').length != 0
         $(@elementsSelector).find('option:not(.hide):first').attr('selected', 'selected')
       else
@@ -41,12 +43,13 @@ class Classes.ByArrayRenderer
       @_show @elementsContainer
 
   _addElement: ->
-    value = $(obj.elementsSelector).find(':selected').val()
+    key = $(@elementsSelector).find('option:selected').val()
+    value = @data.getValue key
     try
-      @data.addElement value
-      element = @_createElement value
+      @data.addElement key
+      element = @_createElement key, value
       $(@elementsContainer).append element
-      $(@elementsSelector).find("option[value=#{value}]").addClass('hide')
+      $(@elementsSelector).find("option[value=#{key}]").addClass('hide')
       if $(@elementsSelector).find('option:not(.hide)').length != 0
         $(@elementsSelector).find('option:not(.hide):first').attr('selected', 'selected')
       else
@@ -55,8 +58,8 @@ class Classes.ByArrayRenderer
       @_show @elementsContainer
     catch e
 
-  _createElement: (value) ->
-    $(obj.element).clone().text(@data.getValue(value)).val(value).click({obj: @}, @_elementClick)
+  _createElement: (key, value) ->
+    $(@element).clone().text(value).val(key).click({obj: @}, @_elementClick)
 
   _removeElement: (element) ->
     @data.removeElement $(element).val()
@@ -67,7 +70,7 @@ class Classes.ByArrayRenderer
     @_hide @elementsContainer if @data.elements.length == 0
 
   _addButtonClick: (event) ->
-    event.data.obj._addElement
+    event.data.obj._addElement()
 
   _elementClick: (event) ->
     event.data.obj._removeElement @
