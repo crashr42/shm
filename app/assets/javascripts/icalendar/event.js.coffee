@@ -14,8 +14,10 @@ $.fn.extend
     return @each ()->
 #      event = new Event()
 #      $(@).append event.body
-      m = new BySecond()
-      r = new ByNumberRenderer()
+      m = new ByWeekDays()
+      m.addElement 1, 1
+      m.addElement 1, 2
+      r = new ByArrayNumberRenderer()
       $(@).append(r.render(m))
 
 class Classes.Event extends Element
