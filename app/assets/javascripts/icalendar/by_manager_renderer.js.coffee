@@ -82,7 +82,6 @@ class Classes.ByManagerRenderer
     @tabHeader = $('<ul class="nav nav-tabs"></ul>').addClass('hide')
     @tabBody = $('<div class="tab-content"></div>')
     for key, part of @parts
-#      id = @_randomString()
       $(@tabHeader).append(
         $('<li></li>').addClass('hide', key).
         append($('<a></a>').
