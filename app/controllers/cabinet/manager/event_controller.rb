@@ -6,9 +6,11 @@ class Cabinet::Manager::EventController < Cabinet::ManagerController
     @event.summary = "Tratata"
 
     @rule = RecurrenceRule.new
-    @rule.frequency = :yearly
+    @rule.frequency = :minutely
     @rule.count = 1
     @rule.event = @event
+    @rule.seconds = [1, 2, 4]
+    @rule.week_days = %w{1_1 2_3}
 
     @result = @event
     @result[:rules] = [@rule]

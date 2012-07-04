@@ -1,7 +1,7 @@
 describe 'ByNumberRenderer', ->
   it 'render only ByNumber instance', ->
     renderer = new ByNumberRenderer()
-    expect(-> renderer.render new ByWeekDays()).toThrow({message: 'instance_type_not_alowed'})
+    expect(-> renderer.render new ByArrayNumber()).toThrow({message: 'instance_type_not_alowed'})
 
   it 'should be restore state', ->
     number = new ByNumber([1, 2, 3], 'key')

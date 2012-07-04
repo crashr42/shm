@@ -9,7 +9,7 @@ describe 'ByArrayNumber', ->
       5: "Friday"
       6: "Saturday"
       7: "Sunday"
-    @n = new ByArrayNumber days, [-53...0].concat([1...54]), 'week_days'
+    @n = new ByArrayNumber days, [-53...0].concat([1...54])
 
   it 'must be add element', ->
     @n.addElement 1, 1
@@ -33,8 +33,8 @@ describe 'ByArrayNumber', ->
     @n.addElement 1, 1
     @n.addElement 1, 2
     @n.addElement 2, 1
-    expect(@n.serialize()).toEqual({week_days: ['1_1', '1_2', '2_1']})
+    expect(@n.serialize()).toEqual(['1_1', '1_2', '2_1'])
 
   it 'deserialization test', ->
-    @n.deserialize {week_days: ['1_1', '1_2', '2_1']}
+    @n.deserialize ['1_1', '1_2', '2_1']
     expect(@n.elements).toEqual(['1_1', '1_2', '2_1'])

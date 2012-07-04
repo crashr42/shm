@@ -2,9 +2,8 @@ Classes = exports ? this
 $ = jQuery
 
 class Classes.ByArrayNumber
-  constructor: (@data, @numbers, @key_name) ->
+  constructor: (@data, @numbers) ->
     @elements = []
-    @excludeFrequencies = @excludeFrequencies ? []
 
   getValue: (key) ->
     return @data[key]
@@ -25,26 +24,9 @@ class Classes.ByArrayNumber
     @elements.indexOf([key1, key2].join('_')) >= 0
 
   serialize: ->
-    data = {}
-    eval('data.' + @key_name + '=this.elements')
-    return data
+    @elements
 
   deserialize: (data) ->
-    @datas = data[@key_name] ? []
     @elements = []
-    for d in @datas
-      keys = d.split('_')
-      @addElement keys[0], keys[1]
+    @addElement d.split('_')[0], d.split('_')[1] for d in data
     return @
-
-class Classes.ByWeekDays extends ByArrayNumber
-  constructor: (@key = 'week_days') ->
-    days =
-      1: "Monday"
-      2: "Tuesday"
-      3: "Wednesday"
-      4: "Thursday"
-      5: "Friday"
-      6: "Saturday"
-      7: "Sunday"
-    super days, [-53...0].concat([1...54]), 'week_days'
