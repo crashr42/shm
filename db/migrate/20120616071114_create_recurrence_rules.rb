@@ -19,6 +19,9 @@ class CreateRecurrenceRules < ActiveRecord::Migration
       t.string  :position                                         # bysplist
       t.string  :week_start, :null => false, :default => 'monday' # wkst
 
+      t.integer :fact_count
+      t.boolean :active
+
       t.timestamps
     end
 
