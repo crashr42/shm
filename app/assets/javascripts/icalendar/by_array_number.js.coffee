@@ -27,6 +27,7 @@ class Classes.ByArrayNumber
     @elements
 
   deserialize: (data) ->
+    throw {message: 'not_alowef_type'} if typeof object == undefined || object == null
     @elements = []
     @addElement d.split('_')[0], d.split('_')[1] for d in data
     return @
