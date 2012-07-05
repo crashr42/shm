@@ -29,8 +29,8 @@ class Classes.ByNumber
   serialize: ->
     @elements
 
-  deserialize: (data) ->
+  deserialize: (object) ->
     throw {message: 'not_alowef_type'} if typeof object == undefined || object == null
     @elements = []
-    @addElement d for d in data
+    @addElement d for d in object
     return @

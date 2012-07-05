@@ -68,9 +68,9 @@ class Classes.ByManager
         data[key] = part.object.serialize()
     return data
 
-  deserialize: (data) ->
+  deserialize: (object) ->
     throw {message: 'not_alowef_type'} if typeof object == undefined || object == null
-    for key, part of data
+    for key, part of object
       if @getAllParts().hasOwnProperty key
         @getAllParts()[key].object.deserialize part if part != null
     return @

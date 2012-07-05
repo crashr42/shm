@@ -2,13 +2,14 @@ Classes = exports ? this
 $ = jQuery
 
 $(document).ready ->
-  e = new Event()
-  e.deserialize(data)
-  console.log(e)
-  console.log(e.serialize())
-#  r = new ByManagerRenderer()
-#  r.render new ByManager()
-#  $('#irrule').append(r.body)
+#  e = new Event()
+#  e.deserialize(data)
+#  console.log(e)
+#  console.log(e.serialize())
+  r = new RuleRenderer()
+  window.rule = new Rule()
+  r.render window.rule
+  $('#irrule').append(r.body)
 
 
 class Classes.Event

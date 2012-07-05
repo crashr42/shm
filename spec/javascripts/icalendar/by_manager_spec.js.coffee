@@ -10,7 +10,9 @@ describe 'ByManager', ->
     expect(@m.getParts().hasOwnProperty('weeks')).toEqual(false)
 
   it 'serialization test', ->
+    @m.setFrequency 'YEARLY'
     parts = @m.getParts()
+    console.log parts
     parts.seconds.addElement 1
     parts.minutes.addElement 2
     parts.hours.addElement 3
