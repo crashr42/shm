@@ -32,16 +32,19 @@ class Classes.ByManagerRenderer
         title: 'Week days'
         renderer: new ByArrayNumberRenderer()
 
-  setFrequency: (@frequency) ->
+  setFrequency: (frequency) ->
 
   render: (object) ->
+    @setFrequency = (frequency) ->
+      object.setFrequency(frequency)
+
     @parts = object.getParts()
     @_createSelector()
     @_createTabs()
-    label = $('<label class="control-label">Parts</label>')
+    @label = $('<label class="control-label">Parts</label>')
     @body = $('<div></div>').append(
       @_groupping(
-        label,
+        @label,
         @selector
       ),
       @_groupping(
@@ -52,16 +55,16 @@ class Classes.ByManagerRenderer
     return @body
 
   _groupping: (label, controls...)->
-    @group = $('<div class="control-group"></div>').append(label)
-    @controlsGroup = $('<div class="controls"></div>')
-    @controlsGroup.append control for control in controls
-    @group.append @controlsGroup
-    return @group
+    group = $('<div class="control-group"></div>').append(label)
+    controlsGroup = $('<div class="controls"></div>')
+    controlsGroup.append control for control in controls
+    group.append controlsGroup
+    return group
 
-  hide: (element) ->
+  _hide: (element) ->
     $(element).addClass('hide').removeClass('active')
 
-  show: (element) ->
+  _show: (element) ->
     $(element).removeClass('hide')
 
   _createSelector: ->
@@ -107,14 +110,14 @@ class Classes.ByManagerRenderer
     body = $(obj.tabBody).find('#by-part-' + $(@).attr('data-part'))
     if $(@).hasClass('active')
       active = $(tab).parent().hasClass('active')
-      obj.hide $(tab).parent()
-      obj.hide body
+      obj._hide $(tab).parent()
+      obj._hide body
       $(obj.tabHeader).find('li:not(.hide):first a').tab('show') if active
-      obj.hide obj.tabHeader if $(obj.tabHeader).find('li:not(.hide)').length == 0
+      obj._hide obj.tabHeader if $(obj.tabHeader).find('li:not(.hide)').length == 0
     else
-      obj.show $(tab).tab('show').parent()
-      obj.show body
-      obj.show obj.tabHeader
+      obj._show $(tab).tab('show').parent()
+      obj._show body
+      obj._show obj.tabHeader
 
   _partIsActive: (key) ->
     $($(@buttonsGroup).find('button').get(key)).hasClass('active')

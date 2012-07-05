@@ -7,6 +7,7 @@ class Cabinet::Manager::EventController < Cabinet::ManagerController
 
     @rule = RecurrenceRule.new
     @rule.frequency = :minutely
+    @rule.interval = 1
     @rule.count = 1
     @rule.event = @event
     @rule.seconds = [1, 2, 4]

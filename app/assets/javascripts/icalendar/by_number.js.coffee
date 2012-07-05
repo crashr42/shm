@@ -30,6 +30,7 @@ class Classes.ByNumber
     @elements
 
   deserialize: (data) ->
+    throw {message: 'not_alowef_type'} if typeof object == undefined || object == null
     @elements = []
     @addElement d for d in data
     return @

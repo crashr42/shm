@@ -2,8 +2,10 @@ Classes = exports ? this
 $ = jQuery
 
 class Classes.ByManager
-  constructor: (@frequency = 'YEARLY') ->
-    @_all_parts =
+  frequencies = ["SECONDLY", "MINUTELY", "HOURLY", "DAILY", "WEEKLY", "MONTHLY", "YEARLY"]
+
+  constructor: ->
+    all_parts =
       seconds:
         object: new ByNumber([1...60])
       minutes:
@@ -22,7 +24,7 @@ class Classes.ByManager
       positions:
         object: new ByNumber([1...367])
       months:
-        object: new ByNumber(
+        object: new ByNumber
           1:  "January"
           2:  "February"
           3:  "March"
@@ -35,9 +37,8 @@ class Classes.ByManager
           10: "October"
           11: "November"
           12: "December"
-        )
       week_days:
-        object: new ByArrayNumber(
+        object: new ByArrayNumber
           1: "Monday"
           2: "Tuesday"
           3: "Wednesday"
@@ -45,26 +46,31 @@ class Classes.ByManager
           5: "Friday"
           6: "Saturday"
           7: "Sunday", [-53...0].concat([1...54])
-        )
+    @getAllParts = -> all_parts
 
-  setFrequency: (@frequency) ->
+  frequency = "YEARLY"
+  getFrequency: -> frequency
+  setFrequency: (f) ->
+    throw {message: 'frequency_not_alowed'} unless frequencies.indexOf(f.toUpperCase()) >= 0
+    frequency = f.toUpperCase()
 
   getParts: ->
     data = {}
-    for key, part of @_all_parts
-      unless part.hasOwnProperty('excludeFrequencies') && part.excludeFrequencies.indexOf(@frequency) >= 0
+    for key, part of @getAllParts()
+      unless part.hasOwnProperty('excludeFrequencies') && part.excludeFrequencies.indexOf(@getFrequency()) >= 0
         data[key] = part.object
     return data
 
   serialize: ->
     data = {}
-    for key, part of @_all_parts
-      unless part.hasOwnProperty('excludeFrequencies') && part.excludeFrequencies.indexOf(@frequency) >= 0
+    for key, part of @getAllParts()
+      unless part.hasOwnProperty('excludeFrequencies') && part.excludeFrequencies.indexOf(@getFrequency()) >= 0
         data[key] = part.object.serialize()
     return data
 
   deserialize: (data) ->
+    throw {message: 'not_alowef_type'} if typeof object == undefined || object == null
     for key, part of data
-      if @_all_parts.hasOwnProperty key
-        @_all_parts[key].object.deserialize part if part != null
+      if @getAllParts().hasOwnProperty key
+        @getAllParts()[key].object.deserialize part if part != null
     return @

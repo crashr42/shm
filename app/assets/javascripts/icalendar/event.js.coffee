@@ -2,13 +2,13 @@ Classes = exports ? this
 $ = jQuery
 
 $(document).ready ->
-#  e = new Event()
-#  e.deserialize(data)
-#  console.log(e)
-#  console.log(e.serialize())
-  r = new ByManagerRenderer()
-  r.render new ByManager()
-  $('#irrule').append(r.body)
+  e = new Event()
+  e.deserialize(data)
+  console.log(e)
+  console.log(e.serialize())
+#  r = new ByManagerRenderer()
+#  r.render new ByManager()
+#  $('#irrule').append(r.body)
 
 
 class Classes.Event
@@ -33,6 +33,7 @@ class Classes.Event
     time_end:     @time_end
 
   deserialize: (object) ->
+    throw {message: 'not_alowef_type'} if typeof object == undefined || object == null
     if object.hasOwnProperty('rules') && object.rules instanceof Array
       for rule in object.rules
         r = new Rule()
