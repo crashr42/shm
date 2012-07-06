@@ -66,6 +66,8 @@ class Classes.ByManager
     for key, part of @getAllParts()
       unless part.hasOwnProperty('excludeFrequencies') && part.excludeFrequencies.indexOf(@getFrequency()) >= 0
         data[key] = part.object.serialize()
+      else
+        data[key] = null
     return data
 
   deserialize: (object) ->
@@ -73,4 +75,7 @@ class Classes.ByManager
     for key, part of object
       if @getAllParts().hasOwnProperty key
         @getAllParts()[key].object.deserialize part if part != null
+    @onDeserialize(@)
     return @
+
+  onDeserialize: (object) ->

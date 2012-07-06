@@ -37,21 +37,15 @@ class Classes.ByManagerRenderer
   render: (object) ->
     @setFrequency = (frequency) ->
       object.setFrequency(frequency)
+      @render object
+    d = @
+    object.onDeserialize = (o) -> d.render o
 
     @parts = object.getParts()
     @_createSelector()
-    @_createTabs()
     @label = $('<label class="control-label">Parts</label>')
-    @body = $('<div></div>').append(
-      @_groupping(
-        @label,
-        @selector
-      ),
-      @_groupping(
-        null,
-        @tabs
-      )
-    )
+    @body = @body ? $('<div></div>')
+    $(@body).html('').append(@_groupping(@label, @selector), @_groupping(null, @tabs))
     return @body
 
   _groupping: (label, controls...)->
@@ -68,67 +62,40 @@ class Classes.ByManagerRenderer
     $(element).removeClass('hide')
 
   _createSelector: ->
-    @buttonsGroup = $('<div class="btn-group" data-toggle="buttons-checkbox">')
-    for key, part of @parts
-      $(@buttonsGroup).append(
-        $('<button class="btn btn-primary"></button>').
-        addClass(key).
-        attr({
-          'data-part': key
-          }).
-        text(@_renderers[key].title).
-        click({obj: @}, @_partClick)
-      )
-    @selector = $('<div></div>').append(@buttonsGroup)
-
-  _createTabs: ->
-    @tabHeader = $('<ul class="nav nav-tabs"></ul>').addClass('hide')
+    @buttonsGroup = $('<div class="btn-group">')
+    @tabHeader = $('<ul class="nav nav-tabs hide"></ul>')
     @tabBody = $('<div class="tab-content"></div>')
     for key, part of @parts
-      $(@tabHeader).append(
-        $('<li></li>').addClass('hide', key).
-        append($('<a></a>').
-        attr({
-          href: '#by-part-' + key,
-          'data-toggle': 'tab'
-          }).
-        text(@_renderers[key].title))
-      )
-      $(@tabBody).append(
-        $('<div class="tab-pane"></div>').
-        addClass('hide').
-        attr({
-          id: 'by-part-' + key
-          }).
-        append(@_renderers[key].renderer.render(part))
-      )
+      tab = $('<li></li>').append($('<a data-toggle="tab"></a>').attr({href: '#by-part-' + key}).text(@_renderers[key].title))
+      @_hide tab
+      $(@tabHeader).append tab
+
+      tabPanel = $('<div class="tab-pane"></div>').attr({id: 'by-part-' + key}).append(@_renderers[key].renderer.render(part))
+      @_hide tabPanel
+      $(@tabBody).append tabPanel
+
+      button = $('<button class="btn btn-primary"></button>').text(@_renderers[key].title).click({obj: @, tab: tab, tabPanel: tabPanel}, @_partClick)
+      $(@buttonsGroup).append button
+      $(button).click() if part.elements.length > 0
+    @selector = $('<div></div>').append(@buttonsGroup)
     @tabs = $('<div></div>').append(@tabHeader).append(@tabBody)
 
   _partClick: (event) ->
-    obj = event.data.obj
-    tab = $(obj.tabHeader).find('a[href=#by-part-' + $(@).attr('data-part') + ']')
-    body = $(obj.tabBody).find('#by-part-' + $(@).attr('data-part'))
-    if $(@).hasClass('active')
-      active = $(tab).parent().hasClass('active')
-      obj._hide $(tab).parent()
-      obj._hide body
-      $(obj.tabHeader).find('li:not(.hide):first a').tab('show') if active
-      obj._hide obj.tabHeader if $(obj.tabHeader).find('li:not(.hide)').length == 0
+    event.data.obj._selectTab @, event.data.tab, event.data.tabPanel
+
+  _selectTab: (button, tab, tabPanel) ->
+    if $(button).hasClass('active')
+      active = $(tab).hasClass('active')
+      @_hide tab
+      @_hide tabPanel
+      $(@tabHeader).find('li:not(.hide):first a').tab('show') if active
+      @_hide @tabHeader if $(@tabHeader).find('li:not(.hide)').length == 0
     else
-      obj._show $(tab).tab('show').parent()
-      obj._show body
-      obj._show obj.tabHeader
+      $(@tabBody).children('div').addClass('hide').removeClass('active')
+      @_show $(tabPanel).addClass('active')
+      @_show @tabHeader
+      @_show $(tab).find('a').tab('show').parent()
+    $(button).button('toggle')
 
   _partIsActive: (key) ->
     $($(@buttonsGroup).find('button').get(key)).hasClass('active')
-
-#  _bindFrequency: (frequency) ->
-#    $(frequency.select).change {obj: @}, (event) ->
-#      obj = event.data.obj
-#      for part in obj.parts
-#        if part.excludeFrequencies.indexOf($(@).val()) >= 0
-#          obj.hide $(obj.tabs).find('.' + part.key).first()
-#          obj.hide $(obj.selector).find('.' + part.key).first()
-#        else
-#          obj.show $(obj.selector).find('.' + part.key).first()
-#          $(obj.tabHeader).find('li:not(.hide):first a').tab('show')

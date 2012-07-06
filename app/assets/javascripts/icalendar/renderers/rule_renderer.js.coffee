@@ -3,14 +3,37 @@ $ = jQuery
 
 class Classes.RuleRenderer
   render: (@rule) ->
-    @body = $('<div></div>')
+    d = @
+    @rule.onDeserialize = (o) ->
+      d.render o
+
+    @body = $(@body ? $('<div></div>')).html('')
+    elements =
+      interval:
+        renderer: new TextRenderer()
+        text: 'Interval'
+      count:
+        renderer: new TextRenderer()
+        text: 'Count'
+      until:
+        renderer: new TextRenderer()
+        text: 'Until'
+    @managerRenderer = new ByManagerRenderer()
     @_renderFrequency()
-    @_renderInterval()
-    @_renderCount()
-    @_renderUntil()
+    @_renderElements(elements)
     @_renderManager()
 
     return @body
+
+  _renderElements: (elements) ->
+    for name, element of elements
+      $(@body).append element.renderer.render @rule['get' + element.text](), element.text
+      $(element.renderer.element).change {rule: @rule}, (event) ->
+        value = $(@).val()
+        try
+          event.data.rule['set' + element.text](value)
+        catch e
+          alert e.message
 
   _groupping: (label, controls...)->
     group = $('<div class="control-group"></div>').append(label)
@@ -20,53 +43,16 @@ class Classes.RuleRenderer
     return group
 
   _renderManager: ->
-    managerRenderer = new ByManagerRenderer()
-    $(@body).append(managerRenderer.render @rule.getByManager())
+    $(@body).append(@managerRenderer.render @rule.getByManager())
 
   _renderFrequency: ->
     selectRenderer = new SelectRenderer()
-    $(@body).append selectRenderer.render {secondly: 'Secondly', minutely:'Minutely'}, 'Frequency'
-    $(selectRenderer.select).change({rule: @rule}, @_bindFrequency)
+    $(@body).append selectRenderer.render ["SECONDLY", "MINUTELY", "HOURLY", "DAILY", "WEEKLY", "MONTHLY", "YEARLY"], 'Frequency'
+    $(selectRenderer.element).change({mr: @managerRenderer}, @_bindFrequency)
 
   _bindFrequency: (event) ->
     value = $(@).val()
     try
-      event.data.rule.setFrequency(value)
-    catch e
-      alert e.message
-
-  _renderInterval: ->
-    textRenderer = new TextRenderer()
-    $(@body).append textRenderer.render @rule.getInterval(), 'Interval'
-    $(textRenderer.element).change({rule: @rule}, @_bindInterval)
-
-  _bindInterval: (event) ->
-    value = $(@).val()
-    try
-      event.data.rule.setInterval(value)
-    catch e
-      alert e.message
-
-  _renderCount: ->
-    textRenderer = new TextRenderer()
-    $(@body).append textRenderer.render @rule.getCount(), 'Count'
-    $(textRenderer.element).change({rule: @rule}, @_bindCount)
-
-  _bindCount: (event) ->
-    value = $(@).val()
-    try
-      event.data.rule.setCount(value)
-    catch e
-      alert e.message
-
-  _renderUntil: ->
-    textRenderer = new TextRenderer()
-    $(@body).append textRenderer.render @rule.getUntil(), 'Until'
-    $(textRenderer.element).change({rule: @rule}, @_bindUntil)
-
-  _bindUntil: (event) ->
-    value = $(@).val()
-    try
-      event.data.rule.setUntil(value)
+      event.data.mr.setFrequency(value)
     catch e
       alert e.message

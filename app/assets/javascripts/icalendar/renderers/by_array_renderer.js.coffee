@@ -7,6 +7,10 @@ class Classes.ByArrayRenderer
       throw
         message: 'instance_type_not_alowed'
 
+    d = @
+    @data.onDeserialize = (object) ->
+      d.render object
+
     @_createBody()
     @_renderElements()
     return @body
@@ -18,7 +22,7 @@ class Classes.ByArrayRenderer
     $(element).addClass('active').removeClass('hide')
 
   _createBody: ->
-    @body = $('<div></div>')
+    @body = @body ? $('<div></div>')
     @addButton =$('<button class="btn btn-success">Add value</button>').click({obj: @}, @_addButtonClick)
     @elementsContainer = $('<div class="well-small"></div>')
     @_hide @elementsContainer
@@ -26,7 +30,7 @@ class Classes.ByArrayRenderer
     @elementsSelector = $('<select></select>')
     $(@elementsSelector).append($('<option></option>').val(key).text(value)) for key, value of @data.numbers
     @helpBlock = $('<p class="help-block"></p>').text(@helpMessage)
-    $(@body).append(@elementsContainer, @elementsSelector, @addButton, @helpBlock)
+    $(@body).html('').append(@elementsContainer, @elementsSelector, @addButton, @helpBlock)
 
   _renderElements: ->
     for element in @data.elements

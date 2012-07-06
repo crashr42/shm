@@ -56,3 +56,7 @@ class Classes.Rule
     @setUntil(object.until) if object.hasOwnProperty('until')
     @setCount(object.count )if object.hasOwnProperty('count')
     @getByManager().deserialize(object)
+    @onDeserialize(@)
+    return @
+
+  onDeserialize: (object) ->

@@ -9,8 +9,8 @@ class Classes.TextRenderer
     group.append controlsGroup
     return group
 
-  render: (text = @default, @title) ->
-    @element = $('<input type="text">').val(text)
+  render: (@text, @title) ->
+    @element = $('<input type="text">').val(@text)
     @label = $('<label class="control-label"></label>').text(@title)
     @body = $('<div></div>').append(@_groupping(@label, @element))
     return @body
