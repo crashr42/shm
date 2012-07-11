@@ -1,46 +1,34 @@
 Classes = exports ? this
 $ = jQuery
 
-$(document).ready ->
-#  body = (new Calendar()).createBody()
-#  $(document.body).append body
-
 class Classes.Calendar
-  createBody: ->
-    dr = new DateRange()
-    dateStart = new Date()
-    dateEnd = new Date()
-    dateEnd.setDate(dateStart.getDate() + 1)
-    table = dr.createTable(dateStart, dateEnd, new MinutesIncrement(15))
+  description = null
+  getDescription: -> description
+  setDescription: (d) -> description = d
 
-class Classes.DateRange
-  createTable: (from, to, incrementator) ->
-    table = $('<table class="table table-bordered table-striped"></table>')
-    while from < to
-      table.append $('<tr></tr>').append $('<td></td>').text from.toLocaleTimeString()
-      incrementator.step from
-    table
+  name = null
+  getName: -> name
+  setName: (n) -> name = n
 
-class Classes.MinutesIncrement
-  constructor: (@increment) ->
+  events = []
+  getEvents: -> events
+  addEvent: (e) -> events.push(e)
+  removeEvent: (e) -> events.splice(events.indexOf(e), 1)
 
-  step: (from) ->
-    from.setMinutes(from.getMinutes() + @increment)
+  serialize: ->
+    data =
+      name: @getName()
+      description: @getDescription()
+      events: []
 
-class Classes.HoursIncrement
-  constructor: (@increment) ->
+    data.events.push(e.serialize()) for e in events
+    return data
 
-  step: (from) ->
-    from.setHours(from.getHours() + @increment)
-
-class Classes.DayIncrement
-  constructor: (@increment) ->
-
-  step: (from) ->
-    from.setDate(from.getDate() + @increment)
-
-class Classes.MonthIncrement
-  constructor: (@increment) ->
-
-  step: (from) ->
-    from.setMonth(from.getMonth() + @increment)
+  deserialize: (object) ->
+    @setName(object.name) if object.hasOwnProperty('name')
+    @setDescription(object.description) if object.hasOwnProperty('description')
+    if object.hasOwnProperty('events') && object.events instanceof Array
+      for e in object.events
+        ev = new Classes.Event()
+        @addEvent(ev.deserialize(e))
+    return @
