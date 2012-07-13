@@ -46,14 +46,12 @@ class Classes.CalendarRenderer
           body: $('<div class="well"></div>')
           title:
             body: $('<h1>Calendar</h1>')
-          buttons:
+          events_menu:
             body: $('<div class="btn-group"></div>')
-            back:
-              body: $('<button class="btn btn-primary">Forward</button>')
+            new:
+              body: $('<button class="btn btn-success">New event</button>')
               events:
-                click: ->
-                  elements.calendar.body.hide()
-                  elements.editor.body.show()
+                click: -> elements.editor.methods.new_event()
       editor:
         body: $('<div class="hide"></div>')
         menu:
@@ -68,46 +66,73 @@ class Classes.CalendarRenderer
                 click: ->
                   elements.editor.body.hide()
                   elements.calendar.body.show()
-    @_renderDom(elements)
+        content:
+          body: $('<div></div>')
+        methods:
+          show: (hdate, vdate) ->
+            elements.editor.body.show()
+            elements.calendar.body.hide()
+          new_event: ->
+            e = new Classes.Event()
+            r = new Classes.EventRenderer()
+            elements.editor.content.body.html(r.render e)
+            elements.editor.methods.show(0, 0)
 
   render: (tabs) ->
-    dom =
-      body: $('<div></div>')
-      tabs: []
+    elements.calendar.tabs = []
+    elements.calendar.menu.buttons =
+      body: $('<div class="btn-group" data-toggle="buttons-radio"></div>')
     for tab in tabs
-      t =
-        body: $('<div></div>')
-        table:
-          body: $('<table class="table table-bordered table-striped"></table>')
-          tr: []
-      row_head = true
-      column_head = true
-      back_v_date_start = new Date(tab.v.date_start.getTime())
-      while back_v_date_start < tab.v.date_end
-        back_h_date_start = new Date(tab.h.date_start.getTime())
-        tr =
-          body: $('<tr></tr>')
-          td: []
-        while back_h_date_start < tab.h.date_end
-          tr.td.push {body: $('<td></td>')} if (column_head && row_head) || (!column_head && !row_head)
-          tr.td.push {body: $('<td></td>').text(tab.h.formatter(back_h_date_start))} if column_head && !row_head
-          tr.td.push {body: $('<td></td>').text(tab.v.formatter(back_v_date_start))} if !column_head && row_head
-          tab.h.stepper(back_h_date_start) unless row_head
-          row_head = false if row_head
-        tab.v.stepper(back_v_date_start) unless column_head
-        t.table.tr.push tr
-        column_head = false
+      do ->
+        t =
+          body: $('<div></div>').hide()
+          table:
+            body: $('<table class="table table-bordered table-striped"></table>')
+            tr: []
+        button =
+          body: $('<button class="btn btn-primary"></button>').text(tab.name)
+          events:
+            click: ->
+              unless button.body.hasClass('active')
+                tt.body.hide() for tt in elements.calendar.tabs
+                t.body.show()
+        elements.calendar.menu.buttons[tab.name] = button
         row_head = true
-      dom.tabs.push t
-      console.log dom
-    @_renderDom(dom)
+        column_head = true
+        back_v_date_start = new Date(tab.v.date_start.getTime())
+        while back_v_date_start < tab.v.date_end
+          do ->
+            back_h_date_start = new Date(tab.h.date_start.getTime())
+            tr =
+              body: $('<tr></tr>')
+              td: []
+            while back_h_date_start < tab.h.date_end
+              do ->
+                td =
+                  properties:
+                    hdate: new Date(back_h_date_start.getTime())
+                    vdate: new Date(back_v_date_start.getTime())
+                  events:
+                    click: -> elements.editor.methods.show td.properties.hdate, td.properties.vdate
+                td.body = $('<td></td>') if (column_head && row_head) || (!column_head && !row_head)
+                td.body = $('<td></td>').text(tab.h.formatter(back_h_date_start)) if column_head && !row_head
+                td.body = $('<td></td>').text(tab.v.formatter(back_v_date_start)) if !column_head && row_head
+                tr.td.push td
+                tab.h.stepper(back_h_date_start) unless row_head
+                row_head = false if row_head
+            tab.v.stepper(back_v_date_start) unless column_head
+            t.table.tr.push tr
+            column_head = false
+            row_head = true
+        elements.calendar.tabs.push t
+    @_renderDom(elements)
 
   body: -> elements.body
 
   _renderDom: (dom) ->
     body = @_findBody(dom)
     @_bindEvents(dom, body)
-    for n, p of dom when ['events', 'body'].indexOf(n) < 0
+    for n, p of dom when ['events', 'body', 'properties', 'methods'].indexOf(n) < 0
       body.append(@_renderDom(p)) unless p instanceof $ || p instanceof Array
       body.append(@_renderDom(e)) for e in p if p instanceof Array
     return body
