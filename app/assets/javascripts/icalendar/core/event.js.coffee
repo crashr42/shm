@@ -37,12 +37,14 @@ class Classes.Event
   getTimeEnd: -> time_end
   setTimeEnd: (te) -> time_end = te
 
-  constructor: ->
-    @rules = []
+  rules = []
+  getRules: -> rules
+  addRule: (r) -> rules.push r
+  removeRule: (r) -> rules.splice(rules.indexOf(r), 1)
 
   serialize: ->
     rls = []
-    rls.push rule.serialize() for rule in @rules
+    rls.push rule.serialize() for rule in rules
     rules: rls
     summary:      @getSummary()
     description:  @getDescription()
@@ -57,7 +59,7 @@ class Classes.Event
       for rule in object.rules
         r = new Rule()
         r.deserialize(rule)
-        @rules.push(r)
+        rules.push(r)
 
     @setSummary(object.summary) if object.hasOwnProperty('summary')
     @setDescription(object.description) if object.hasOwnProperty('description')

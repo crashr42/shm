@@ -49,7 +49,7 @@ class Classes.CalendarRenderer
           events_menu:
             body: $('<div class="btn-group"></div>')
             new:
-              body: $('<button class="btn btn-success">New event</button>')
+              body: $('<button class="btn btn-success" style="float: right;">New event</button>')
               events:
                 click: -> elements.editor.methods.new_event()
       editor:
@@ -80,8 +80,8 @@ class Classes.CalendarRenderer
 
   render: (tabs) ->
     elements.calendar.tabs = []
-    elements.calendar.menu.buttons =
-      body: $('<div class="btn-group" data-toggle="buttons-radio"></div>')
+    elements.calendar.menu.events_menu.buttons =
+      body: $('<div class="btn-group" style="float: left;" data-toggle="buttons-radio"></div>')
     for tab in tabs
       do ->
         t =
@@ -96,7 +96,7 @@ class Classes.CalendarRenderer
               unless button.body.hasClass('active')
                 tt.body.hide() for tt in elements.calendar.tabs
                 t.body.show()
-        elements.calendar.menu.buttons[tab.name] = button
+        elements.calendar.menu.events_menu.buttons[tab.name] = button
         row_head = true
         column_head = true
         back_v_date_start = new Date(tab.v.date_start.getTime())

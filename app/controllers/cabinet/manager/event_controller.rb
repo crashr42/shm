@@ -1,4 +1,7 @@
 class Cabinet::Manager::EventController < Cabinet::ManagerController
+
+  layout 'cabinet/manager/event'
+
   def index
     @event = Event.new
     @event.date_start = DateTime.now
