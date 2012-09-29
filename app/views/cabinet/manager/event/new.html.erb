@@ -1,61 +1,59 @@
-<div class="container">
-  <%= form_tag({:controller => :event, :action => :new}, :class => 'form-horizontal') do %>
-      <div class="control-group">
-        <label class="control-label">User</label>
+<%= form_tag({:controller => :event, :action => :new}, :class => 'form-horizontal') do %>
+  <div class="control-group">
+    <label class="control-label">User</label>
 
-        <div class="controls">
-          <div id="selected-user">
+    <div class="controls">
+      <button type="button" id="select-user" class="btn btn-primary">Select user</button>
+      <div id="selected-user" style="padding: 8px; font-size: 18px;">
 
-          </div>
-          <button type="button" id="select-user" class="btn btn-primary">Select user</button>
-        </div>
       </div>
-      <div class="control-group">
-        <label class="control-label">Category</label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Category</label>
 
-        <div class="controls">
-          <select name="event[category]" id="category">
-            <% Event.categories.each do |c| %>
-                <option value="<%= c %>"><%= t "event.categories.#{c}" %></option>
-            <% end %>
-          </select>
-        </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label">Date start</label>
+    <div class="controls">
+      <select name="event[category]" id="category">
+        <% Event.categories.each do |c| %>
+            <option value="<%= c %>"><%= t "event.categories.#{c}" %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Date start</label>
 
-        <div class="controls">
-          <input type="text" name="event[date_start]" id="date_start" class="datepicker" placeholder="date">
-          <input type="text" name="event[time_start]" id="time_start" class="timepicker" placeholder="time">
-        </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label">Date end</label>
+    <div class="controls">
+      <input type="text" name="event[date_start]" id="date_start" class="datepicker" placeholder="date">
+      <input type="text" name="event[time_start]" id="time_start" class="timepicker" placeholder="time">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Date end</label>
 
-        <div class="controls">
-          <input type="text" name="event[date_end]" id="date_end" class="datepicker" placeholder="date">
-          <input type="text" name="event[time_end]" id="time_end" class="timepicker" placeholder="time">
-        </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label">Summary</label>
+    <div class="controls">
+      <input type="text" name="event[date_end]" id="date_end" class="datepicker" placeholder="date">
+      <input type="text" name="event[time_end]" id="time_end" class="timepicker" placeholder="time">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Summary</label>
 
-        <div class="controls">
-          <input type="text" name="event[summary]" id="summary" placeholder="summary">
-        </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label">Description</label>
+    <div class="controls">
+      <input type="text" name="event[summary]" id="summary" placeholder="summary">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Description</label>
 
-        <div class="controls">
-          <textarea name="event[description]" id="description" placeholder="description"></textarea>
-        </div>
-      </div>
-      <div class="form-actions">
-        <button class="btn" type="submit">Create</button>
-      </div>
-  <% end %>
-</div>
+    <div class="controls">
+      <textarea name="event[description]" id="description" placeholder="description"></textarea>
+    </div>
+  </div>
+  <div class="form-actions">
+    <button class="btn" type="submit">Create</button>
+  </div>
+<% end %>
 
 <div class="modal hide fade" id="modal-select-user">
   <div class="modal-header">
