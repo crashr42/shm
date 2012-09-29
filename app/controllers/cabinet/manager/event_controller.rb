@@ -27,7 +27,7 @@ class Cabinet::Manager::EventController < Cabinet::ManagerController
   end
 
   def find
-    @calendars = Calendar.where('name like ?', "%#{params[:name]}%")
+    @calendars = Calendar.where('name like ?', "%#{params[:name]}%").limit(10)
 
     render :layout => false
   end
