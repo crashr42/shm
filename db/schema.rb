@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120929053141) do
+ActiveRecord::Schema.define(:version => 20120929110755) do
 
   create_table "calendars", :force => true do |t|
     t.integer  "user_id"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20120929053141) do
     t.integer  "calendar_id"
     t.integer  "user_id"
     t.date     "date_start",                           :null => false
-    t.time     "time_start",                           :null => false
+    t.time     "time_start"
     t.string   "description"
     t.string   "status",      :default => "CONFIRMED", :null => false
     t.string   "summary",                              :null => false
