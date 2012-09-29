@@ -14,11 +14,17 @@ class User < ActiveRecord::Base
   def self.current
     Thread.current[:user]
   end
+
   def self.current=(user)
     Thread.current[:user] = user
   end
 
   def role?(name)
     self.roles.find_by_name(name)
+  end
+
+  # заглушка - релизовать согласно задаче #26 Поиск подходящих событий
+  def find_events_by_date(date)
+    events.where('date_start between ? and ?', DateTime.parse("#{date.year}-#{date.month}-#{date.day} 00:00:00"), DateTime.parse("#{date.year}-#{date.month}-#{date.day} 23:59:59 order by date_start"))
   end
 end
