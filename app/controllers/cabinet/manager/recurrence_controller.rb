@@ -6,6 +6,8 @@ class Cabinet::Manager::RecurrenceController < ApplicationController
     if request.post?
       rule = RecurrenceRule.new params[:rule]
       rule.save!
+
+      redirect_to :controller => :recurrence, :action => :new
     end
   end
 
