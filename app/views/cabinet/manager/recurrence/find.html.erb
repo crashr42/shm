@@ -1,0 +1,13 @@
+<% @events.each do |e| %>
+    <div class="event-info-block">
+      <div class="pull-right">
+        <button class="btn select-find-event">Select</button>
+      </div>
+      <div class="pull-left">
+        <div class="event-info">
+          <%= e.summary %>
+          <input type="hidden" name="rule[event_id]" value="<%= e.id %>">
+        </div>
+      </div>
+    </div>
+<% end %>

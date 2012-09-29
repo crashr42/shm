@@ -1,30 +1,12 @@
 class RecurrenceRule < ActiveRecord::Base
   belongs_to :event
 
-  attr_protected :created_at, :hours, :minutes, :month_days, :months,
-                 :position, :seconds, :updated_at, :week_days, :weeks, :year_days
+  attr_protected :created_at, :updated_at, :id
 
-  %w{
-    seconds minutes hours week_days
-    month_days year_days weeks months position
-  }.each do |p|
-    define_method "add_#{p.chomp('s')}" do |value|
-      eval """
-        self.#{p} = '' unless self.#{p}
-        unless self.#{p}.split(',').include?(#{value}.to_s)
-          self.#{p} = self.#{p}.split(',').push(#{value}).join(',')
-        end
-      """
-    end
+  validates_inclusion_of :frequency, :in => %w{yearly monthly weekly daily hourly}
 
-    define_method "remove_#{p.chomp('s')}" do |value|
-      eval """
-        self.#{p} = '' unless self.#{p}
-        s = self.#{p}.split(',')
-        s.delete(#{value}.to_s)
-        self.#{p} = s == '' ? nil : s.join(',')
-      """
-    end
+  def self.frequencies
+    %w{yearly monthly weekly daily hourly}
   end
 
 end

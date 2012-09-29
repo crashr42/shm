@@ -34,6 +34,8 @@ Shm::Application.routes.draw do
       match '/event' => 'event#index'
       match '/event/new' => 'event#new'
       match '/event/find' => 'event#find'
+      match '/rule/new' => 'recurrence#new'
+      match '/rule/find' => 'recurrence#find'
     end
   end
 

@@ -3,12 +3,21 @@
 //= require twitter/bootstrap
 //= require_tree .
 
-$('.datepicker').datepicker({
-    format: 'dd.mm.yyyy',
-    weekStart: 1,
-    todayBtn: true,
-    todayHighlight: true,
-    autoclose: true
-}).keydown(function() { return false });
+function bind_datepicker() {
+    $('.datepicker').datepicker({
+        format:'dd.mm.yyyy',
+        weekStart:1,
+        todayBtn:true,
+        todayHighlight:true,
+        autoclose:true
+    }).keydown(function () {
+            return false
+        });
+}
 
-$('.timepicker').timepicker();
+function bind_timepicker() {
+    $('.timepicker').timepicker();
+}
+
+bind_datepicker();
+bind_timepicker();

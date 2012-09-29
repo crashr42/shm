@@ -1,0 +1,25 @@
+// Place all the styles related to the cabinet/manager/event controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.form-search-large {
+  margin: 5px;
+}
+
+.form-search-large input[type=text] {
+  font-size: 18px;
+  padding: 8px;
+  width: 97%;
+}
+
+.event-info-block {
+  height: 27px;
+  font-size: 16px;
+  padding: 5px;
+  border: 1px solid #EEEEEE;
+}
+
+#event-list {
+  overflow-y: auto;
+  max-height: 300px;
+}

@@ -1,0 +1,10 @@
+en:
+  recurrence_rule:
+    frequencies:
+      yearly:   Yearly
+      monthly:  Monthly
+      weekly:   Weekly
+      daily:    Daily
+      hourly:   Hourly
+      minutely: Minutely
+      secondly: Secondly
