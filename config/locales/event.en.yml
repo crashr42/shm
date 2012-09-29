@@ -1,0 +1,5 @@
+en:
+  event:
+    categories:
+      appointment: Appointment
+      appointment_hour: Appointment hour

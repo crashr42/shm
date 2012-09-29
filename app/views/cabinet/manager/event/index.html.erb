@@ -1,6 +1,4 @@
-<div class="json-event">
-  <script type="text/javascript">
-      window.data = <%= @result.to_json.html_safe %>;
-  </script>
+<div class="container">
+  <h2>Manage events</h2>
+  <%= link_to 'Add event', :controller => :event, :action => :new %>
 </div>
-<div id="irrule" class="form-horizontal"></div>

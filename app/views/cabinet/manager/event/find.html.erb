@@ -1,0 +1,14 @@
+<% @calendars.each do |c| %>
+    <div class="user-info-block">
+      <div class="pull-right">
+        <button class="btn select-find-user">Select</button>
+      </div>
+      <div class="pull-left">
+        <div class="user-info">
+          <%= c.user.email %>
+          <input type="hidden" name="event[user_id]" value="<%= c.user.id %>">
+          <input type="hidden" name="event[calendar_id]" value="<%= c.id %>">
+        </div>
+      </div>
+    </div>
+<% end %>

@@ -32,6 +32,8 @@ Shm::Application.routes.draw do
       root :to => 'index#index'
       match '/' => 'index#index'
       match '/event' => 'event#index'
+      match '/event/new' => 'event#new'
+      match '/event/find' => 'event#find'
     end
   end
 

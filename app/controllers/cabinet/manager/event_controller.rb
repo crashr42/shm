@@ -1,12 +1,9 @@
 class Cabinet::Manager::EventController < Cabinet::ManagerController
-
-  layout 'cabinet/manager/event'
-
   def index
     @event = Event.new
     @event.date_start = DateTime.now
     @event.date_end = DateTime.now + 1.month
-    @event.summary = "Tratata"
+    @event.summary = "Some summary"
 
     @rule = RecurrenceRule.new
     @rule.frequency = :weekly
@@ -18,5 +15,20 @@ class Cabinet::Manager::EventController < Cabinet::ManagerController
 
     @result = @event
     @result[:rules] = [@rule]
+  end
+
+  def new
+    if request.post?
+      event = Event.new params[:event]
+      event.save!
+
+      redirect_to :controller => :event, :action => :new
+    end
+  end
+
+  def find
+    @calendars = Calendar.where('name like ?', "%#{params[:name]}%")
+
+    render :layout => false
   end
 end
