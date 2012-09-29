@@ -16,3 +16,11 @@ $(document).ready ->
 
   $('#name').keydown ->
     $(@).parents('form:first').submit();
+
+  $('#whole_day').click ->
+    if $(@).attr('checked') == 'checked'
+      $('#time_start').attr('name', '').hide()
+      $('#time_end').attr('name', '').hide()
+    else
+      $('#time_start').attr('name', 'event[time_start]').show()
+      $('#time_end').attr('name', 'event[time_end]').show()

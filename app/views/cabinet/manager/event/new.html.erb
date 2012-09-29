@@ -20,12 +20,19 @@
       </select>
     </div>
   </div>
+    <div class="control-group">
+      <label class="control-label">Whole day?</label>
+
+      <div class="controls">
+        <input type="checkbox" id="whole_day" name="whole_day" checked="checked">
+      </div>
+    </div>
   <div class="control-group">
     <label class="control-label">Date start</label>
 
     <div class="controls">
       <input type="text" name="event[date_start]" id="date_start" class="datepicker" placeholder="date">
-      <input type="text" name="event[time_start]" id="time_start" class="timepicker" placeholder="time">
+      <input type="text" name="event[time_start]" id="time_start" class="timepicker" placeholder="time" style="display: none;">
     </div>
   </div>
   <div class="control-group">
@@ -33,7 +40,7 @@
 
     <div class="controls">
       <input type="text" name="event[date_end]" id="date_end" class="datepicker" placeholder="date">
-      <input type="text" name="event[time_end]" id="time_end" class="timepicker" placeholder="time">
+      <input type="text" name="event[time_end]" id="time_end" class="timepicker" placeholder="time" style="display: none;">
     </div>
   </div>
   <div class="control-group">
