@@ -31,11 +31,18 @@ Shm::Application.routes.draw do
     namespace :manager do
       root :to => 'index#index'
       match '/' => 'index#index'
-      match '/event' => 'event#index'
+
       match '/event/new' => 'event#new'
       match '/event/find' => 'event#find'
+
       match '/rule/new' => 'recurrence#new'
       match '/rule/find' => 'recurrence#find'
+
+      match '/user' => 'user#index'
+      match '/user/find' => 'user#find', :via => :post
+      match '/user/show(/:id)' => 'user#show'
+
+      match '/calendar(/:id)' => 'calendar#index'
     end
   end
 
