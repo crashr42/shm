@@ -1,0 +1,21 @@
+<div>
+  <div class="pull-right">
+    <%= link_to 'Next', {:controller => :calendar, :action => :index, :id => params[:id], :date => @date + 1.day}, :class => 'btn' %>
+  </div>
+  <div class="pull-left">
+    <%= link_to 'Prev', {:controller => :calendar, :action => :index, :id => params[:id], :date => @date - 1.day}, :class => 'btn' %>
+  </div>
+  <div class="padding-top20"></div>
+  <div class="info-events-block">
+    <% @events.each do |e| %>
+        <div class="info-event-block">
+          <div class="pull-right">
+            <%= link_to 'Information', {:controller => :event, :action => :show, :id => e.id}, :class => 'btn' %>
+          </div>
+          <div class="pull-left">
+            Start: <%= e.date_start %> End: <%= e.date_end %> Summary <%= e.summary %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>

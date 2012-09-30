@@ -1,3 +1,12 @@
-// Place all the styles related to the cabinet/manager/calendar controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.info-events-block {
+  padding: 15px;
+}
+
+.info-event-block {
+  padding: 10px;
+  font-size: 16px;
+  width: 98%;
+  height: 25px;
+  margin: 5px;
+  border: 1px solid #eeeeee;
+}
