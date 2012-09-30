@@ -34,6 +34,7 @@ Shm::Application.routes.draw do
 
       match '/event/new' => 'event#new'
       match '/event/find' => 'event#find'
+      match '/event/show(/:id)' => 'event#show'
 
       match '/rule/new' => 'recurrence#new'
       match '/rule/find' => 'recurrence#find'
@@ -42,7 +43,7 @@ Shm::Application.routes.draw do
       match '/user/find' => 'user#find', :via => :post
       match '/user/show(/:id)' => 'user#show'
 
-      match '/calendar(/:id)' => 'calendar#index'
+      match '/calendar(/:id)(/:date)' => 'calendar#index'
     end
   end
 
