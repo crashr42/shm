@@ -39,6 +39,6 @@ class Cabinet::Manager::EventController < Cabinet::ManagerController
   end
 
   def show
-
+    @event = Event.find params[:id]
   end
 end
