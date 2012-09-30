@@ -31,4 +31,8 @@ class Cabinet::Manager::EventController < Cabinet::ManagerController
 
     render :layout => false
   end
+
+  def show
+
+  end
 end
