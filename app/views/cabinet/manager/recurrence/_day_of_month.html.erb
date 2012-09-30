@@ -2,6 +2,11 @@
   <label class="control-label">Day of month</label>
 
   <div class="controls">
-    <input type="text" name="rule[month_days]" placeholder="not present">
+    <select name="rule[month_days]">
+      <option>None</option>
+      <% (1..31).each do |d| %>
+          <option value="<%= d %>"><%= d %></option>
+      <% end %>
+    </select>
   </div>
 </div>

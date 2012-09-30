@@ -16,4 +16,12 @@ class Cabinet::Manager::RecurrenceController < ApplicationController
 
     render :layout => false
   end
+
+  def show
+    @rule = RecurrenceRule.find params[:id]
+  end
+
+  def edit
+    @rule = RecurrenceRule.find params[:id]
+  end
 end

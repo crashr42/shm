@@ -22,7 +22,7 @@ class Cabinet::Manager::EventController < Cabinet::ManagerController
       event = Event.new params[:event]
       event.save!
 
-      redirect_to :controller => :event, :action => :new
+      redirect_to :controller => :event, :action => :show, :id => event.id
     end
   end
 

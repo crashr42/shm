@@ -10,7 +10,7 @@ class Event < ActiveRecord::Base
 
   accepts_nested_attributes_for :attendees, :allow_destroy => true
 
-  validates_inclusion_of :category, :in => %w{appointment appointment_hour}
+  validates_inclusion_of :category, :in => %w(appointment appointment_hour)
 
   # ---
   # appointment - прием у врача
@@ -22,11 +22,14 @@ class Event < ActiveRecord::Base
   # участники
   # - доктор
   def self.categories
-    %w{appointment appointment_hour}
+    %w(appointment appointment_hour)
   end
 
   private
-  def register_organizer(event)
-    event.user = User.current
+  def register_organizer
+    if User.current.present?
+      self.user = User.current
+      self.calendar = User.current.calendars.first
+    end
   end
 end

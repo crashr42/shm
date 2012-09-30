@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120930083400) do
+ActiveRecord::Schema.define(:version => 20120930115226) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "event_id"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(:version => 20120930083400) do
 
   create_table "recurrence_rules", :force => true do |t|
     t.integer  "event_id"
-    t.string   "frequency",                        :null => false
+    t.string   "frequency",                 :null => false
     t.integer  "count"
     t.datetime "end_date"
     t.integer  "interval"
@@ -80,9 +80,11 @@ ActiveRecord::Schema.define(:version => 20120930083400) do
     t.string   "weeks"
     t.string   "months"
     t.string   "position"
-    t.string   "week_start", :default => "monday", :null => false
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.integer  "fact_count"
+    t.boolean  "active"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "week_start", :default => 1, :null => false
   end
 
   add_index "recurrence_rules", ["event_id"], :name => "index_recurrence_rules_on_event_id"
