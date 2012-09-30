@@ -3,10 +3,7 @@
     <label class="control-label">Organizer</label>
 
     <div class="controls">
-      <button type="button" id="select-user" class="btn">Select user</button>
-      <div id="selected-user" style="padding: 8px; font-size: 18px;">
-
-      </div>
+      <h3><%= User.current.email %></h3>
     </div>
   </div>
   <div class="control-group">
@@ -57,6 +54,17 @@
       <textarea name="event[description]" id="description" placeholder="description"></textarea>
     </div>
   </div>
+    <div class="control-group">
+      <label class="control-label">Attendees</label>
+
+      <div class="controls">
+        <button class="btn" type="button" id="add-attendee-to-event">Add new attendee</button>
+        <div class="padding-top10"></div>
+        <div id="selected-attendee">
+
+        </div>
+      </div>
+    </div>
   <div class="form-actions">
     <button class="btn" type="submit">Create</button>
   </div>
@@ -72,6 +80,21 @@
         <input type="text" id="name" name="name" placeholder="Enter user name">
     <% end %>
     <div id="user-list">
+
+    </div>
+  </div>
+</div>
+
+<div class="modal hide fade" id="modal-select-attendee-user">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Select attendee</h3>
+  </div>
+  <div class="modal-body">
+    <%= form_tag({:controller => :event, :action => :find_attendee}, :class => 'form-search-large', :id => 'attendee-user-search-form') do %>
+        <input type="text" id="attendee-name" name="name" placeholder="Enter attendee name">
+    <% end %>
+    <div id="attendee-user-list">
 
     </div>
   </div>

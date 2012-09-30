@@ -1,0 +1,19 @@
+<% @users.each do |u| %>
+    <div class="user-info-block">
+      <div class="pull-right">
+        <button class="btn select-attendee-user">Select</button>
+      </div>
+      <div class="pull-left">
+        <div class="user-info">
+          <select name="event[attendees_attributes][][role]" class="input-small">
+            <% Attendee.roles.each do |r| %>
+                <option value="<%= r %>"><%= t "attendee.roles.#{r}" %></option>
+            <% end %>
+          </select>
+          <%= u.email %>
+          (<%= u.roles.map(&:name).join(", ") %>)
+          <input type="hidden" name="event[attendees_attributes][][user_id]" value="<%= u.id %>">
+        </div>
+      </div>
+    </div>
+<% end %>

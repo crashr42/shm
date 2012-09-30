@@ -32,6 +32,12 @@ class Cabinet::Manager::EventController < Cabinet::ManagerController
     render :layout => false
   end
 
+  def find_attendee
+    @users = User.where('email like ?', "%#{params[:name]}%").limit(10)
+
+    render :layout => false
+  end
+
   def show
 
   end

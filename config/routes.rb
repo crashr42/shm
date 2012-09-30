@@ -33,7 +33,8 @@ Shm::Application.routes.draw do
       match '/' => 'index#index'
 
       match '/event/new' => 'event#new'
-      match '/event/find' => 'event#find'
+      match '/event/find' => 'event#find', :via => :post
+      match '/event/find_attendee' => 'event#find_attendee', :via => :post
       match '/event/show(/:id)' => 'event#show'
 
       match '/rule/new' => 'recurrence#new'

@@ -22,3 +22,19 @@ $(document).ready ->
     else
       $('#time_start').attr('name', 'event[time_start]').show()
       $('#time_end').attr('name', 'event[time_end]').show()
+
+  select_attendee_user = ->
+    $('.select-attendee-user').click ->
+      div = $('<div class="alert alert-info"><a class="close" data-dismiss="alert" href="#">&times;</a></div>')
+      $('#selected-attendee').append(div.append($(@).parent().parent().find('.user-info').first().html()))
+
+  $('#attendee-name').keyup -> $(@).parents('form:first').submit();
+
+  $('#add-attendee-to-event').click -> $('#modal-select-attendee-user').modal('show')
+
+  $('#attendee-user-search-form').submit ->
+    $.post '/cabinet/manager/event/find_attendee', $(@).serialize(), (response) ->
+      $('#attendee-user-list').html(response)
+      select_attendee_user()
+    return false
+

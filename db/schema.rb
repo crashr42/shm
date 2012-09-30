@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120929110755) do
+ActiveRecord::Schema.define(:version => 20120930083400) do
+
+  create_table "attendees", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "user_id"
+    t.string   "role"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "attendees", ["event_id"], :name => "index_attendees_on_event_id"
+  add_index "attendees", ["user_id"], :name => "index_attendees_on_user_id"
 
   create_table "calendars", :force => true do |t|
     t.integer  "user_id"
@@ -109,6 +120,9 @@ ActiveRecord::Schema.define(:version => 20120929110755) do
 
   add_index "users_to_roles", ["role_id"], :name => "index_users_to_roles_on_role_id"
   add_index "users_to_roles", ["user_id"], :name => "index_users_to_roles_on_user_id"
+
+  add_foreign_key "attendees", "events", :name => "attendees_event_id_fk"
+  add_foreign_key "attendees", "users", :name => "attendees_user_id_fk"
 
   add_foreign_key "calendars", "users", :name => "calendars_user_id_fk"
 
