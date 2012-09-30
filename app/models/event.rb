@@ -12,6 +12,15 @@ class Event < ActiveRecord::Base
 
   validates_inclusion_of :category, :in => %w{appointment appointment_hour}
 
+  # ---
+  # appointment - прием у врача
+  # участники
+  # - доктор
+  # - пациент
+  # ---
+  # appointment_hour - приемный час у врача
+  # участники
+  # - доктор
   def self.categories
     %w{appointment appointment_hour}
   end
