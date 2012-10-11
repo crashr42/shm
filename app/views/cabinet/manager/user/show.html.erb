@@ -12,3 +12,6 @@
       <li><%= link_to c.name, :controller => :calendar, :action => :index, :id => c.id %></li>
   <% end %>
 </ul>
+<% if @user.role? :doctor %>
+    <%= link_to 'Appointment schedule', :controller => :schedule, :action => :index, :id => @user.id %>
+<% end %>
