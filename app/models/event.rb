@@ -1,8 +1,9 @@
 class Event < ActiveRecord::Base
   belongs_to :calendar
   belongs_to :user
-  has_many   :recurrence_rules
-  has_many   :attendees
+  has_many :recurrence_rules
+  has_many :attendees
+  has_many :documents
 
   before_create :register_organizer
 
