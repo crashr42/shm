@@ -1,0 +1,11 @@
+<div class="control-group">
+  <label class="control-label">Hour</label>
+
+  <div class="controls">
+    <select name="rule[hours]">
+      <% (0..23).each do |h| %>
+          <option value="<%= h %>"><%= h %></option>
+      <% end %>
+    </select>
+  </div>
+</div>

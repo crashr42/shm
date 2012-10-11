@@ -3,7 +3,6 @@
 <head>
   <title>Shm</title>
   <%= stylesheet_link_tag "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -13,7 +12,13 @@
       <div class="container">
         <a class="brand" href="/">SHM</a>
         <ul class="nav">
-          <li><%= link_to 'Admin panel', '/admin' %></li>
+          <li><%= link_to 'Admin panel', '/admin' if User.current.present? && User.current.role?(:admin) %></li>
+          <% if user_signed_in? %>
+              <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+          <% else %>
+              <li><%= link_to('Login', new_user_session_path)  %></li>
+          <% end %>
+          <%= render :partial => '/cabinets_list' %>
         </ul>
       </div>
     </div>
@@ -28,5 +33,7 @@
     </div>
   </div>
 </div>
+
+<%= javascript_include_tag "application" %>
 </body>
 </html>

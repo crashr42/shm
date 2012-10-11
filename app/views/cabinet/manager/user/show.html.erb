@@ -1,0 +1,14 @@
+<h2>Information about <%= @user.email %></h2>
+<p>Email: <%= @user.email %></p>
+<p>Roles: </p>
+<ul>
+  <% @user.roles.each do |r| %>
+      <li><%= r.name %></li>
+  <% end %>
+</ul>
+<p>Calendars: </p>
+<ul>
+  <% @user.calendars.each do |c| %>
+      <li><%= link_to c.name, :controller => :calendar, :action => :index, :id => c.id %></li>
+  <% end %>
+</ul>

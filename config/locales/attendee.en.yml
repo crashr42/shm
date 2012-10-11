@@ -1,0 +1,6 @@
+en:
+  attendee:
+    roles:
+      patient: Patient
+      doctor:  Doctor
+      attending_doctor: Attending doctor

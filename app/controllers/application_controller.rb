@@ -1,17 +1,26 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  helper :all
 
-  if ::Rails.application.config.handle_errors
-    rescue_from Exception, :with => :render_error
-    rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
-  end
+  before_filter :manage_user
 
   private
-  def render_error(exception)
-    redirect_to :controller => "/error", :action => :render_error
+  def manage_user
+    User.current = current_user
   end
 
-  def render_not_found(exception)
-    redirect_to :controller => "/error", :action => :render_not_found, :from => request.url
+  if ::Rails.application.config.handle_errors
+    rescue_from Exception do |exception|
+      redirect_to "/error/500"
+    end
+
+    rescue_from ActiveRecord::RecordNotFound do |exception|
+      redirect_to "/error/404?from#{request.url}"
+    end
+
+    rescue_from CanCan::AccessDenied do |exception|
+      redirect_to "/error/403"
+    end
   end
+
 end

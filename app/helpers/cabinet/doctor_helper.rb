@@ -1,0 +1,2 @@
+module Cabinet::DoctorHelper
+end

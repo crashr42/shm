@@ -1,0 +1,26 @@
+<h3>Event #<%= @event.id %></h3>
+<p>Orginizer: <%= @event.user.email %></p>
+<p>Summary: <%= @event.summary %></p>
+<p>Calenar: <%= link_to @event.calendar.name, :controller => :calendar, :action => :index, :date => @event.date_start %></p>
+<p>Date: from <%= @event.date_start.to_s :ru %> to <%= @event.date_end.to_s :ru %></p>
+<p>Time: from <%= @event.time_start %> to <%= @event.time_end %></p>
+<p>Category: <%= @event.category %></p>
+<% if @event.description.present? %>
+    <p>Description: <%= @event.description %></p>
+<% end %>
+<% if @event.attendees.present? %>
+    <p>Attendees: </p>
+    <ul>
+      <% @event.attendees.each do |a| %>
+          <li><%= a.user.email %></li>
+      <% end %>
+    </ul>
+<% end %>
+<% if @event.recurrence_rules.present? %>
+    <p>Recurrency rules: </p>
+    <ul>
+      <% @event.recurrence_rules.each do |r| %>
+          <li><%= link_to "rule ##{r.id}", :controller => :recurrence, :action => :show, :id => r.id %></li>
+      <% end %>
+    </ul>
+<% end %>

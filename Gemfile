@@ -12,6 +12,15 @@ group :test, :development do
   gem 'minitest-rails',
       :git => "git://github.com/rawongithub/minitest-rails.git",
       :branch => "gemspec"
+  gem 'libnotify'
+  gem 'ruby_gntp'
+  gem 'jasmine'
+  gem 'jasminerice'
+  gem 'guard'
+  gem 'guard-jasmine'
+  gem 'guard-coffeescript'
+  gem 'guard-livereload'
+  gem 'journey'
 end
 group :test do
   gem 'minitest-reporters', '>= 0.5.0'
@@ -27,3 +36,7 @@ gem 'execjs'
 gem 'therubyracer'
 gem 'twitter-bootstrap-rails'
 gem 'faker'
+gem 'foreigner'
+gem 'cancan'
+gem 'icalendar'
+gem 'uuidtools'

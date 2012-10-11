@@ -1,0 +1,118 @@
+<%= form_tag({:controller => :recurrence, :action => :edit}, :class => 'form-horizontal') do %>
+    <input type="hidden" name="rule[id]" value="<%= @rule.id %>">
+    <div class="control-group">
+      <label class="control-label">Event</label>
+
+      <div class="controls">
+        <button type="button" class="btn" id="select-event">Select</button>
+        <div id="selected-event" style="padding: 8px; font-size: 18px;">
+          <%= @rule.event.summary %>
+          <input type="hidden" name="rule[event_id]" value="<%= @rule.id %>">
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Until</label>
+
+      <div class="controls">
+        <select name="until" id="until">
+          <option value="infinity">Infinity</option>
+          <option value="count" <%= 'selected="selected"' if @rule.count.present? %>>Count</option>
+          <option value="end_date" <%= 'selected="selected"' if @rule.end_date.present? %>>Date</option>
+        </select>
+        <span class="help-block">Rule is true until</span>
+      </div>
+    </div>
+    <div id="until-block">
+      <% if @rule.count.present? %>
+          <div class="control-group">
+            <label class="control-label">Count</label>
+
+            <div class="controls">
+              <input type="text" name="rule[count]" value="<%= @rule.count %>">
+            </div>
+          </div>
+      <% else %>
+          <% if @rule.end_date.present? %>
+              <div class="control-group">
+                <label class="control-label">End date</label>
+
+                <div class="controls">
+                  <input type="text" name="rule[end_date]" class="datepicker" value="<%= @rule.end_date.to_date %>">
+                </div>
+              </div>
+          <% end %>
+      <% end %>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Frequency</label>
+
+      <div class="controls">
+        <select name="rule[frequency]" id="frequency">
+          <% RecurrenceRule.frequencies.each do |f| %>
+              <option <%= 'selected="selected"' if f == @rule.frequency %> value="<%= f %>"><%= t "recurrence_rule.frequencies.#{f}" %></option>
+          <% end %>
+        </select>
+        <span class="help-block">Rule frequency.</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Interval</label>
+
+      <div class="controls">
+        <input type="text" name="rule[interval]" value="<%= @rule.interval %>">
+        <span class="help-block">Interval for selected frequency.</span>
+      </div>
+    </div>
+    <div id="frequency-block">
+      <%= render :partial => "#{@rule.frequency}_frequency" %>
+    </div>
+    <div class="form-actions">
+      <button class="btn">Create</button>
+    </div>
+<% end %>
+
+<div class="modal hide fade" id="modal-select-event">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Select event</h3>
+  </div>
+  <div class="modal-body">
+    <%= form_tag({:controller => :recurrence, :action => :find}, :class => 'form-search-large', :id => 'event-search-form') do %>
+        <input type="text" id="name" name="name" placeholder="Enter user name">
+    <% end %>
+    <div id="event-list">
+
+    </div>
+  </div>
+</div>
+
+<div class="hide">
+  <% RecurrenceRule.frequencies.each do |f| %>
+      <div id="<%= f %>">
+        <%= render :partial => "#{f}_frequency" %>
+      </div>
+  <% end %>
+</div>
+
+<div class="hide">
+  <div id="until_count">
+    <div class="control-group">
+      <label class="control-label">Count</label>
+
+      <div class="controls">
+        <input type="text" name="rule[count]" value="<%= @rule.count %>">
+      </div>
+    </div>
+  </div>
+  <div id="until_end_date">
+    <div class="control-group">
+      <label class="control-label">End date</label>
+
+      <div class="controls">
+        <input type="text" name="rule[end_date]" class="datepicker" value="<%= @rule.end_date.to_date %>">
+      </div>
+    </div>
+  </div>
+  <div id="until_infinity"></div>
+</div>
