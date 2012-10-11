@@ -1,4 +1,4 @@
-class Cabinet::Manager::RecurrenceController < ApplicationController
+class Cabinet::Manager::RecurrenceController < Cabinet::ManagerController
 
   layout 'cabinet/manager/layout'
 

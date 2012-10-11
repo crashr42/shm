@@ -1,4 +1,4 @@
-class Cabinet::Manager::CalendarController < ApplicationController
+class Cabinet::Manager::CalendarController < Cabinet::ManagerController
 
   layout 'cabinet/manager/layout'
 
