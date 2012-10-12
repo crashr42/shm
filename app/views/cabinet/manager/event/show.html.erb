@@ -3,7 +3,7 @@
 <p>Summary: <%= @event.summary %></p>
 <p>Calenar: <%= link_to @event.calendar.name, :controller => :calendar, :action => :index, :date => @event.date_start %></p>
 <p>Date: from <%= @event.date_start.to_s :ru %> to <%= @event.date_end.to_s :ru %></p>
-<p>Time: from <%= @event.time_start %> to <%= @event.time_end %></p>
+<p>Time: from <%= @event.time_start.strftime '%H:%M:%S' %> to <%= @event.time_end.strftime '%H:%M:%S' %></p>
 <p>Category: <%= t "event.categories.#{@event.category}" %></p>
 <% if @event.description.present? %>
     <p>Description: <%= @event.description %></p>
