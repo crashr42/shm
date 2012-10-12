@@ -1,0 +1,9 @@
+<h3>Appointments hours for <%= link_to @doctor.email, {:controller => :user, :action => :show, :id => @doctor.id} %></h3>
+<% if @doctor.appointments_hours %>
+    <% @doctor.appointments_hours.each do |h| %>
+        <div class="alert alert-info">
+          <%= link_to 'See', {:controller => :event, :action => :show, :id => h.id}, :class => 'btn pull-right' %>
+          <%= h.summary %>
+        </div>
+    <% end %>
+<% end %>

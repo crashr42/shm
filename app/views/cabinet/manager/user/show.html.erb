@@ -13,5 +13,5 @@
   <% end %>
 </ul>
 <% if @user.role? :doctor %>
-    <%= link_to 'Appointment schedule', :controller => :schedule, :action => :index, :id => @user.id %>
+    <%= link_to 'Appointment schedule', {:controller => :schedule, :action => :index, :id => @user.id}, :class => 'btn' %>
 <% end %>
