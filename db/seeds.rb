@@ -14,10 +14,9 @@ Event.delete_all
 Calendar.delete_all
 User.delete_all
 
-Rake::Task['users:add_test'].invoke
-
 Role.all.each do |role|
   user = User.new
+  user.type = "#{role.name.capitalize!}User"
   user.email = "#{role.name.downcase}@shm.com"
   user.password = 123456
   user.save!
@@ -29,6 +28,7 @@ end
 
 (0..50).each do
   u = User.new
+  u.type = 'PatientUser'
   u.email = Faker::Internet.email
   u.password = u.email
   u.save!
