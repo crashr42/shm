@@ -8,26 +8,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 gem 'jquery-rails'
-group :test, :development do
-  gem 'minitest-rails',
-      :git => "git://github.com/rawongithub/minitest-rails.git",
-      :branch => "gemspec"
-  gem 'libnotify'
-  gem 'ruby_gntp'
-  gem 'jasmine'
-  gem 'jasminerice'
-  gem 'guard'
-  gem 'guard-jasmine'
-  gem 'guard-coffeescript'
-  gem 'guard-livereload'
-  gem 'journey'
-end
-group :test do
-  gem 'minitest-reporters', '>= 0.5.0'
-  gem 'minitest-rails-shoulda',
-      :git => "git://github.com/rawongithub/minitest-rails-shoulda.git"
-  gem 'capybara_minitest_spec'
-end
 gem 'rails_admin'
 gem 'pg'
 gem 'devise'
