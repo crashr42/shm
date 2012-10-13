@@ -1,21 +1,28 @@
-<div>
-  <div class="pull-right">
-    <%= link_to 'Next', {:controller => :calendar, :action => :index, :id => params[:id], :date => @date + 1.day}, :class => 'btn' %>
-  </div>
-  <div class="pull-left">
-    <%= link_to 'Prev', {:controller => :calendar, :action => :index, :id => params[:id], :date => @date - 1.day}, :class => 'btn' %>
-  </div>
-  <div class="padding-top20"></div>
-  <div class="info-events-block">
-    <% @events.each do |e| %>
-        <div class="info-event-block">
-          <div class="pull-right">
-            <%= link_to 'Information', {:controller => :event, :action => :show, :id => e.id}, :class => 'btn' %>
-          </div>
-          <div class="pull-left">
-            Start: <%= e.date_start %> End: <%= e.date_end %> Summary <%= e.summary %>
-          </div>
-        </div>
-    <% end %>
-  </div>
+<h3>From <%= @from_date %> to <%= @to_date %></h3>
+<div class="btn-group">
+  <%= link_to 'Prev', {:controller => :calendar, :action => :index, :year => @previous_year, :month => @previous_month}, :class => 'btn' %>
+  <%= link_to 'Next', {:controller => :calendar, :action => :index, :year => @next_year, :month => @next_month}, :class => 'btn' %>
 </div>
+<table class="table calendar">
+  <tr>
+    <% Date::DAYNAMES[1..6].push(Date::DAYNAMES[0]).each do |d| %>
+        <th><%= d %></th>
+    <% end %>
+  </tr>
+  <% @calendar_date_from.step(@calendar_date_to) do |d| %>
+      <% if d.wday == 1 %>
+          <tr>
+      <% end %>
+      <td>
+        <div class="calendar-day">
+          <h4><%= d.day %></h4>
+          <% @events.select { |e| e.date_start == d }.each do |e| %>
+              <%= link_to t("event.categories.#{e.category}"), {:controller => :event, :action => :show, :id => e.id}, :class => 'label label-info' %>
+          <% end %>
+        </div>
+      </td>
+      <% if d.wday == 0 %>
+          </tr>
+      <% end %>
+  <% end %>
+</table>

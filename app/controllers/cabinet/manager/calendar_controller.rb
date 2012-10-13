@@ -3,11 +3,17 @@ class Cabinet::Manager::CalendarController < Cabinet::ManagerController
   layout 'cabinet/manager/layout'
 
   def index
-    if params[:date].present?
-      @date = DateTime.parse(params[:date]).to_date
-    else
-      @date = DateTime.now.to_date
-    end
-    @events = Event.where(:calendar_id => params[:id]).where('date(date_start) = ?', @date)
+    @year = params[:year].present? ? params[:year].to_i : DateTime.now.year
+    @month = params[:month].present? ? params[:month].to_i : DateTime.now.month
+    @from_date = Date.parse("#@year-#@month-01")
+    @to_date = Date.civil @year, @month, -1
+    @previous_month = @month - 1 < 1 ? 12 : @month - 1
+    @previous_year = @month == 12 ? @year - 1 : @year
+    @next_month = @month + 1 > 12 ? 1 : @month + 1
+    @next_year = @month == 1 ? @year + 1 : @year
+    @calendar_date_from = @from_date.at_beginning_of_week
+    @calendar_date_to = @to_date.at_end_of_week
+
+    @events = Event.where(:calendar_id => params[:id]).where('date(date_start) < ?', @to_date).where('date(date_start) > ?', @from_date)
   end
 end
