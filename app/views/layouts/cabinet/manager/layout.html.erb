@@ -32,6 +32,7 @@
             <ul class="nav">
               <li><%= link_to "Home", :controller => :index, :action => :index %></li>
               <li><%= link_to "Users", :controller => :user, :action => :index  %></li>
+              <li><%= link_to "Parameters", :controller => :parameter, :action => :index %></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -51,6 +52,7 @@
                   <li class="nav-header">Manage events</li>
                   <li><%= link_to 'Add event', :controller => :event, :action => :new %></li>
                   <li><%= link_to 'Add rule', :controller => :recurrence, :action => :new %></li>
+                  <li><%= link_to 'Add parameter', :controller => :parameter, :action => :new %></li>
                 </ul>
               </div><!--/.well -->
             </div><!--/span-->

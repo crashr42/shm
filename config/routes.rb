@@ -47,6 +47,9 @@ Shm::Application.routes.draw do
       match '/user/show(/:id)' => 'user#show'
 
       match '/calendar(/:id)(/:year)(/:month)' => 'calendar#index'
+
+      match '/parameters' => 'parameter#index'
+      match '/parameter/new' => 'parameter#new'
     end
   end
 
