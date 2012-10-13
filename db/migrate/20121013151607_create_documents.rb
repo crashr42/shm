@@ -2,11 +2,10 @@ class CreateDocuments < ActiveRecord::Migration
   def change
     create_table :documents do |t|
 
-      t.reference :event
-      t.reference :created_by
+      t.references :event
+      t.references :user
 
       t.string :record
-      t.datetime :created_at, :null => false
 
       t.timestamps
     end
