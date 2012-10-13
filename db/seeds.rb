@@ -10,6 +10,7 @@ Role.create :name => 'admin'
 Role.create :name => 'manager'
 
 RecurrenceRule.delete_all
+Attendee.delete_all
 Event.delete_all
 Calendar.delete_all
 User.delete_all
@@ -44,9 +45,9 @@ end
     e.calendar = c
     e.summary = "Summary for event #{i} by user #{u.email}"
     e.description = "Description for event #{i} by user #{u.email}"
-    e.date_start = DateTime.now - Random.rand(1..3600).minutes
+    e.date_start = DateTime.now - Random.rand(1..10).days
     e.time_start = e.date_start.to_time
-    e.date_end = DateTime.now + Random.rand(1..3600).minutes
+    e.date_end = DateTime.now + Random.rand(1..10).days
 
     (0..Random.rand(0..2)).each do |ir|
       r = RecurrenceRule.new
