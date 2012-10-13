@@ -27,12 +27,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Shm</a>
+          <a class="brand" href="#">Система мониторинга здоровья</a>
           <div class="container nav-collapse">
             <ul class="nav">
-              <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
+              <li><%= link_to('Выход', destroy_user_session_path, :method => :delete) %></li>
+              <%= render :partial => '/cabinets_list' %>
+              <li><%= link_to "Аккаунт", "/path3"  %></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -41,22 +41,30 @@
 
     <div class="container">
       <div class="content">
-        <div class="row">
-           <div class="span9">
-              <%= yield %>
+
+        <!--<div class="row">-->
+        <!--<div class="span9">-->
+        <%= yield %>
+        <!--</div>-->
+        <!--</div>&lt;!&ndash;/row&ndash;&gt;-->
+        <div class="tabbable tabs-right"> <!-- Only required for left/right tabs -->
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#recents" data-toggle="tab">Последнее</a></li>
+            <li><a href="#events" data-toggle="tab">Приемы</a></li>
+            <li><a href="#patients" data-toggle="tab">Пациенты</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="recents">
+              <h3>Дефолтный контент <small>Новости, уведомления</small></h3>
             </div>
-            <div class="span3">
-              <div class="well sidebar-nav">
-                <h3>Sidebar</h3>
-                <ul class="nav nav-list">
-                  <li class="nav-header">Sidebar</li>
-                  <li><%= link_to "Link1", "/path1"  %></li>
-                  <li><%= link_to "Link2", "/path2"  %></li>
-                  <li><%= link_to "Link3", "/path3"  %></li>
-                </ul>
-              </div><!--/.well -->
-            </div><!--/span-->
-        </div><!--/row-->
+            <div class="tab-pane" id="events">
+              <h3>Приемы пациентов <small>Заполнить данные, создать новый прием</small></h3>
+            </div>
+            <div class="tab-pane" id="patients">
+              <h3>Пациенты <small>Просмотреть данные, назначить лечение</small> </h3>
+            </div>
+          </div>
+        </div>
       </div><!--/content-->
 
       <footer>
