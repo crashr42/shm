@@ -17,7 +17,7 @@
         <div class="calendar-day">
           <h4><%= d.day %></h4>
           <% @events.select { |e| e.date_start == d }.each do |e| %>
-              <%= link_to t("event.categories.#{e.category}"), {:controller => :event, :action => :show, :id => e.id}, :class => 'label label-info' %>
+              <%= link_to t("event.categories.#{e.category}"), {:controller => :event, :action => :show, :id => e.id}, :class => 'label label-info event-info', :'data-id' => e.id %>
           <% end %>
         </div>
       </td>
@@ -26,3 +26,15 @@
       <% end %>
   <% end %>
 </table>
+<div class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Event info</h3>
+  </div>
+  <div class="modal-body">
+
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+  </div>
+</div>

@@ -36,6 +36,7 @@ Shm::Application.routes.draw do
       match '/event/find' => 'event#find', :via => :post
       match '/event/find_attendee' => 'event#find_attendee', :via => :post
       match '/event/show(/:id)' => 'event#show'
+      match '/event/json' => 'event#json_format', :via => :post
 
       match '/rule/new' => 'recurrence#new', :via => :get
       match '/rule/find' => 'recurrence#find', :via => :post
