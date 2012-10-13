@@ -1,0 +1,2 @@
+class StringParameter < Parameter
+end
