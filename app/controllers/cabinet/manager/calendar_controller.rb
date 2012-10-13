@@ -8,9 +8,9 @@ class Cabinet::Manager::CalendarController < Cabinet::ManagerController
     @from_date = Date.parse("#@year-#@month-01")
     @to_date = Date.civil @year, @month, -1
     @previous_month = @month - 1 < 1 ? 12 : @month - 1
-    @previous_year = @month == 12 ? @year - 1 : @year
+    @previous_year = @month - 1 < 1 ? @year - 1 : @year
     @next_month = @month + 1 > 12 ? 1 : @month + 1
-    @next_year = @month == 1 ? @year + 1 : @year
+    @next_year = @month + 1 > 12 ? @year + 1 : @year
     @calendar_date_from = @from_date.at_beginning_of_week
     @calendar_date_to = @to_date.at_end_of_week
 
