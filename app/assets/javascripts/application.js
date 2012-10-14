@@ -1,3 +1,4 @@
+//= require ./app
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
@@ -21,3 +22,7 @@ function bind_timepicker() {
 
 bind_datepicker();
 bind_timepicker();
+
+$(document).ready(function(){
+    App.load_module();
+});

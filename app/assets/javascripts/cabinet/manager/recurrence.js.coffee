@@ -1,6 +1,6 @@
-$ = jQuery
+App.module('/cabinet/manager/recurrence', ->
+  $ = jQuery
 
-$(document).ready ->
   select_find_event = ->
     $('.select-find-event').click ->
       $('#selected-event').html($(@).parent().parent().find('.event-info').first().html())
@@ -22,3 +22,4 @@ $(document).ready ->
   $('#until').change ->
     $('#until-block').html($("#until_#{$(@).val()}").html())
     bind_datepicker()
+)

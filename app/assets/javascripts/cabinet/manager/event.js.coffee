@@ -1,6 +1,6 @@
-$ = jQuery
+App.module('/cabinet/manager/event', ->
+  $ = jQuery
 
-$(document).ready ->
   select_find_user = ->
     $('.select-find-user').click ->
       $('#selected-user').html($(@).parent().parent().find('.user-info').first().html())
@@ -12,8 +12,6 @@ $(document).ready ->
       $('#user-list').html(response)
       select_find_user()
     return false
-
-  $('#name').keyup -> $(@).parents('form:first').submit();
 
   $('#whole_day').click ->
     if $(@).attr('checked') == 'checked'
@@ -37,4 +35,4 @@ $(document).ready ->
       $('#attendee-user-list').html(response)
       select_attendee_user()
     return false
-
+)
