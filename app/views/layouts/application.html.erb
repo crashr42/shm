@@ -5,7 +5,7 @@
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
 <div class="container-fluid">
   <div class="navbar">
     <div class="navbar-inner">
