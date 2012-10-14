@@ -4,6 +4,7 @@ class Cabinet::Manager::ParameterController < Cabinet::ManagerController
   end
 
   def new
+    @parameter = Parameter.new
   end
 
   def create

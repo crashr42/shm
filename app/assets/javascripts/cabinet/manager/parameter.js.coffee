@@ -1,5 +1,3 @@
-$ = jQuery
+App.module('/cabinet/manager/parameter', ->
 
-$(document).ready ->
-  $('#parameter_type_selector').change ->
-    alert $(@).val()
+)

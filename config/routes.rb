@@ -48,8 +48,7 @@ Shm::Application.routes.draw do
 
       match '/calendar(/:id)(/:year)(/:month)' => 'calendar#index'
 
-      match '/parameters' => 'parameter#index'
-      match '/parameter/new' => 'parameter#new'
+      resources :parameter
     end
   end
 
