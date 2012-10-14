@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(:version => 20121013153047) do
 
   add_index "calendars", ["user_id"], :name => "index_calendars_on_user_id"
 
+  create_table "documents", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "user_id"
+    t.string   "record"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "documents", ["event_id"], :name => "index_documents_on_event_id"
+  add_index "documents", ["user_id"], :name => "index_documents_on_user_id"
+
   create_table "events", :force => true do |t|
     t.integer  "calendar_id"
     t.integer  "user_id"
@@ -137,6 +148,9 @@ ActiveRecord::Schema.define(:version => 20121013153047) do
   add_foreign_key "attendees", "users", :name => "attendees_user_id_fk"
 
   add_foreign_key "calendars", "users", :name => "calendars_user_id_fk"
+
+  add_foreign_key "documents", "events", :name => "documents_event_id_fk"
+  add_foreign_key "documents", "users", :name => "documents_user_id_fk"
 
   add_foreign_key "events", "calendars", :name => "events_calendar_id_fk"
   add_foreign_key "events", "users", :name => "events_user_id_fk"

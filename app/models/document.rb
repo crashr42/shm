@@ -1,5 +1,3 @@
 class Document < ActiveRecord::Base
-  # Данная сущность является результатом какого-либо события
-
-  belongs_to :event
+  # attr_accessible :title, :body
 end
