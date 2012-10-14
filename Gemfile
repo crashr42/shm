@@ -7,9 +7,11 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
 end
+group :development do
+  gem "rails-erd"
+end
 gem 'jquery-rails'
 gem 'rails_admin'
-gem 'pg'
 gem 'devise'
 gem 'thin'
 gem 'execjs'

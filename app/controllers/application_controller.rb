@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   private
   # Hook для ajax запрсов view будет отдаваться без layout
   def render(options = nil, extra_options = {}, &block)
-    options = {:layout => !request.xhr?}.merge(options) unless options.nil?
+    options = {:layout => !request.xhr?}.merge(options) if !options.nil? && options.is_a?(Hash)
     super(options, extra_options)
   end
 end

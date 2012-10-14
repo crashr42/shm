@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121013151607) do
+ActiveRecord::Schema.define(:version => 20121013153047) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "event_id"
@@ -62,6 +62,15 @@ ActiveRecord::Schema.define(:version => 20121013151607) do
 
   add_index "events", ["calendar_id"], :name => "index_events_on_calendar_id"
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
+
+  create_table "parameters", :force => true do |t|
+    t.string   "name",       :null => false
+    t.string   "type",       :null => false
+    t.text     "default",    :null => false
+    t.text     "value",      :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"
