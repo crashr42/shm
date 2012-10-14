@@ -23,4 +23,6 @@ function bind_timepicker() {
 bind_datepicker();
 bind_timepicker();
 
-App.load_module();
+$(document).ready(function(){
+    App.load_module();
+});
