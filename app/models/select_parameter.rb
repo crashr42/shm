@@ -1,5 +1,8 @@
 class SelectParameter < Parameter
-  def values
-    value.split(';')
+  def default_metadata
+    {
+        'default' => '',
+        'values' => []
+    }
   end
 end

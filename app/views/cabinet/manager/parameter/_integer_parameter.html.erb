@@ -7,9 +7,9 @@
       </div>
     </div>
     <div class="control-group">
-      <%= f.label :default, :class => 'control-label' %>
+      <label class="control-label">Default</label>
       <div class="controls">
-        <%= f.text_field :default, :placeholder => 'default value' %>
+        <input type="text" name="parameter[metadata][default]" placeholder="default value" value="<%= p.metadata['default'] %>">
       </div>
     </div>
     <div class="form-actions">

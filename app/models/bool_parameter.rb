@@ -1,5 +1,8 @@
 class BoolParameter < Parameter
-  def values
-    [true, false]
+  def default_metadata
+    {
+        'values' => %w(true false),
+        'default' => 'false'
+    }
   end
 end

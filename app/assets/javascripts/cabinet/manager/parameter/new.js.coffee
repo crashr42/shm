@@ -7,8 +7,8 @@ App.module('/cabinet/manager/parameter/new', ->
     $('#select-p-add-new-value-button').click ->
       value = $('#select-p-new-value').val()
       box = $('<div class="alert alert-info"></div>')
-      hidden = $('<input type="hidden" name="parameter[value][]" value="' + value + '">')
-      def = $("<input name='parameter[default]' value='#{value}' type='radio'>")
+      hidden = $('<input type="hidden" name="parameter[metadata][values][]" value="' + value + '">')
+      def = $("<input name='parameter[metadata][default]' value='#{value}' type='radio'>")
       label = $("<label class='as-default radio'>#{value}</label>").prepend def
       button = $('<button type="button" class="close" data-dismiss="alert">&times;</button>')
       button.click -> $(@).parent().remove()
