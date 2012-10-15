@@ -1,5 +1,5 @@
-<%= form_for [:cabinet, :manager, p], :html => {:class => 'form-horizontal'} do |f| %>
-    <%= f.hidden_field :type, :value => 'StringParameter' %>
+<%= form_for p, :url => url_for(:controller => :parameter, :action => :create), :html => {:class => 'form-horizontal'} do |f| %>
+    <%= f.hidden_field :type, :value => 'BoolParameter' %>
     <div class="control-group">
       <%= f.label :name, :class => 'control-label' %>
       <div class="controls">
