@@ -1,18 +1,13 @@
 <h3>Create new parameter</h3>
-<% [:string, :integer, :select, :bool].each do |p| %>
-    <button class="btn show-parameter-dialog" type="btn" data-type="<%= p %>"><%= p.capitalize %></button>
-
-    <div class="modal hide fade" id="modal-<%= p %>">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3><%= p.capitalize %></h3>
-      </div>
-      <div class="modal-body">
-        <%= render :partial => "#{p}_parameter", :locals => {:p => @parameter} %>
-      </div>
-      <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">Close</a>
-        <a href="#" class="btn btn-primary">Save changes</a>
-      </div>
-    </div>
-<% end %>
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#string-p" data-toggle="tab">String</a></li>
+  <li><a href="#integer-p" data-toggle="tab">Integer</a></li>
+  <li><a href="#select-p" data-toggle="tab">Select</a></li>
+  <li><a href="#bool-p" data-toggle="tab">Bool</a></li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active" id="string-p"><%= render :partial => 'string_parameter', :locals => {:p => @parameter} %></div>
+  <div class="tab-pane" id="integer-p"><%= render :partial => 'integer_parameter', :locals => {:p => @parameter} %></div>
+  <div class="tab-pane" id="select-p"><%= render :partial => 'select_parameter', :locals => {:p => @parameter} %></div>
+  <div class="tab-pane" id="bool-p"><%= render :partial => 'bool_parameter', :locals => {:p => @parameter} %></div>
+</div>
