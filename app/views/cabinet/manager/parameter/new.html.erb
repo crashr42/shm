@@ -1,13 +1,14 @@
 <h3>Create new parameter</h3>
 <ul class="nav nav-tabs">
+  <li><a>Select parameter type:</a></li>
   <li class="active"><a href="#string-p" data-toggle="tab">String</a></li>
   <li><a href="#integer-p" data-toggle="tab">Integer</a></li>
   <li><a href="#select-p" data-toggle="tab">Select</a></li>
   <li><a href="#bool-p" data-toggle="tab">Bool</a></li>
 </ul>
 <div class="tab-content">
-  <div class="tab-pane active" id="string-p"><%= render :partial => 'string_parameter', :locals => {:p => @parameter} %></div>
-  <div class="tab-pane" id="integer-p"><%= render :partial => 'integer_parameter', :locals => {:p => @parameter} %></div>
-  <div class="tab-pane" id="select-p"><%= render :partial => 'select_parameter', :locals => {:p => @parameter} %></div>
-  <div class="tab-pane" id="bool-p"><%= render :partial => 'bool_parameter', :locals => {:p => @parameter} %></div>
+  <div class="tab-pane active" id="string-p"><%= render :partial => 'string_parameter', :locals => {:p => StringParameter.new} %></div>
+  <div class="tab-pane" id="integer-p"><%= render :partial => 'integer_parameter', :locals => {:p => IntegerParameter.new} %></div>
+  <div class="tab-pane" id="select-p"><%= render :partial => 'select_parameter', :locals => {:p => SelectParameter.new} %></div>
+  <div class="tab-pane" id="bool-p"><%= render :partial => 'bool_parameter', :locals => {:p => BoolParameter.new} %></div>
 </div>

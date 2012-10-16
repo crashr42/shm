@@ -1,7 +1,7 @@
 class StringParameter < Parameter
   def default_metadata
     {
-        'default' => '1222'
+        'default' => ''
     }
   end
 end

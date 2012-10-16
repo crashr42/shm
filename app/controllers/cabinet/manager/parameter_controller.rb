@@ -4,14 +4,15 @@ class Cabinet::Manager::ParameterController < Cabinet::ManagerController
   end
 
   def new
-    @parameter = Parameter.new
   end
 
   def create
     if params[:parameter][:type].present?
       p = params[:parameter][:type].constantize.new params[:parameter]
-      #p.save!
-      render :text => p.metadata.to_json
+      p.save!
+      redirect_to :action => :index
+    else
+      raise ArgumentError
     end
   end
 end
