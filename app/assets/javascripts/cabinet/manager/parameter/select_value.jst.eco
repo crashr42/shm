@@ -1,0 +1,8 @@
+<div class="alert alert-info">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <input type="hidden" name="parameter[metadata][values][]" value="<%= @value %>">
+  <label class="as-default radio">
+    <input name="parameter[metadata][default]" value="<%= @value %>" type="radio">
+    <%= @value %>
+  </label>
+</div>
