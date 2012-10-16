@@ -13,7 +13,6 @@
       <div class="container">
         <a class="brand" href="/">SHM</a>
         <ul class="nav">
-          <li><%= link_to 'Admin panel', '/admin' %></li>
           <% if user_signed_in? %>
               <li>
                 <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
@@ -23,6 +22,7 @@
                 <%= link_to('Login', new_user_session_path)  %>
               </li>
           <% end %>
+          <li><%= link_to 'Bid', new_bid_path %></li>
         </ul>
       </div>
     </div>

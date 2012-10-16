@@ -5,9 +5,15 @@
 
   <div><%= f.password_field :password, :placeholder => "Password", :class => 'input-mega-large' %></div>
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Sign in" %></div>
+  <div>
+    <% if devise_mapping.rememberable? -%>
+        <div class="pull-right" style="padding-top: 4px; padding-right: 8px;">
+          <label class="checkbox">
+            <%= f.check_box :remember_me %>
+            Remember me?
+          </label>
+        </div>
+    <% end -%>
+    <%= f.submit "Sign in", :class => 'btn btn-success' %>
+  </div>
 <% end %>
