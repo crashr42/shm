@@ -1,4 +1,4 @@
-<%= form_for p, :as => :parameter, :url => url_for(:controller => :parameter, :action => :create), :html => {:class => 'form-horizontal'} do |f| %>
+<%= form_for p, :as => :parameter, :url => url_for(:controller => :parameter, :action => p.new_record? ? :create : :update), :html => {:class => 'form-horizontal'} do |f| %>
     <%= f.hidden_field :type, :value => 'SelectParameter' %>
     <div class="control-group">
       <%= f.label :name, :class => 'control-label' %>
@@ -17,9 +17,22 @@
       </div>
     </div>
     <div class="control-group">
-      <div id="select-p-values-box"></div>
+      <div id="select-p-values-box">
+        <% p.metadata['values'].each do |v| %>
+            <div class="alert alert-info">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <input type="hidden" name="parameter[metadata][values][]" value="<%= v %>">
+              <label class="as-default radio">
+                <%= radio_button_tag 'parameter[metadata][default]', v, v == p.metadata['default'] %>
+                <%= v %>
+              </label>
+            </div>
+        <% end %>
+      </div>
     </div>
     <div class="form-actions">
-      <button type="submit" class="btn">Create</button>
+      <button type="submit" class="btn">
+        <%= p.new_record? ? 'Create' : 'Update' %>
+      </button>
     </div>
 <% end %>

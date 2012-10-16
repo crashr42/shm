@@ -1,6 +1,6 @@
 <h3>Parameters</h3>
 <ul>
   <% @parameters.each do |p| %>
-      <li><%= p.name %></li>
+      <li><%= p.name %> <%= link_to 'edit', edit_cabinet_manager_parameter_path(p) %></li>
   <% end %>
 </ul>

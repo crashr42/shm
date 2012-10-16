@@ -16,6 +16,6 @@ class Parameter < ActiveRecord::Base
 
   private
   def merge_with_default_metadata
-    write_attribute(:metadata, default_metadata.merge(read_attribute(:metadata) || {}).to_json)
+    write_attribute(:metadata, default_metadata.merge(read_attribute(:metadata) ? JSON.parse(read_attribute(:metadata)).to_hash : {}).to_json)
   end
 end
