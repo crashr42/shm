@@ -8,7 +8,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 group :development do
-  gem "rails-erd"
+  gem 'rails-erd'
 end
 gem 'jquery-rails'
 gem 'rails_admin'
@@ -23,3 +23,4 @@ gem 'cancan'
 gem 'icalendar'
 gem 'uuidtools'
 gem 'eco'
+gem 'carrierwave'

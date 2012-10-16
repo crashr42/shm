@@ -1,0 +1,42 @@
+<h3>New bid</h3>
+<%= form_for @bid, :url => {:controller => :bid, :action => :create}, :html => {:multipart => true, :class => 'form-horizontal'} do |f| %>
+    <div class="control-group">
+      <%= f.label :first_name, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :first_name, :placeholder => 'enter first name' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :last_name, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :last_name, :placeholder => 'enter last name' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :third_name, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :third_name, :placeholder => 'enter third name' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :address, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :address, :placeholder => 'enter address' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :policy, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :policy, :placeholder => 'enter policy' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :passport_scan, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.file_field :passport_scan %>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-success">Send bid</button>
+    </div>
+<% end %>

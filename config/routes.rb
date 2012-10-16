@@ -10,6 +10,8 @@ Shm::Application.routes.draw do
   match '/error/404', :to => 'error#render_not_found'
   match '/error/403', :to => 'error#render_access_denied'
 
+  resources :bid
+
   match '/doctor(/:path)', :to => redirect {|params, request| "/cabinet/doctor/#{params[:path]}"}
   match '/patient(/:path)', :to => redirect {|params, request| "/cabinet/patient/#{params[:path]}"}
   match '/admin(/:path)', :to => redirect {|params, request| "/cabinet/admin/#{params[:path]}"}
