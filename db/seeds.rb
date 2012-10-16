@@ -12,7 +12,6 @@ Role.create :name => 'manager'
 RecurrenceRule.delete_all
 Attendee.delete_all
 Event.delete_all
-Calendar.delete_all
 User.delete_all
 
 Role.all.each do |role|
@@ -38,11 +37,9 @@ end
   ur.role = Role.find_by_name 'patient'
   ur.save!
 
-  c = u.calendars.first
   (0..30).each do |i|
     e = Event.new
     e.category = Event.categories.sample
-    e.calendar = c
     e.summary = "Summary for event #{i} by user #{u.email}"
     e.description = "Description for event #{i} by user #{u.email}"
     e.date_start = DateTime.now - Random.rand(1..10).days
@@ -65,9 +62,13 @@ end
     end
     e.user = u
     e.save!
+
+    a = Attendee.new
+    a.event = e
+    a.user = User.first(:offset => rand(User.count))
+    a.role = Attendee.roles[rand(3)]
+    a.save!
   end
-  c.user = u
-  c.save!
 end
 
 

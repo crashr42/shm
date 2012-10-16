@@ -6,12 +6,7 @@
       <li><%= r.name %></li>
   <% end %>
 </ul>
-<p>Calendars: </p>
-<ul>
-  <% @user.calendars.each do |c| %>
-      <li><%= link_to c.name, :controller => :calendar, :action => :index, :id => c.id %></li>
-  <% end %>
-</ul>
+<p>Calendar: <%= link_to 'Main calendar', :controller => :calendar, :action => :index, :id => @user.id %></p>
 <% if @user.role? :doctor %>
     <%= link_to 'Appointment schedule', {:controller => :schedule, :action => :index, :id => @user.id}, :class => 'btn' %>
 <% end %>

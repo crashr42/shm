@@ -14,6 +14,6 @@ class Cabinet::Manager::CalendarController < Cabinet::ManagerController
     @calendar_date_from = @from_date.at_beginning_of_week
     @calendar_date_to = @to_date.at_end_of_week
 
-    @events = Event.where(:calendar_id => params[:id]).where('date(date_start) < ?', @to_date).where('date(date_start) > ?', @from_date)
+    @events = Event.includes(:attendees).where(:attendees => {:user_id => params[:id]}).where('date(date_start) < ?', @to_date).where('date(date_start) > ?', @from_date)
   end
 end

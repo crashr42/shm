@@ -1,5 +1,4 @@
 class Event < ActiveRecord::Base
-  belongs_to :calendar
   belongs_to :user
   has_many :recurrence_rules
   has_many :attendees
@@ -30,7 +29,6 @@ class Event < ActiveRecord::Base
   def register_organizer
     if User.current.present?
       self.user = User.current
-      self.calendar = User.current.calendars.first
     end
   end
 end
