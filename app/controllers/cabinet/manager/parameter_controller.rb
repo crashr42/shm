@@ -25,7 +25,7 @@ class Cabinet::Manager::ParameterController < Cabinet::ManagerController
 
     respond_to do |f|
       if p.update_attributes params[:parameter]
-        f.html {redirect_to :action => :index, :notice => 'Parameter updated.'}
+        f.html {redirect_to({:action => :index}, :notice => 'Parameter updated.')}
       else
         raise Exception
       end

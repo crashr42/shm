@@ -1,6 +1,11 @@
 <h3>Parameters</h3>
-<ul>
+<table class="table">
   <% @parameters.each do |p| %>
-      <li><%= p.name %> <%= link_to 'edit', edit_cabinet_manager_parameter_path(p) %></li>
+      <tr>
+        <td>
+          <%= link_to 'Edit', edit_cabinet_manager_parameter_path(p), :class => 'btn' %>
+          <%= p.name %>
+        </td>
+      </tr>
   <% end %>
-</ul>
+</table>
