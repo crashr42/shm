@@ -51,6 +51,7 @@ Shm::Application.routes.draw do
       match '/calendar(/:id)(/:year)(/:month)' => 'calendar#index'
 
       resources :parameter
+      resources :bid
     end
   end
 

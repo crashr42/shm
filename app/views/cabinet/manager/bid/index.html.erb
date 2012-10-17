@@ -1,0 +1,17 @@
+<table class="table">
+  <tr>
+    <th>#</th>
+    <th>Information</th>
+    <th>Operations</th>
+  </tr>
+  <% @bids.each do |b| %>
+  <tr>
+    <td>
+      <%= b.id %>
+      <span class="label label-<%= b.css_status %>"><%= b.status %></span>
+    </td>
+    <td><%= b.information %></td>
+    <td><%= link_to 'See', {:controller => :'cabinet/manager/bid', :action => :show, :id => b.id}, :class => 'btn' %></td>
+  </tr>
+  <% end %>
+</table>

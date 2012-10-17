@@ -27,12 +27,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Shm</a>
+          <%= link_to 'Shm', {:controller => :'/index', :action => :index}, :class => 'brand' %>
           <div class="container nav-collapse">
             <ul class="nav">
               <li><%= link_to "Home", :controller => :index, :action => :index %></li>
               <li><%= link_to "Users", :controller => :user, :action => :index  %></li>
               <li><%= link_to "Parameters", :controller => :parameter, :action => :index %></li>
+              <li><%= link_to "Bids", :controller => :'cabinet/manager/bid', :action => :index %></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

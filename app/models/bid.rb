@@ -10,4 +10,29 @@ class Bid < ActiveRecord::Base
   validates_presence_of :address
   validates_presence_of :policy
   validates_presence_of :passport_scan
+
+  def information
+    "#{first_name} #{last_name} #{third_name} #{address}"
+  end
+
+  def reject
+    write_attribute(:status, 'rejected')
+    save!
+  end
+
+  def approve
+    write_attribute(:status, 'approved')
+    save!
+  end
+
+  def css_status
+    case read_attribute(:status)
+      when 'approved' then
+        'success'
+      when 'rejected' then
+        'important'
+      else
+        'info'
+    end
+  end
 end
