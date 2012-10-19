@@ -1,8 +1,6 @@
 <h3>From <%= @from_date %> to <%= @to_date %></h3>
-<div class="btn-group">
-  <%= link_to 'Prev', {:controller => :calendar, :action => :index, :year => @previous_year, :month => @previous_month}, :class => 'btn' %>
-  <%= link_to 'Next', {:controller => :calendar, :action => :index, :year => @next_year, :month => @next_month}, :class => 'btn' %>
-</div>
+<%= link_to 'Next', {:controller => :calendar, :action => :index, :year => @next_year, :month => @next_month}, :class => 'btn pull-right' %>
+<%= link_to 'Prev', {:controller => :calendar, :action => :index, :year => @previous_year, :month => @previous_month}, :class => 'btn' %>
 <table class="table calendar">
   <tr>
     <% Date::DAYNAMES[1..6].push(Date::DAYNAMES[0]).each do |d| %>
@@ -15,10 +13,13 @@
       <% end %>
       <td>
         <div class="calendar-day">
-          <h4><%= d.day %></h4>
-          <% @events.select { |e| e.date_start == d }.each do |e| %>
-              <%= link_to t("event.categories.#{e.category}"), {:controller => :event, :action => :show, :id => e.id}, :class => 'label label-info event-info', :'data-id' => e.id %>
-          <% end %>
+          <h5 class="pull-right badge badge-info"><%= d.day %></h5>
+          <div class="clearfix"></div>
+          <div>
+            <% @events.select { |e| e.date_start == d }.each do |e| %>
+                <%= link_to t("event.short_categories.#{e.category}"), {:controller => :event, :action => :show, :id => e.id}, :class => t("event.categories_label.#{e.category}"), :'data-id' => e.id %>
+            <% end %>
+          </div>
         </div>
       </td>
       <% if d.wday == 0 %>
