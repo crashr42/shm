@@ -44,7 +44,8 @@ end
     e.description = "Description for event #{i} by user #{u.email}"
     e.date_start = DateTime.now - Random.rand(1..10).days
     e.time_start = e.date_start.to_time
-    e.date_end = DateTime.now + Random.rand(1..10).days
+    e.date_end = e.date_start + Random.rand(1..3).days
+    e.time_end = e.date_end.to_time
 
     (0..Random.rand(0..2)).each do |ir|
       r = RecurrenceRule.new

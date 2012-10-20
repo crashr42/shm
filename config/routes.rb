@@ -46,7 +46,8 @@ Shm::Application.routes.draw do
       match '/user/find' => 'user#find', :via => :post
       match '/user/show(/:id)' => 'user#show'
 
-      match '/calendar(/:id)(/:year)(/:month)' => 'calendar#index'
+      match '/calendar(/:id)' => 'calendar#index', :via => :get
+      match '/calendar/events' => 'calendar#events', :via => :post
 
       resources :parameter
     end

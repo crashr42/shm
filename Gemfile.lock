@@ -64,6 +64,10 @@ GEM
       sass-rails (>= 3.1.1)
     foreigner (1.2.1)
       activerecord (>= 3.0.0)
+    fullcalendar-rails (1.5.4.0)
+    gon (4.0.0)
+      actionpack (>= 2.3.0)
+      json
     haml (3.1.7)
     hike (1.2.1)
     i18n (0.6.1)
@@ -189,6 +193,8 @@ DEPENDENCIES
   execjs
   faker
   foreigner
+  fullcalendar-rails
+  gon
   icalendar
   jquery-rails
   pg
