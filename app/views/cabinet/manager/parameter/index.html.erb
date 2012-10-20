@@ -4,6 +4,7 @@
       <tr>
         <td>
           <%= link_to 'Edit', edit_cabinet_manager_parameter_path(p), :class => 'btn pull-right' %>
+          <%= link_to 'Delete', cabinet_manager_parameter_path(p), :confirm => 'Are you sure you want to destroy parameter?', :method => :delete, :class => 'btn btn-danger pull-right' %>
           <span class="label label-info"><%= p.class.name.gsub('Parameter', '').downcase %></span>
           <%= p.name %>
         </td>

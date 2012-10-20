@@ -31,4 +31,13 @@ class Cabinet::Manager::ParameterController < Cabinet::ManagerController
       end
     end
   end
+
+  def destroy
+    @parameter = Parameter.find params[:id]
+    @parameter.destroy
+
+    respond_to do |f|
+      f.html { redirect_to :action => :index }
+    end
+  end
 end
