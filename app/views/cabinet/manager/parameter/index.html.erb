@@ -3,7 +3,8 @@
   <% @parameters.each do |p| %>
       <tr>
         <td>
-          <%= link_to 'Edit', edit_cabinet_manager_parameter_path(p), :class => 'btn' %>
+          <%= link_to 'Edit', edit_cabinet_manager_parameter_path(p), :class => 'btn pull-right' %>
+          <span class="label label-info"><%= p.class.name.gsub('Parameter', '').downcase %></span>
           <%= p.name %>
         </td>
       </tr>
