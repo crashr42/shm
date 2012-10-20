@@ -3,3 +3,9 @@ en:
     categories:
       appointment: Appointment
       appointment_hour: Appointment hour
+    short_categories:
+      appointment: A
+      appointment_hour: AH
+    categories_label:
+      appointment: 'label event-info'
+      appointment_hour: 'label event-info'
