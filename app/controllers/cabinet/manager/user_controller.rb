@@ -7,7 +7,7 @@ class Cabinet::Manager::UserController < Cabinet::ManagerController
   end
 
   def find
-    @users = User.where('email like ?', "%#{params[:name]}%").limit(20)
+    @users = User.where('email like ?', "%#{params[:name]}%").limit(200)
 
     render :layout => false
   end

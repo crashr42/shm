@@ -19,7 +19,7 @@
   </head>
   <body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
 
-    <div class="navbar navbar">
+    <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
@@ -27,35 +27,31 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <%= link_to 'Shm', {:controller => :'/index', :action => :index}, :class => 'brand' %>
+          <%= link_to_active 'Shm', {:controller => :'/index', :action => :index}, :class => 'brand' %>
           <div class="container nav-collapse">
             <ul class="nav">
-              <li><%= link_to "Home", :controller => :index, :action => :index %></li>
-              <li><%= link_to "Users", :controller => :user, :action => :index  %></li>
-              <li><%= link_to "Parameters", :controller => :parameter, :action => :index %></li>
-              <li><%= link_to "Bids", :controller => :'cabinet/manager/bid', :action => :index %></li>
+              <%= link_to_active_wrapper 'Dashboard', :li, :controller => :index, :action => :index %>
+              <%= link_to_active_wrapper 'Users', :li, :controller => :user, :action => :index  %>
+              <li class="dropdown <% if controller.controller_name == 'parameter' %> active <% end %>">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Parameters <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <%= link_to_active_wrapper 'List', :li, :controller => :parameter, :action => :index %>
+                  <%= link_to_active_wrapper 'Add', :li, :controller => :parameter, :action => :new %>
+                </ul>
+              </li>
+              <%= link_to_active_wrapper 'Bids', :li, :controller => :'cabinet/manager/bid', :action => :index %>
+              <%= link_to_active_wrapper 'New event', :li, :controller => :event, :action => :new %>
+              <%= link_to_active_wrapper 'New rule', :li, :controller => :recurrence, :action => :new %>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
       <div class="content">
         <div class="row-fluid">
-           <div class="span9">
-              <%= yield %>
-            </div>
-            <div class="span3">
-              <div class="well sidebar-nav">
-                <h3>Manage</h3>
-                <ul class="nav nav-list">
-                  <li><%= link_to 'Add event', :controller => :event, :action => :new %></li>
-                  <li><%= link_to 'Add rule', :controller => :recurrence, :action => :new %></li>
-                  <li><%= link_to 'Add parameter', :controller => :parameter, :action => :new %></li>
-                </ul>
-              </div><!--/.well -->
-            </div><!--/span-->
+          <%= yield %>
         </div><!--/row-->
       </div><!--/content-->
 
