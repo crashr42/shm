@@ -1,0 +1,23 @@
+en:
+  parameter:
+    integer:
+      metadata:
+        errors:
+          default: Invalid default value
+          validators:
+            max: Invalid max value
+            min: Invalid min value
+    bool:
+      metadata:
+        errors:
+          default: Invalid default value
+          values: Invalid default values
+    string:
+      metadata:
+        errors:
+          default: Invalid default value
+    select:
+      metadata:
+        errors:
+          default: Invalid default value
+          values: Invalid values

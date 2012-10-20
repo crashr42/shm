@@ -1,2 +1,3 @@
 <h3>Edit <%= @parameter.type.gsub('Parameter', '').downcase %> parameter</h3>
+<%= render :partial => 'errors', :locals => {:parameter => @parameter} %>
 <%= render :partial => @parameter.type.underscore, :locals => {:p => @parameter} %>

@@ -7,12 +7,13 @@ class Cabinet::Manager::ParameterController < Cabinet::ManagerController
   end
 
   def create
-    if params[:parameter][:type].present?
-      p = params[:parameter][:type].constantize.new params[:parameter]
-      p.save!
-      redirect_to :action => :index
-    else
-      raise Exception
+    @parameter = params[:parameter][:type].constantize.new params[:parameter]
+    respond_to do |f|
+      if @parameter.save
+        f.html { redirect_to({:action => :index}, :notice => 'Parameter created.') }
+      else
+        f.html { render :action => :new }
+      end
     end
   end
 
@@ -21,13 +22,12 @@ class Cabinet::Manager::ParameterController < Cabinet::ManagerController
   end
 
   def update
-    p = Parameter.find params[:id]
-
+    @parameter = Parameter.find params[:id]
     respond_to do |f|
-      if p.update_attributes params[:parameter]
-        f.html {redirect_to({:action => :index}, :notice => 'Parameter updated.')}
+      if @parameter.update_attributes params[:parameter]
+        f.html { redirect_to({:action => :index}, :notice => 'Parameter updated.') }
       else
-        raise Exception
+        f.html { render :action => :edit }
       end
     end
   end

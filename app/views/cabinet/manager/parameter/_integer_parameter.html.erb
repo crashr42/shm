@@ -12,6 +12,18 @@
         <input type="text" name="parameter[metadata][default]" placeholder="default value" value="<%= p.metadata['default'] %>">
       </div>
     </div>
+    <div class="control-group">
+      <label class="control-label">Min</label>
+      <div class="controls">
+        <input type="text" name="parameter[metadata][validators][min]" placeholder="min value for parameter" value="<%= p.metadata['validators']['min'] %>">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Max</label>
+      <div class="controls">
+        <input type="text" name="parameter[metadata][validators][max]" placeholder="max value for parameter" value="<%= p.metadata['validators']['max'] %>">
+      </div>
+    </div>
     <div class="form-actions">
       <%= link_to 'Back', {:controller => :parameter, :action => :index}, :class => 'btn' %>
       <button type="submit" class="btn btn-success">

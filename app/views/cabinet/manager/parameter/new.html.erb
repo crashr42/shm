@@ -1,14 +1,19 @@
 <h3>Create new parameter</h3>
 <ul class="nav nav-tabs">
   <li><a>Select parameter type:</a></li>
-  <li class="active"><a href="#string-p" data-toggle="tab">String</a></li>
-  <li><a href="#integer-p" data-toggle="tab">Integer</a></li>
-  <li><a href="#select-p" data-toggle="tab">Select</a></li>
-  <li><a href="#bool-p" data-toggle="tab">Bool</a></li>
+  <% [StringParameter, IntegerParameter, SelectParameter, BoolParameter].each_with_index do |t, i| %>
+      <li <% if @parameter.is_a?(t) || (i == 0 && !@parameter.present?) %> class="active" <% end %>><a href="#<%= t.name.underscore %>" data-toggle="tab"><%= t t %></a></li>
+  <% end %>
 </ul>
 <div class="tab-content">
-  <div class="tab-pane active" id="string-p"><%= render :partial => 'string_parameter', :locals => {:p => StringParameter.new} %></div>
-  <div class="tab-pane" id="integer-p"><%= render :partial => 'integer_parameter', :locals => {:p => IntegerParameter.new} %></div>
-  <div class="tab-pane" id="select-p"><%= render :partial => 'select_parameter', :locals => {:p => SelectParameter.new} %></div>
-  <div class="tab-pane" id="bool-p"><%= render :partial => 'bool_parameter', :locals => {:p => BoolParameter.new} %></div>
+  <% [StringParameter, IntegerParameter, SelectParameter, BoolParameter].each_with_index do |t, i| %>
+      <div class="tab-pane <% if @parameter.is_a?(t) || (i == 0 && !@parameter.present?) %> active <% end %>" id="<%= t.name.underscore %>">
+        <% if @parameter.present? && @parameter.is_a?(t) %>
+            <%= render :partial => 'errors', :locals => {:parameter => @parameter} %>
+            <%= render :partial => t.name.underscore, :locals => {:p => @parameter} %>
+        <% else %>
+            <%= render :partial => t.name.underscore, :locals => {:p => t.new} %>
+        <% end %>
+      </div>
+  <% end %>
 </div>
