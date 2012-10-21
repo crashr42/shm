@@ -1,1 +1,11 @@
-Приемы
+<%= form_tag do %>
+    <h4>Пожалуйста, заполните данные</h4>
+    <%= label_tag(:event, "Выберите прием пациента:") %>
+    <% probable_events = Event.all.map {|event| [event.description, event.id]} %>
+    <%= select_tag(:event,  options_for_select( probable_events)) %>
+    <br/>
+    <%= label_tag(:doc_content, "Введите результат осмотра:") %>
+    <%= text_area_tag(:doc_content) %>
+    <br/>
+    <%= submit_tag("Сохранить") %>
+<% end %>
