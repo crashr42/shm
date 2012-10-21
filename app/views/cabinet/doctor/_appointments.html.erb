@@ -1,8 +1,8 @@
 <%= form_tag({:controller => "cabinet/doctor/document", :action => "new"}, :method => :post) do %>
     <h4>Пожалуйста, заполните данные</h4>
-    <%= label_tag(:event, "Выберите прием пациента:") %>
+    <%= label_tag(:event_id, "Выберите прием пациента:") %>
     <% probable_events = Event.all.map {|event| [event.description, event.id]} %>
-    <%= select_tag(:event,  options_for_select( probable_events)) %>
+    <%= select_tag(:event_id,  options_for_select( probable_events)) %>
     <br/>
     <%= label_tag(:doc_content, "Введите результат осмотра:") %>
     <%= text_area_tag(:doc_content) %>
