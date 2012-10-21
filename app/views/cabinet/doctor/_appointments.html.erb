@@ -1,4 +1,4 @@
-<%= form_tag do %>
+<%= form_tag({:controller => "cabinet/doctor/document", :action => "new"}, :method => :post) do %>
     <h4>Пожалуйста, заполните данные</h4>
     <%= label_tag(:event, "Выберите прием пациента:") %>
     <% probable_events = Event.all.map {|event| [event.description, event.id]} %>

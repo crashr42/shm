@@ -21,6 +21,7 @@ Shm::Application.routes.draw do
     namespace :doctor do
       root :to => 'index#index'
       match '/' => 'index#index'
+      match '/document/new' => 'document#new'
     end
     namespace :patient do
       root :to => 'index#index'
