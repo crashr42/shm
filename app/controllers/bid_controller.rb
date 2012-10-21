@@ -4,13 +4,13 @@ class BidController < ApplicationController
   end
 
   def create
-    bid = Bid.new params[:bid]
+    @bid = Bid.new params[:bid]
 
     respond_to do |f|
-      if bid.save!
-        f.html { redirect_to({:action => :show, :id => bid.id}, :notice => 'Bid created.') }
+      if @bid.save
+        f.html { redirect_to({:action => :show, :id => @bid.id}, :notice => 'Bid created.') }
       else
-        raise Exception
+        f.html { render :action => :new }
       end
     end
   end

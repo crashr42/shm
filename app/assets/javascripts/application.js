@@ -4,6 +4,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require fullcalendar
+//= require rails.validations
 //= require_tree .
 
 function bind_datepicker() {
