@@ -7,7 +7,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  */
-.datepicker {
+input.datepicker {
   top: 0;
   left: 0;
   padding: 4px;
@@ -20,7 +20,7 @@
 	}*/
 
 }
-.datepicker:before {
+input.datepicker:before {
   content: '';
   display: inline-block;
   border-left: 7px solid transparent;
@@ -31,7 +31,7 @@
   top: -7px;
   left: 6px;
 }
-.datepicker:after {
+input.datepicker:after {
   content: '';
   display: inline-block;
   border-left: 6px solid transparent;
@@ -41,7 +41,7 @@
   top: -6px;
   left: 7px;
 }
-.datepicker > div {
+input.datepicker > div {
   display: none;
 }
 .datepicker.days div.datepicker-days {

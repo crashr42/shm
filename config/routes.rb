@@ -53,6 +53,7 @@ Shm::Application.routes.draw do
 
       resources :parameter
       resources :bid
+      resources :events
     end
   end
 
