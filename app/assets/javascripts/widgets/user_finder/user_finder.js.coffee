@@ -29,6 +29,6 @@ methods =
   hide: -> $(@).find('.modal').modal('hide')
 
 $.fn.widgets_users_finder = (method) ->
-  return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 )) if methods[method]
-  return methods.init.apply( this, arguments ) if typeof method == 'object' || !method
+  return methods[method].apply(this, Array.prototype.slice.call(arguments, 1)) if methods[method]
+  return methods.init.apply(this, arguments) if typeof method == 'object' || !method
   $.error 'Method ' +  method + ' does not exist on jQuery.widgets_users_finder'
