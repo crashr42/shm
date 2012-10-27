@@ -11,6 +11,12 @@ class Bid < ActiveRecord::Base
   validates_presence_of :policy
   validates_presence_of :passport_scan
 
+  after_create :mail_bid_created
+
+  def mail_bid_created
+    BidMailer::created.deliver
+  end
+
   def information
     "#{first_name} #{last_name} #{third_name} #{address}"
   end
@@ -18,11 +24,13 @@ class Bid < ActiveRecord::Base
   def reject
     write_attribute(:status, 'rejected')
     save!
+    BidMailer::rejected.deliver
   end
 
   def approve
     write_attribute(:status, 'approved')
     save!
+    BidMailer::approved.deliver
   end
 
   def css_status

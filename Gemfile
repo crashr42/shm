@@ -9,6 +9,8 @@ group :assets do
 end
 group :development do
   gem 'rails-erd'
+  gem 'mailcatcher'
+  gem 'faker'
 end
 gem 'jquery-rails'
 gem 'rails_admin'
@@ -17,7 +19,6 @@ gem 'thin'
 gem 'execjs'
 gem 'therubyracer'
 gem 'twitter-bootstrap-rails'
-gem 'faker'
 gem 'foreigner'
 gem 'cancan'
 gem 'icalendar'
