@@ -7,9 +7,12 @@ class Cabinet::Manager::UserController < Cabinet::ManagerController
   end
 
   def find
-    @users = User.where('email like ?', "%#{params[:name]}%").limit(200)
+    @users = User.select([:id, :email]).where('email like ?', "%#{params[:name]}%").limit(200)
 
-    render :layout => false
+    respond_to do |f|
+      f.html { render :layout => false }
+      f.json { render :json => @users }
+    end
   end
 
   def show

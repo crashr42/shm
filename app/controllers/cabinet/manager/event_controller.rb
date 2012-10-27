@@ -4,11 +4,18 @@ class Cabinet::Manager::EventController < Cabinet::ManagerController
   end
 
   def new
-    if request.post?
-      event = Event.new params[:event]
-      event.save!
+    @event = Event.new
+  end
 
-      redirect_to :controller => :event, :action => :show, :id => event.id
+  def create
+    @event = Event.new params[:event]
+
+    respond_to do |f|
+      if @event.save
+        f.html { redirect_to({:action => :show}, :notice => 'Event created.') }
+      else
+        f.html { render :action => :new }
+      end
     end
   end
 

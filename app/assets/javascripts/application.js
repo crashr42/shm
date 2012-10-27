@@ -8,19 +8,18 @@
 //= require_tree .
 
 function bind_datepicker() {
-    $('.datepicker').datepicker({
+    $('input.datepicker').datepicker({
         format:'dd.mm.yyyy',
         weekStart:1,
         todayBtn:true,
-        todayHighlight:true,
-        autoclose:true
+        todayHighlight:true
     }).keydown(function () {
             return false
         });
 }
 
 function bind_timepicker() {
-    $('.timepicker').timepicker();
+    $('input.timepicker').timepicker();
 }
 
 bind_datepicker();
