@@ -27,4 +27,14 @@ bind_timepicker();
 
 $(document).ready(function(){
     App.load_module();
+    $('.b_file').each(function () {
+        var i_file = $(this).prev();
+        var file = $(this).parent().prev();
+        file.change(function(){
+            i_file.val(file.val());
+        });
+        $(this).click(function(){
+            file.click();
+        })
+    });
 });

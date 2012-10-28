@@ -5,7 +5,7 @@
     <%= f.input :third_name, :placeholder => 'enter third name' %>
     <%= f.input :address, :placeholder => 'enter address' %>
     <%= f.input :policy, :placeholder => 'enter policy' %>
-    <%= f.input :passport_scan, :type => :file %>
+    <%= f.input :passport_scan, :as => :file %>
     <div class="form-actions">
       <%= f.button :submit, 'Send bid', :class => 'btn-success' %>
       <%= link_to 'Back', :back, :class => 'btn' %>
