@@ -8,10 +8,10 @@
   <tr>
     <td>
       <%= b.id %>
-      <span class="label label-<%= b.css_status %>"><%= b.status %></span>
+      <%= status_label b %>
     </td>
     <td><%= b.information %></td>
-    <td><%= link_to 'See', {:controller => :'cabinet/manager/bid', :action => :show, :id => b.id}, :class => 'btn' %></td>
+    <td><%= link_to 'See', cabinet_manager_bid_path(b), :class => 'btn' %></td>
   </tr>
   <% end %>
 </table>

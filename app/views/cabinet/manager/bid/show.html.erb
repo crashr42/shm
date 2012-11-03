@@ -1,12 +1,14 @@
 <h3>Bid #<%= @bid.id %></h3>
-<span class="label label-<%= @bid.css_status %>"><%= @bid.status %></span>
-<% if @bid.status == 'created' %>
-    <%= link_to 'Approve', {:controller => :'cabinet/manager/bid', :action => :approve, :id => @bid.id}, :class => 'btn btn-success' %>
-    <%= link_to 'Reject', {:controller => :'cabinet/manager/bid', :action => :reject, :id => @bid.id}, :class => 'btn btn-danger' %>
+<%= status_label @bid %>
+<% unless @bid.approved? %>
+  <%= link_to 'Approve', approved_path(@bid), :class => 'btn btn-success' %>
 <% end %>
-<p>First name: <%= @bid.first_name %></p>
-<p>Last name: <%= @bid.last_name %></p>
-<p>Third name: <%= @bid.third_name %></p>
-<p>Address: <%= @bid.address %></p>
-<h4>Passport scan</h4>
+<% unless @bid.rejected? %>  
+  <%= link_to 'Reject', rejected_path(@bid), :class => 'btn btn-danger' %>
+<% end %>
+<p><%= Bid.human_attribute_name :first_name %>: <%= @bid.first_name %></p>
+<p><%= Bid.human_attribute_name :last_name %>: <%= @bid.last_name %></p>
+<p><%= Bid.human_attribute_name :third_name %>: <%= @bid.third_name %></p>
+<p><%= Bid.human_attribute_name :address %>: <%= @bid.address %></p>
+<h4><%= Bid.human_attribute_name :passport_scan %></h4>
 <%= image_tag @bid.passport_scan.url %>

@@ -33,14 +33,15 @@ class Bid < ActiveRecord::Base
     BidMailer::approved.deliver
   end
 
-  def css_status
-    case read_attribute(:status)
-      when 'approved' then
-        'success'
-      when 'rejected' then
-        'important'
-      else
-        'info'
-    end
+  def rejected?
+    read_attribute(:status) == 'rejected'
+  end
+
+  def approved?
+    read_attribute(:status) == 'approved'
+  end
+
+  def created?
+    read_attribute(:status) == 'created'
   end
 end
