@@ -1,5 +1,17 @@
 class Cabinet::Doctor::DocumentController < ApplicationController
+  
+  #Show avalible event's
+  def show_events
+
+  end
+
+  #Get form for creating new document
   def new
+
+  end
+  
+  #Creting new document
+  def create 
     begin
       @document = Document.new
       @document.event_id = @_params[:event_id]
