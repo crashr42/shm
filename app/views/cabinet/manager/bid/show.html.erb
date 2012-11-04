@@ -9,6 +9,7 @@
 <p><%= Bid.human_attribute_name :first_name %>: <%= @bid.first_name %></p>
 <p><%= Bid.human_attribute_name :last_name %>: <%= @bid.last_name %></p>
 <p><%= Bid.human_attribute_name :third_name %>: <%= @bid.third_name %></p>
+<p><%= Bid.human_attribute_name :email %>: <%= mail_to @bid.email %></p>
 <p><%= Bid.human_attribute_name :address %>: <%= @bid.address %></p>
 <h4><%= Bid.human_attribute_name :passport_scan %></h4>
 <%= image_tag @bid.passport_scan.url %>

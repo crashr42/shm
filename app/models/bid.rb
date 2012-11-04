@@ -1,20 +1,19 @@
 class Bid < ActiveRecord::Base
-  attr_accessible :first_name, :last_name, :third_name, :address, :policy, :passport_scan
+  attr_accessible :first_name, :last_name, :third_name, :address, :policy, :passport_scan, :email
   mount_uploader :passport_scan, PassportScanUploader
 
-  validates_length_of :first_name, :maximum => 255
-  validates_length_of :last_name, :maximum => 255
-  validates_length_of :third_name, :maximum => 255
-  validates_presence_of :first_name
-  validates_presence_of :last_name
-  validates_presence_of :address
-  validates_presence_of :policy
-  validates_presence_of :passport_scan
+  validates :first_name, :length => {:maximum => 255, :minimum => 1}, :presence => true
+  validates :last_name,  :length => {:maximum => 255, :minimum => 1}, :presence => true
+  validates :third_name, :length => {:maximum => 255, :minimum => 1}
+  validates :address,    :length => {:maximum => 255, :minimum => 1}, :presence => true
+  validates :policy,     :length => {:maximum => 32, :minimum => 32}, :presence => true
+  validates :email,      :length => {:minimum => 5}, :presence => true, :email => true
+  validates :passport_scan, :presence => true
 
   after_create :mail_bid_created
 
   def mail_bid_created
-    BidMailer::created.deliver
+    BidMailer::created(self).deliver
   end
 
   def information
@@ -24,13 +23,13 @@ class Bid < ActiveRecord::Base
   def reject
     write_attribute(:status, 'rejected')
     save!
-    BidMailer::rejected.deliver
+    BidMailer::rejected(self).deliver
   end
 
   def approve
     write_attribute(:status, 'approved')
     save!
-    BidMailer::approved.deliver
+    BidMailer::approved(self).deliver
   end
 
   def rejected?

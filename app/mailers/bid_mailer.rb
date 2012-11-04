@@ -1,13 +1,13 @@
 class BidMailer < ActionMailer::Base
-  def created
-    mail(:from => 't@t.ru', :to => 'l@l.ru', :subject => 'ttt')
+  def created b
+    mail(:from => 't@t.ru', :to => b.email, :subject => 'Bid created')
   end
 
-  def rejected
-    mail(:from => 't@t.ru', :to => 'l@l.ru', :subject => 'ttt')
+  def rejected b
+    mail(:from => 't@t.ru', :to => b.email, :subject => 'Bid rejected')
   end
 
-  def approved
-    mail(:from => 't@t.ru', :to => 'l@l.ru', :subject => 'ttt')
+  def approved b
+    mail(:from => 't@t.ru', :to => b.email, :subject => 'Bid approved')
   end
 end
