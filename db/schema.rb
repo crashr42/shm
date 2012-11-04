@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(:version => 20121103141151) do
     t.string   "status",        :default => "created", :null => false
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
-    t.string   "email"
+    t.string   "email",                                :null => false
   end
 
   create_table "documents", :force => true do |t|
@@ -129,10 +129,10 @@ ActiveRecord::Schema.define(:version => 20121103141151) do
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "type",                                   :null => false
-    t.string   "first_name"
-    t.string   "last_name"
+    t.string   "first_name",                             :null => false
+    t.string   "last_name",                              :null => false
     t.string   "third_name"
-    t.string   "address"
+    t.string   "address",                                :null => false
     t.string   "policy"
   end
 

@@ -17,6 +17,12 @@ User.delete_all
 Role.all.each do |role|
   user = User.new
   user.type = "#{role.name.capitalize!}User"
+  user.first_name = Faker::Name.first_name
+  user.last_name = Faker::Name.last_name
+  user.address = "#{Faker::Address.country} #{Faker::Address.city} #{Faker::Address.street_address}"
+  if role.name == 'patient'
+    user.policy = Faker::Lorem.characters 32
+  end
   user.email = "#{role.name.downcase}@shm.com"
   user.password = 123456
   user.save!
@@ -27,8 +33,11 @@ Role.all.each do |role|
 end
 
 (0..50).each do
-  u = User.new
-  u.type = 'PatientUser'
+  u = PatientUser.new
+  u.first_name = Faker::Name.first_name
+  u.last_name = Faker::Name.last_name
+  u.address = "#{Faker::Address.country} #{Faker::Address.city} #{Faker::Address.street_address}"
+  u.policy = Faker::Lorem.characters 32
   u.email = Faker::Internet.email
   u.password = u.email
   u.save!
