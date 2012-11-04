@@ -1,7 +1,7 @@
 <% @users.each do |u| %>
     <div class="user-info-block">
       <div class="pull-right">
-        <%= link_to('Information', {:controller => :user, :action => :show, :id => u.id}, :class => 'btn') %>
+        <%= link_to('Создать прием', "/cabinet/doctor/appointment/patient/#{u.id}/new", :class => 'btn') %>
       </div>
       <div class="pull-left">
         <div class="user-info">
