@@ -7,6 +7,16 @@
 <i class="icon-search"></i>Поиск доктора</a>
 
 
+  <legend>
+    <%= label_tag(:patient, "Выберите пациента:") %>
+    <%= text_field_tag(:patient, "Кликните для поиска") %><br/>
+
+    <%= label_tag(:doctor, "Выберите принимающего доктора:") %>
+    <%= text_field_tag(:doctor, "Кликните для поиска") %>
+
+  </legend>
+
+
 <%= simple_form_for @event, :url => {:controller => "appointment", :action => "create"},  :class => 'form-horizontal' do |f| %>
   <%= f.input :date_start, :label => "Дата начала приема" %>
   <%= f.input :time_start, :label => "Время начала приема" %>
