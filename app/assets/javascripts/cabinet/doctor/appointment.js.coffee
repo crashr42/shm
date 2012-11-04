@@ -4,10 +4,18 @@
 
 App.module('/cabinet/doctor/appointment', ->
   $ = jQuery
-
-  $('#search-patient').click ->
+  
+  $('#patient').click ->
     $(@).user_finder(
       url: '/cabinet/doctor/user/find.json'
+      selected: (user) ->
+      	$('#patient').val(user.email) $('#patient_id').val(user.id)
+    ).user_finder('show')
+
+  $('#doctor').click ->
+    $(@).user_finder(
+      url: '/cabinet/doctor/user/find_doctor.json'
       selected: (user) -> window.location = '/cabinet/doctor/user/show/' + user.id
     ).user_finder('show')
+
 )

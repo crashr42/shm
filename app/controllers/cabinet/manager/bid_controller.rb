@@ -1,4 +1,4 @@
-class Cabinet::Manager::BidController < ApplicationController
+class Cabinet::Manager::BidController < Cabinet::ManagerController
   layout 'cabinet/manager/layout'
 
   def index

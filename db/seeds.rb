@@ -1,27 +1,27 @@
 require "faker"
 
-ActiveRecord::Base.connection.execute('DELETE FROM users_to_roles')
-
+UsersToRoles.delete_all
 Role.delete_all
+RecurrenceRule.delete_all
+Attendee.delete_all
+Document.delete_all
+Event.delete_all
+User.delete_all
+Bid.delete_all
 
-Role.create :name => 'patient'
 Role.create :name => 'doctor'
+Role.create :name => 'patient'
 Role.create :name => 'admin'
 Role.create :name => 'manager'
 
-RecurrenceRule.delete_all
-Attendee.delete_all
-Event.delete_all
-User.delete_all
-
 Role.all.each do |role|
-  user = User.new
-  user.type = "#{role.name.capitalize!}User"
+  user = "#{role.name.capitalize!}User".constantize.new
   user.first_name = Faker::Name.first_name
   user.last_name = Faker::Name.last_name
   user.address = "#{Faker::Address.country} #{Faker::Address.city} #{Faker::Address.street_address}"
-  if role.name == 'patient'
+  if user.is_a? PatientUser
     user.policy = Faker::Lorem.characters 32
+    user.doctor_user = DoctorUser.first
   end
   user.email = "#{role.name.downcase}@shm.com"
   user.password = 123456
@@ -29,6 +29,21 @@ Role.all.each do |role|
   ur = UsersToRoles.new
   ur.user = user
   ur.role = role
+  ur.save!
+end
+
+(0..10).each do
+  u = DoctorUser.new
+  u.first_name = Faker::Name.first_name
+  u.last_name = Faker::Name.last_name
+  u.address = "#{Faker::Address.country} #{Faker::Address.city} #{Faker::Address.street_address}"
+  u.policy = Faker::Lorem.characters 32
+  u.email = Faker::Internet.email
+  u.password = u.email
+  u.save!
+  ur = UsersToRoles.new
+  ur.user = u
+  ur.role = Role.find_by_name 'doctor'
   ur.save!
 end
 
@@ -81,5 +96,7 @@ end
   end
 end
 
-
-
+PatientUser.all.each do |p|
+  p.doctor_user = DoctorUser.first(:offset => rand(DoctorUser.count))
+  p.save!
+end

@@ -2,9 +2,7 @@ class Cabinet::Doctor::UserController < ApplicationController
   
   #find user by name
   def find
-    @users = User.select([:id, :first_name, :last_name, :email]).where(
-    'first_name ILIKE :name or last_name ILIKE :name', {:name => "%#{params[:name]}%"}).where('type = ?', "PatientUser").limit(200)
-
+    @users = User.searh_patients_by_email params[:name]
     respond_to do |f|
       f.html { render :layout => false }
       f.json { render :json => @users }
@@ -12,10 +10,8 @@ class Cabinet::Doctor::UserController < ApplicationController
   end
   
   #find doctor
-  def find
-    @users = User.select([:id, :first_name, :last_name, :email]).where(
-    'first_name ILIKE :name or last_name ILIKE :name', {:name => "%#{params[:name]}%"}).where('type = ?', "PatientUser").limit(200)
-
+  def find_doctor
+    @users = User.searh_doctors_by_email params[:name]
     respond_to do |f|
       f.html { render :layout => false }
       f.json { render :json => @users }
