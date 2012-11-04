@@ -1,4 +1,6 @@
-<h4>Выберите пациента:<h4>
+<h4>Выберите пациента для создания нового прием: <br/>
+<small>(для этого введите имя и фамилию в поле поиска)</small>
+<h4>
 <%= form_tag({:controller => :appointment, :action => :find}, :class => 'form-search-large', :id => 'user-main-search-form') do %>
     <input type="text" id="name" name="name" placeholder="Enter user name">
 <% end %>
