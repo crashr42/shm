@@ -27,29 +27,29 @@ class User < ActiveRecord::Base
   end
 
  
-  def self.searh_patients_by_name
+  def self.searh_patients_by_name search_name
     @users = User.where(
-    'first_name ILIKE :name or last_name ILIKE :name', {:name => "%#{params[:name]}%"}).where('type = ?', "PatientUser").limit(200)
+    'first_name ILIKE :name or last_name ILIKE :name', {:name => "%#{search_name}%"}).where('type = ?', "PatientUser").limit(200)
 
   end
   
   #find doctor
-  def self.searh_doctors_by_name 
+  def self.searh_doctors_by_name search_name
     @users = User.where(
-    'first_name ILIKE :name or last_name ILIKE :name', {:name => "%#{params[:name]}%"}).where('type = ?', "DoctorUser").limit(200)
+    'first_name ILIKE :name or last_name ILIKE :name', {:name => "%#{search_name}%"}).where('type = ?', "DoctorUser").limit(200)
   
   end
 
-  def self.searh_patients_by_email
+  def self.searh_patients_by_email search_name
     @users = User.where(
-    'first_name ILIKE :name', {:name => "%#{params[:name]}%"}).where('type = ?', "PatientUser").limit(200)
+    'email ILIKE :name', {:name => "%#{search_name}%"}).where('type = ?', "PatientUser").limit(200)
 
   end
   
   #find doctor
-  def self.searh_doctors_by_email
+  def self.searh_doctors_by_email search_name
     @users = User.where(
-    'first_name ILIKE :name', {:name => "%#{params[:name]}%"}).where('type = ?', "DoctorUser").limit(200)
+    'email first_name ILIKE :name', {:name => "%#{search_name}%"}).where('type = ?', "DoctorUser").limit(200)
   
   end
 
