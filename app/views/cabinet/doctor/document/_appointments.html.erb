@@ -1,0 +1,7 @@
+<%= form_tag({:controller => "cabinet/doctor/document", :action => "new"}, :method => :post) do %>
+    <h4>Результаты осмотра для пациента:</h4>
+    <%= label_tag(:doc_content, "Введите результат осмотра:") %>
+    <%= text_area_tag(:doc_content) %>
+    <br/>
+    <%= submit_tag("Сохранить") %>
+<% end %>

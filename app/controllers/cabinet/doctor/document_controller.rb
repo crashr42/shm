@@ -9,7 +9,7 @@ class Cabinet::Doctor::DocumentController < ApplicationController
 
   #Get form for creating new document
   def new
-
+  
   end
   
   #Creting new document

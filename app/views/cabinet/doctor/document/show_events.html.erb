@@ -10,7 +10,7 @@
    <tr>
    <td><%= event.date_start%><br/>
    <%= event.time_start.strftime("%H:%M") %> - <%= event.time_end.strftime("%H:%M")%></td>
-   <td><%= User.find_by_id(event.user_id).email unless User.find_by_id(event.user_id).blank? %></td>
+   <td><%= link_to(User.find_by_id(event.user_id).email, 'new') unless User.find_by_id(event.user_id).blank? %></td>
    <td><%= event.description %></td>
    </tr>
  <% end %>
