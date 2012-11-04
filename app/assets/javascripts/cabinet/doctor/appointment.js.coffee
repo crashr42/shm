@@ -10,4 +10,11 @@ App.module('/cabinet/doctor/appointment', ->
       url: '/cabinet/doctor/user/find.json'
       selected: (user) -> window.location = '/cabinet/doctor/user/show/' + user.id
     ).user_finder('show')
+
+  $('#search-doctor').click ->
+    $(@).user_finder(
+      url: '/cabinet/doctor/user/find_doctor.json'
+      selected: (user) -> window.location = '/cabinet/doctor/user/show/' + user.id
+    ).user_finder('show')
+
 )

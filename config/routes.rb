@@ -29,6 +29,8 @@ Shm::Application.routes.draw do
       match 'appointment/new' => 'appointment#new'
       match 'appointment/save' => 'appointment#create'
       match 'user/find' => 'user#find', :via => :post
+      match 'user/find_doctor' => 'user#find_doctor', :via => :post
+
 
     end
     namespace :patient do

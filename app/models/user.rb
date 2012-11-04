@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   #find doctor
   def self.searh_doctors_by_email search_name
     @users = User.where(
-    'email first_name ILIKE :name', {:name => "%#{search_name}%"}).where('type = ?', "DoctorUser").limit(200)
+    'email ILIKE :name', {:name => "%#{search_name}%"}).where('type = ?', "DoctorUser").limit(200)
   
   end
 
