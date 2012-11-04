@@ -18,27 +18,25 @@ class Cabinet::Doctor::DocumentController < ApplicationController
   
   #Creting new document
   def create 
-    if params[:event_id].blank?
-      flash[:error] = "No event_id in params"
-      #return redirect_to '/cabinet/doctor/document/index'
-    end
-
-    if params[:doc_content].blank?
-      flash[:error] = "You must all field complete"
-      #return redirect_to '/cabinet/doctor/document/index'
-    end
-
-
+    
     begin
+      if params[:event_id].blank?
+        raise "No event_id in params"
+      end
+
+      if params[:doc_content].blank?
+        raise "You must all field complete"
+      end
+
       @document = Document.new
       @document.event_id = params[:event_id]
       @document.record = params[:doc_content]
       @document.user = User.current
       @document.save
       flash[:notice] = 'Document was succefly cretating'
-      #return redirect_to '/cabinet/doctor/document/index'
-    rescue
-      flash[:error] = "Errror - can't create document"
+      
+      rescue Exception => exp
+      flash[:error] = exp.message
     end
 
     return redirect_to '/cabinet/doctor/document/index'

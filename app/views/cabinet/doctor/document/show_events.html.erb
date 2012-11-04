@@ -1,8 +1,8 @@
 <% if flash[:notice] %>
-  <p class="notice"><%= flash[:notice] %></p>
+  <span class="label label-success"><%= flash[:notice] %></span>
 <% end %>
 <% if flash[:error] %>
-  <p class="error"><%= flash[:error] %></p>
+  <span class="label label-important"><%= flash[:error] %></span>
 <% end %>
 
 
