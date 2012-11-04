@@ -25,4 +25,32 @@ class User < ActiveRecord::Base
   def find_events_by_date(date)
     events.where('date_start between ? and ?', DateTime.parse("#{date.year}-#{date.month}-#{date.day} 00:00:00"), DateTime.parse("#{date.year}-#{date.month}-#{date.day} 23:59:59 order by date_start"))
   end
+
+ 
+  def self.searh_patients_by_name
+    @users = User.where(
+    'first_name ILIKE :name or last_name ILIKE :name', {:name => "%#{params[:name]}%"}).where('type = ?', "PatientUser").limit(200)
+
+  end
+  
+  #find doctor
+  def self.searh_doctors_by_name 
+    @users = User.where(
+    'first_name ILIKE :name or last_name ILIKE :name', {:name => "%#{params[:name]}%"}).where('type = ?', "DoctorUser").limit(200)
+  
+  end
+
+  def self.searh_patients_by_email
+    @users = User.where(
+    'first_name ILIKE :name', {:name => "%#{params[:name]}%"}).where('type = ?', "PatientUser").limit(200)
+
+  end
+  
+  #find doctor
+  def self.searh_doctors_by_email
+    @users = User.where(
+    'first_name ILIKE :name', {:name => "%#{params[:name]}%"}).where('type = ?', "DoctorUser").limit(200)
+  
+  end
+
 end
