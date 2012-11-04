@@ -10,5 +10,15 @@ class Cabinet::Doctor::UserController < ApplicationController
       f.json { render :json => @users }
     end
   end
+  
+  #find doctor
+  def find
+    @users = User.select([:id, :first_name, :last_name, :email]).where(
+    'first_name ILIKE :name or last_name ILIKE :name', {:name => "%#{params[:name]}%"}).where('type = ?', "PatientUser").limit(200)
 
+    respond_to do |f|
+      f.html { render :layout => false }
+      f.json { render :json => @users }
+    end
+  end
 end

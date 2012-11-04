@@ -5,10 +5,9 @@
 App.module('/cabinet/doctor/appointment', ->
   $ = jQuery
 
-  $('#name').keyup -> $(@).parents('form:first').submit();
-
-  $('#user-main-search-form').submit ->
-    $.post '/cabinet/doctor/user/find', $(@).serialize(), (request) -> $('#user-main-list').html(request)
-
-    return false
+  $('#search-patient').click ->
+    $(@).user_finder(
+      url: '/cabinet/doctor/user/find.json'
+      selected: (user) -> window.location = '/cabinet/doctor/user/show/' + user.id
+    ).user_finder('show')
 )

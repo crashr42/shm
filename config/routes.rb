@@ -26,9 +26,9 @@ Shm::Application.routes.draw do
       match '/document/save' => 'document#create'
 
       match 'appointment/index' => 'appointment#index'
-      match 'appointment/patient/(:patient_id)/new' => 'appointment#new'
+      match 'appointment/new' => 'appointment#new'
       match 'appointment/save' => 'appointment#create'
-      match 'user/find' => 'user#find'
+      match 'user/find' => 'user#find', :via => :post
 
     end
     namespace :patient do
