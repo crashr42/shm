@@ -61,6 +61,18 @@ module Shm
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # Default host url for mailer
+    config.action_mailer.default_url_options = { :host => "0.0.0.0:3000" }
+
+    # Devise layouts
+    config.to_prepare do
+      Devise::SessionsController.layout 'devise/sessions'
+      Devise::RegistrationsController.layout 'devise/sessions'
+      Devise::ConfirmationsController.layout 'devise/sessions'
+      Devise::UnlocksController.layout 'devise/sessions'
+      Devise::PasswordsController.layout 'devise/sessions'
+    end
+
     config.generators do |g|
       g.test_framework :mini_test, :spec => true, :fixture => true
       g.integration_tool :mini_test

@@ -14,7 +14,7 @@ class Cabinet::Manager::BidController < ApplicationController
 
     respond_to do |f|
       if @bid.approve
-        f.html { redirect_to({:action => :show, :id => @bid.id}, :notice => 'Bid approved.') }
+        f.html { redirect_to({:action => :show, :id => @bid.id}, :notice => 'bid_approved') }
       else
         raise Exception
       end
@@ -26,7 +26,7 @@ class Cabinet::Manager::BidController < ApplicationController
 
     respond_to do |f|
       if @bid.reject
-        f.html { redirect_to({:action => :show, :id => @bid.id}, :notice => 'Bid rejected') }
+        f.html { redirect_to({:action => :show, :id => @bid.id}, :notice => 'bid_rejected') }
       else
         raise Exception
       end

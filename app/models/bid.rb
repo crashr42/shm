@@ -29,7 +29,21 @@ class Bid < ActiveRecord::Base
   def approve
     write_attribute(:status, 'approved')
     save!
-    BidMailer::approved(self).deliver
+
+    p = PatientUser.new
+    p.first_name = self.first_name
+    p.last_name = self.last_name
+    p.third_name = self.third_name
+    p.email = self.email
+    p.address = self.address
+    p.policy = self.policy
+    p.password = Faker::Lorem.characters 16
+    p.reset_password_token = Faker::Lorem.characters 32
+    p.reset_password_sent_at = DateTime.now
+    p.roles << Role.find_by_name('patient')
+    p.save!
+
+    BidMailer::approved(p).deliver
   end
 
   def rejected?

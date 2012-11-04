@@ -1,13 +1,14 @@
 class BidMailer < ActionMailer::Base
-  def created b
-    mail(:from => 't@t.ru', :to => b.email, :subject => 'Bid created')
+  def created bid
+    mail(:from => 't@t.ru', :to => bid.email, :subject => 'Bid created')
   end
 
-  def rejected b
-    mail(:from => 't@t.ru', :to => b.email, :subject => 'Bid rejected')
+  def rejected bid
+    mail(:from => 't@t.ru', :to => bid.email, :subject => 'Bid rejected')
   end
 
-  def approved b
-    mail(:from => 't@t.ru', :to => b.email, :subject => 'Bid approved')
+  def approved patient
+    @patient = patient
+    mail(:from => 't@t.ru', :to => patient.email, :subject => 'Bid approved')
   end
 end
