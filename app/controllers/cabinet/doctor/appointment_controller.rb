@@ -7,6 +7,11 @@ class Cabinet::Doctor::AppointmentController < ApplicationController
 
   #get form create appointments event
   def new
-  
+   @event = Event.new
+  end
+
+  #create new appontment
+  def create
+   
   end
 end
