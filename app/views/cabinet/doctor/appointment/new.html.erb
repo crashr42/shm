@@ -5,9 +5,10 @@
   <%= f.input :date_end, :label => "Дата окончания приема" %>
   <%= f.input :time_end, :label => "Время окончания приема" %>
 
-  <%= hidden_field_tag(:patient_id, "#{params['patient_id']}") %>
-  <%= hidden_field_tag(:category, "appointment") %>
-  
+  <%= f.input :user_id, :as => :hidden %>
+  <%= f.input :category, :as => :hidden %>
+  <%= f.input :summary, :placeholder => "summary" %>
+  <%= f.input :description, :placeholder => "Описание приема" %>   
   <div class="form-actions">
     <%= f.button :submit, 'Сохранить', :class => 'btn-success' %>
     <%= link_to 'Назад', :back, :class => 'btn' %>
