@@ -1,1 +1,10 @@
-Doctor cabinet
+<div class="page-header">
+  <h1>ФИО <small>Личный кабинет</small></h1>
+  <% if flash[:notice] %>
+      <p class="notice"><%= flash[:notice] %></p>
+  <% end %>
+  <% if flash[:error] %>
+      <p class="error"><%= flash[:error] %></p>
+  <% end %>
+
+</div>
