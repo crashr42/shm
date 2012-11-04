@@ -22,7 +22,7 @@ Shm::Application.routes.draw do
       root :to => 'index#index'
       match '/' => 'index#index'
       match '/document/index' => 'document#show_events'
-      match '/document/new' => 'document#new'
+      match '/document/new-for-event(/:event_id)' => 'document#new'
       match '/document/save' => 'document#create'
     end
     namespace :patient do

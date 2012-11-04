@@ -1,5 +1,5 @@
-<%= form_tag({:controller => "cabinet/doctor/document", :action => "new"}, :method => :post) do %>
-    <h4>Результаты осмотра для пациента:</h4>
+<%= form_tag({:controller => 'cabinet/doctor/document/save'}, :method => :post) do %>
+    <h4>Введите результаты осмотра для приема №<%= @event.id %><br/><small>(<%= @event.description %>)</small></h4>
     <%= label_tag(:doc_content, "Введите результат осмотра:") %>
     <%= text_area_tag(:doc_content) %>
     <br/>
