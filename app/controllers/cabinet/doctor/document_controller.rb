@@ -1,5 +1,7 @@
 class Cabinet::Doctor::DocumentController < ApplicationController
   
+  layout 'cabinet/doctor/layout'
+
   #Show avalible event's
   def show_events
 
