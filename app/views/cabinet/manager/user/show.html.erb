@@ -1,5 +1,11 @@
 <h2>Information about <%= @user.email %></h2>
-<p>Email: <%= @user.email %></p>
+<p><%= User.human_attribute_name :first_name %>: <%= @user.first_name %></p>
+<p><%= User.human_attribute_name :last_name %>: <%= @user.last_name %></p>
+<% if @user.third_name.present? %>
+    <p><%= User.human_attribute_name :third_name %>: <%= @user.third_name %></p>
+<% end %>
+<p><%= User.human_attribute_name :email %>: <%= @user.email %></p>
+<p><%= User.human_attribute_name :address %>: <%= @user.address %></p>
 <p>Roles: </p>
 <ul>
   <% @user.roles.each do |r| %>
