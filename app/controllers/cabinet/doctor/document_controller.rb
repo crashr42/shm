@@ -35,8 +35,9 @@ class Cabinet::Doctor::DocumentController < ApplicationController
       @document.save
       flash[:notice] = 'Document was succefly cretating'
       
-      rescue Exception => exp
+    rescue Exception => exp
       flash[:error] = exp.message
+      return redirect_to "/cabinet/doctor/document/new-for-event/#{params['event_id']}" if params[:event_id].present?
     end
 
     return redirect_to '/cabinet/doctor/document/index'
