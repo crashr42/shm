@@ -27,7 +27,7 @@ Shm::Application.routes.draw do
 
       match 'appointment/index' => 'appointment#index'
       match 'appointment/save' => 'appointment#create'
-      match 'appointment/find' => 'appointment#find'
+      match 'user/find' => 'user#find'
 
     end
     namespace :patient do

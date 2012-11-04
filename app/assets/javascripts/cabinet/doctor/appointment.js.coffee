@@ -8,6 +8,7 @@ App.module('/cabinet/doctor/appointment', ->
   $('#name').keyup -> $(@).parents('form:first').submit();
 
   $('#user-main-search-form').submit ->
-    $.post '/cabinet/doctor/appointment/find', $(@).serialize(), (request) -> $('#user-main-list').html(request)
+    $.post '/cabinet/doctor/user/find', $(@).serialize(), (request) -> $('#user-main-list').html(request)
+
     return false
 )
