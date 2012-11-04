@@ -1,4 +1,12 @@
 <h3>Добавление нового приема</h3>
+
+<a href="javascript:void(0)" id="search-patient">
+<i class="icon-search"></i>Поиск пациента</a>
+
+<a href="javascript:void(0)" id="search-doctor">
+<i class="icon-search"></i>Поиск доктора</a>
+
+
 <%= simple_form_for @event, :url => {:controller => "appointment", :action => "create"},  :class => 'form-horizontal' do |f| %>
   <%= f.input :date_start, :label => "Дата начала приема" %>
   <%= f.input :time_start, :label => "Время начала приема" %>
