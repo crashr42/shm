@@ -1,9 +1,8 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :users_to_roleses, :class_name => 'UsersToRoles'
   has_many :roles, :through => :users_to_roleses, :readonly => false
+  has_many :users_to_roleses, :class_name => UsersToRoles, :dependent => :delete_all
   has_many :events
 
   attr_protected :created_at, :current_sign_in_at, :current_sign_in_ip, :encrypted_password,
