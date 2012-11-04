@@ -4,7 +4,7 @@ class Cabinet::Doctor::DocumentController < ApplicationController
 
   #Show avalible event's
   def show_events
-
+    @events = Event.where(:id => Attendee.select("event_id").where("user_id = ? AND role = ?", User.current.id, 'attending_doctor'))
   end
 
   #Get form for creating new document
