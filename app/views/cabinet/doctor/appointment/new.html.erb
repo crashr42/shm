@@ -1,2 +1,15 @@
 <h3>Добавление нового приема</h3>
-<%= params %>
+<%= simple_form_for @event, :url => {:controller => "appointment", :action => "create"},  :class => 'form-horizontal' do |f| %>
+  <%= f.input :date_start, :label => "Дата начала приема" %>
+  <%= f.input :time_start, :label => "Время начала приема" %>
+  <%= f.input :date_end, :label => "Дата окончания приема" %>
+  <%= f.input :time_end, :label => "Время окончания приема" %>
+
+  <%= hidden_field_tag(:patient_id, "#{params['patient_id']}") %>
+  <%= hidden_field_tag(:category, "appointment") %>
+  
+  <div class="form-actions">
+    <%= f.button :submit, 'Сохранить', :class => 'btn-success' %>
+    <%= link_to 'Назад', :back, :class => 'btn' %>
+  </div> 
+<% end %>
