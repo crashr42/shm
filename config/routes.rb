@@ -24,6 +24,9 @@ Shm::Application.routes.draw do
       match '/document/index' => 'document#show_events'
       match '/document/new-for-event(/:event_id)' => 'document#new'
       match '/document/save' => 'document#create'
+
+      match 'appointment/new' => 'appointment#get_form'
+      match 'appointment/save' => 'appointment#create'
     end
     namespace :patient do
       root :to => 'index#index'
