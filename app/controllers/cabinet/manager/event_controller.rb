@@ -1,6 +1,21 @@
 class Cabinet::Manager::EventController < Cabinet::ManagerController
   def index
+    start_date = Time.at(params[:start].to_i).to_date
+    end_date = Time.at(params[:end].to_i).to_date
+    user_id = params[:id]
 
+    respond_to do |f|
+      f.html
+      f.json {
+        events = Event.find_by_user_and_date user_id, start_date, end_date
+        render :json => events.map {|e|{
+            id:    e.id,
+            title: e.category,
+            start: e.date_start,
+            end:   e.date_end
+        }}
+      }
+    end
   end
 
   def new

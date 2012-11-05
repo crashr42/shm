@@ -28,6 +28,8 @@ Shm::Application.routes.draw do
     namespace :patient do
       root :to => 'index#index'
       match '/' => 'index#index'
+
+      resources :calendar, :event
     end
     namespace :admin do
       root :to => 'index#index'
@@ -37,26 +39,17 @@ Shm::Application.routes.draw do
       root :to => 'index#index'
       match '/' => 'index#index'
 
-      match '/event/new' => 'event#new'
+      resources :parameter, :bid, :event, :user
+
       match '/event/find' => 'event#find', :via => :post
       match '/event/find_attendee' => 'event#find_attendee', :via => :post
-      match '/event/show(/:id)' => 'event#show'
       match '/event/json' => 'event#json_format', :via => :post
 
       match '/rule/new' => 'recurrence#new', :via => :get
       match '/rule/find' => 'recurrence#find', :via => :post
       match '/rule/edit/:id' => 'recurrence#edit', :via => :get
 
-      match '/user' => 'user#index'
       match '/user/find' => 'user#find', :via => :post
-
-      match '/calendar(/:id)' => 'calendar#index', :via => :get
-      match '/calendar/events' => 'calendar#events', :via => :post
-
-      resources :parameter
-      resources :bid
-      resources :events
-      resources :user
     end
   end
 
