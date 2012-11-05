@@ -1,0 +1,17 @@
+<h3>Please, select attending doctor!</h3>
+<div class="row-fluid">
+  <div class="span3">
+    <ul>
+      <% @doctors.each do |d| %>
+          <li>
+            <button class="btn show-doctor-info" type="button" data-id="<%= d.id %>"><%= d.email %></button>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="span9">
+    <div id="doctor-info-box">
+
+    </div>
+  </div>
+</div>

@@ -32,6 +32,21 @@ Role.all.each do |role|
   ur.save!
 end
 
+(0..10).each do
+  u = DoctorUser.new
+  u.first_name = Faker::Name.first_name
+  u.last_name = Faker::Name.last_name
+  u.address = "#{Faker::Address.country} #{Faker::Address.city} #{Faker::Address.street_address}"
+  u.policy = Faker::Lorem.characters 32
+  u.email = Faker::Internet.email
+  u.password = u.email
+  u.save!
+  ur = UsersToRoles.new
+  ur.user = u
+  ur.role = Role.find_by_name 'doctor'
+  ur.save!
+end
+
 (0..50).each do
   u = PatientUser.new
   u.first_name = Faker::Name.first_name
@@ -40,7 +55,6 @@ end
   u.policy = Faker::Lorem.characters 32
   u.email = Faker::Internet.email
   u.password = u.email
-  u.doctor_user = DoctorUser.first
   u.save!
   ur = UsersToRoles.new
   ur.user = u
@@ -82,3 +96,7 @@ end
   end
 end
 
+PatientUser.all.each do |p|
+  p.doctor_user = DoctorUser.first(:offset => rand(DoctorUser.count))
+  p.save!
+end

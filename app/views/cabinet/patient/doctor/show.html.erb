@@ -1,0 +1,10 @@
+<div class="well">
+  <h3><%= User.human_attribute_name :email %>: <%= @doctor.email %></h3>
+  <h4>Attending <%= @doctor.patient_users.count %> patients.</h4>
+  <p><%= User.human_attribute_name :first_name %>: <%= @doctor.first_name %></p>
+  <p><%= User.human_attribute_name :last_name %>: <%= @doctor.last_name %></p>
+  <% if @doctor.third_name.present? %>
+    <p><%= User.human_attribute_name :last_name %>: <%= @doctor.last_name %></p>
+  <% end %>
+  <%= link_to 'It\'s my attending doctor!', {:controller => :'cabinet/patient/doctor', :action => :create, :id => @doctor.id}, {:method => :post, :class => 'btn btn-success'} %>
+</div>
