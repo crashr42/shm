@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103141151) do
+ActiveRecord::Schema.define(:version => 20121105094821) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "event_id"
@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(:version => 20121103141151) do
     t.string   "third_name"
     t.string   "address",                                :null => false
     t.string   "policy"
+    t.integer  "doctor_user_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -158,6 +159,8 @@ ActiveRecord::Schema.define(:version => 20121103141151) do
   add_foreign_key "events", "users", :name => "events_user_id_fk"
 
   add_foreign_key "recurrence_rules", "events", :name => "recurrence_rules_event_id_fk"
+
+  add_foreign_key "users", "users", :name => "users_doctor_user_id_fk", :column => "doctor_user_id"
 
   add_foreign_key "users_to_roles", "roles", :name => "users_to_roles_role_id_fk"
   add_foreign_key "users_to_roles", "users", :name => "users_to_roles_user_id_fk"
