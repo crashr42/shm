@@ -7,6 +7,7 @@ Attendee.delete_all
 Document.delete_all
 Event.delete_all
 User.delete_all
+Bid.delete_all
 
 Role.create :name => 'doctor'
 Role.create :name => 'patient'
@@ -80,6 +81,4 @@ end
     a.save!
   end
 end
-
-
 

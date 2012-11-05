@@ -40,6 +40,7 @@ class Bid < ActiveRecord::Base
     p.password = Faker::Lorem.characters 16
     p.reset_password_token = Faker::Lorem.characters 32
     p.reset_password_sent_at = DateTime.now
+    p.doctor_user = DoctorUser.first(:offset => rand(DoctorUser.count))
     p.roles << Role.find_by_name('patient')
     p.save!
 
