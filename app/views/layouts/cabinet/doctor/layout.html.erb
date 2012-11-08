@@ -28,13 +28,29 @@
             <span class="icon-bar"></span>
           </a>
           <a class="brand" href="#">Система мониторинга здоровья</a>
+          
+          <!--here is top menu-->
+
           <div class="container nav-collapse">
-            <ul class="nav">
-              <li><%= link_to('Выход', destroy_user_session_path, :method => :delete) %></li>
-              <%= render :partial => '/cabinets_list' %>
-              <li><%= link_to "Аккаунт", "/path3"  %></li>
-            </ul>
-          </div><!--/.nav-collapse -->
+          <ul class="nav">
+          <%= link_to_active_wrapper 'Dashboard', :li, :controller => :index, :action => :index %>
+          <%= link_to_active_wrapper 'My Patients', :li, :controller => :user, :action => :index %>
+          <%= link_to_active_wrapper 'My Appointments', :li, :controller => :'cabinet/manager/bid', :action => :index %>
+          <%= link_to_active_wrapper 'Document Archive', :li, :controller => :event, :action => :new %>
+          <%= link_to_active_wrapper 'Log out', :li, destroy_user_session_path, :method => :delete%>
+        </ul>
+        <ul class="nav pull-right">
+          <li>
+            <a href="javascript:void(0)" id="search-user">
+              <i class="icon-search"></i>
+              Search Patient
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
+
+
         </div>
       </div>
     </div>
@@ -45,11 +61,13 @@
           <div class="span9">
             <%= yield %>
           </div>
+            
+
           <div class="span3">
             <div class="well sidebar-nav">
-              <h3>Sidebar</h3>
+              <h3>Functions:</h3>
               <ul class="nav nav-list">
-                <li class="nav-header">Sidebar</li>
+                <li class="nav-header">Fast menu:</li>
                 <li><%= link_to "Принять пациента", '/cabinet/doctor/document/index' %></li>
                 <li><%= link_to "Создать прием", "/cabinet/doctor/appointment/new"  %></li>
 
