@@ -1,12 +1,4 @@
 <h3>Добавление нового приема</h3>
-
-<a href="javascript:void(0)" id="search-patient">
-<i class="icon-search"></i>Поиск пациента</a>
-
-<a href="javascript:void(0)" id="search-doctor">
-<i class="icon-search"></i>Поиск доктора</a>
-
-
   <legend>
     <%= label_tag(:patient, "Выберите пациента:") %>
     <%= text_field_tag(:patient, "Кликните для поиска") %><br/>
@@ -31,4 +23,6 @@
     <%= f.button :submit, 'Сохранить', :class => 'btn-success' %>
     <%= link_to 'Назад', :back, :class => 'btn' %>
   </div> 
+  <%= hidden_field_tag('patient_id') %>
+  <%= hidden_field_tag('doctor_id') %>
 <% end %>
