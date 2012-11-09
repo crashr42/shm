@@ -34,9 +34,9 @@
           <div class="container nav-collapse">
           <ul class="nav">
           <%= link_to_active_wrapper 'Dashboard', :li, :controller => :index, :action => :index %>
-          <%= link_to_active_wrapper 'My Patients', :li, :controller => :user, :action => :index %>
-          <%= link_to_active_wrapper 'My Appointments', :li, :controller => :'cabinet/manager/bid', :action => :index %>
-          <%= link_to_active_wrapper 'Document Archive', :li, :controller => :event, :action => :new %>
+          <%= link_to_active_wrapper 'My Patients', :li,  cabinet_doctor_patients_path %>
+          <%= link_to_active_wrapper 'My Appointments', :li, cabinet_doctor_appointments_path %>
+          <%= link_to_active_wrapper 'Document Archive', :li, cabinet_doctor_documents_path %>
           <%= link_to_active_wrapper 'Log out', :li, destroy_user_session_path, :method => :delete%>
         </ul>
         <ul class="nav pull-right">
@@ -70,8 +70,10 @@
                 <li class="nav-header">Fast menu:</li>
                 <li><%= link_to "Принять пациента", '/cabinet/doctor/document/index' %></li>
                 <li><%= link_to "Создать прием", "/cabinet/doctor/appointment/new"  %></li>
-
-
+	      </ul>
+	      <ul class="nav nav-list">
+                <li class="nav-header">Local menu:</li>
+		<%= yield :local_menu %>
               </ul>
             </div><!--/.well -->
           </div><!--/span-->

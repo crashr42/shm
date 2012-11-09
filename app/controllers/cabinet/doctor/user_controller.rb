@@ -1,5 +1,7 @@
 class Cabinet::Doctor::UserController < ApplicationController
   
+  layout 'cabinet/doctor/layout'
+  
   #find user by name
   def find
     @users = User.searh_patients_by_email params[:name]
@@ -16,5 +18,9 @@ class Cabinet::Doctor::UserController < ApplicationController
       f.html { render :layout => false }
       f.json { render :json => @users }
     end
+  end
+
+  def index
+  
   end
 end

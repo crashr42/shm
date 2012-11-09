@@ -22,8 +22,8 @@ Shm::Application.routes.draw do
       root :to => 'index#index'
       match '/' => 'index#index'
       
-      resource :patient, :controller => 'user'
-      resource :appointment, :document
+      resources :patients, :controller => 'user'
+      resources :appointments, :documents
       
       #match '/document/index' => 'document#show_events'
       #match '/document/new-for-event(/:event_id)' => 'document#new'
