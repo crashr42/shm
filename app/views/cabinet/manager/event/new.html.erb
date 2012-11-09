@@ -1,4 +1,4 @@
-<%= form_tag({:controller => :event, :action => :new}, :class => 'form-horizontal') do %>
+<%= form_tag({:controller => :event, :action => :create}, :class => 'form-horizontal') do %>
   <div class="control-group">
     <label class="control-label">Organizer</label>
 
@@ -10,9 +10,9 @@
     <label class="control-label">Category</label>
 
     <div class="controls">
-      <select name="event[category]" id="category">
-        <% Event.categories.each do |c| %>
-            <option value="<%= c %>"><%= t "event.categories.#{c}" %></option>
+      <select name="event[type]" id="category">
+        <% Event.select(:type).map(&:type).uniq.each do |c| %>
+            <option value="<%= c %>"><%= t "event.categories.#{c.underscore.gsub('_event', '')}" %></option>
         <% end %>
       </select>
     </div>

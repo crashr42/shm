@@ -1,6 +1,6 @@
 <% if flash.present? && [:notice].present? %>
     <div class="alert alert-info">
       <button class="close" data-dismiss="alert">&times;</button>
-      <%= render :partial => "/cabinet/manager/notification_#{flash[:notice]}" %>
+      <%= render :partial => "/cabinet/manager/notification_#{flash[:notice]}" rescue flash[:notice] %>
     </div>
 <% end %>

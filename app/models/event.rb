@@ -6,24 +6,9 @@ class Event < ActiveRecord::Base
 
   before_create :register_organizer
 
-  attr_protected :created_at, :id, :updated_at
+  attr_accessible :type, :date_start, :time_start, :date_end, :time_end, :summary, :description, :attendees_attributes
 
   accepts_nested_attributes_for :attendees, :allow_destroy => true
-
-  validates_inclusion_of :category, :in => %w(appointment appointment_hour)
-
-  # ---
-  # appointment - прием у врача
-  # участники
-  # - доктор
-  # - пациент
-  # ---
-  # appointment_hour - приемный час у врача
-  # участники
-  # - доктор
-  def self.categories
-    %w(appointment appointment_hour)
-  end
 
   def self.find_by_user_and_date user_id, start_date, end_date = nil
     if end_date.present?

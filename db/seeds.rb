@@ -62,9 +62,8 @@ end
   ur.save!
 
   (0..30).each do |i|
-    e = Event.new
-    e.category = Event.categories.sample
-    e.summary = "Summary for event #{i} by user #{u.email}"
+    e = AppointmentEvent.new
+    e.summary = "Appointment ##{i} for user #{u.email}"
     e.description = "Description for event #{i} by user #{u.email}"
     e.date_start = DateTime.now - Random.rand(1..10).days
     e.time_start = e.date_start.to_time
@@ -90,8 +89,34 @@ end
 
     a = Attendee.new
     a.event = e
-    a.user = User.first(:offset => rand(User.count))
-    a.role = Attendee.roles[rand(3)]
+    a.user = u
+    a.role = 'patient'
+    a.save!
+
+    a = Attendee.new
+    a.event = e
+    a.user = DoctorUser.first(:offset => rand(DoctorUser.count))
+    a.role = 'attending_doctor'
+    a.save!
+  end
+end
+
+DoctorUser.all.each do |d|
+  (0..15).each do |i|
+    e = AppointmentHourEvent.new
+    e.summary = "Summary for appointment hour #{i} for user #{d.email}"
+    e.description = "Description for appointment hour #{i} for user #{d.email}"
+    e.date_start = DateTime.now - Random.rand(1..10).days
+    e.date_end = e.date_start
+    e.time_start = e.date_start.to_time
+    e.time_end = e.time_start + Random.rand(1..4).hours
+    e.user = d
+    e.save!
+
+    a = Attendee.new
+    a.event = e
+    a.user = d
+    a.role = 'attending_doctor'
     a.save!
   end
 end

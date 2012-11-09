@@ -5,7 +5,7 @@
 <% if @event.time_start.present? && @event.time_end.present? %>
     <p>Time: from <%= @event.time_start.strftime '%H:%M:%S' %> to <%= @event.time_end.strftime '%H:%M:%S' %></p>
 <% end %>
-<p>Category: <%= t "event.categories.#{@event.category}" %></p>
+<p>Type: <%= t "event.categories.#{@event.class.name.underscore.gsub('/_event/', '')}" %></p>
 <% if @event.description.present? %>
     <p>Description: <%= @event.description %></p>
 <% end %>
