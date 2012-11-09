@@ -18,3 +18,4 @@ pickle-email-*.html
 /public/uploads/*
 /public/uploads/tmp/*
 .idea
+*.swp
