@@ -23,10 +23,10 @@ class Cabinet::Manager::EventController < Cabinet::ManagerController
   end
 
   def create
-    @event = Event.new params[:event]
+    @event = params[:event][:type].constantize.new params[:event]
 
     respond_to do |f|
-      if @event.save
+      if @event.save!
         f.html { redirect_to({:action => :show, :id => @event.id}, :notice => 'event_created') }
       else
         f.html { render :action => :new }
