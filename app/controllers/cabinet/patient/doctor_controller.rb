@@ -16,4 +16,8 @@ class Cabinet::Patient::DoctorController < Cabinet::PatientController
   def show
     @doctor = DoctorUser.find params[:id]
   end
+
+  def find
+    render :json => DoctorUser.where('email like ?', "%#{params[:name]}%").limit(10)
+  end
 end

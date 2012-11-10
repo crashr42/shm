@@ -35,7 +35,9 @@ Shm::Application.routes.draw do
       root :to => 'index#index'
       match '/' => 'index#index'
 
-      resources :calendar, :event, :doctor
+      match '/doctor/find' => 'doctor#find'
+
+      resources :calendar, :event, :doctor, :appointment
     end
     namespace :admin do
       root :to => 'index#index'
