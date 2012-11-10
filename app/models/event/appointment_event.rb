@@ -7,4 +7,8 @@ class AppointmentEvent < Event
   def attending_doctor
     self.appointment_hour_event.attending_doctor_attendees.first.user
   end
+
+  def self.coming_free
+    where('date_start > ?', DateTime.now).where(:status => 'free').order(:date_start).limit(5)
+  end
 end
