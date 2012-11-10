@@ -25,24 +25,6 @@ class Event < ActiveRecord::Base
   validates :type, :presence => true
   validates :summary, :presence => true
   validates :duration, :presence => true
-  validates :time_end, :timeliness => {:type => :time, :on_or_after => :time_start}
-  validates :time_start, :timeliness => {:type => :time, :on_or_before => :time_end}
-
-  # Дата и время начала события
-  def datetime_start
-    DateTime.new(
-        self.date_start.year, self.date_start.month, self.date_start.day,
-        self.time_start.hour, self.time_start.min, self.time_start.sec
-    )
-  end
-
-  # Дата и время окончания события
-  def datetime_end
-    DateTime.new(
-        self.date_end.year, self.date_end.month, self.date_end.day,
-        self.time_end.hour, self.time_end.min, self.time_end.sec
-    )
-  end
 
   # Поиск событий, в которых пользователь участвует или которые он организует, за указанный промежуток времени
   def self.find_by_user_and_date user_id, start_date, end_date = nil
@@ -70,7 +52,7 @@ class Event < ActiveRecord::Base
   # === Examples
   # class AppointmentHourEvent < Event
   #   has_many :appointment_events
-  #   watch_events :appointment_event, :predicted_time => 15.minutes
+  #   child_events :appointment_event, :predicted_time => 15.minutes
   # end
   # Для событий типа AppointmentHourEvent при создании будут созданые дочерние события типа AppointmentEvent.
   # Даты начала и окончания дочерних событий будут совпадать с датами родительского события.
@@ -81,9 +63,9 @@ class Event < ActiveRecord::Base
   # [:predicted_time]
   #   Временной промежуток для дочернего события.
   # Arguments examples:
-  #   watch_events :some_child_event, :predicted_time => 15.minutes
-  #   watch_events [:some_child_event_class, :other_child_event_class], :predicted_time => 15.minutes
-  def self.watch_events processes, options = {}
+  #   child_events :some_child_event, :predicted_time => 15.minutes
+  #   child_events [:some_child_event_class, :other_child_event_class], :predicted_time => 15.minutes
+  def self.child_events processes, options = {}
     raise "Predicred time not passed!" unless options[:predicted_time].present?
     process_array(processes, options[:predicted_time]) if processes.is_a? Array
     process(processes.to_s.classify.constantize, options[:predicted_time]) if processes.is_a? Symbol
@@ -101,12 +83,10 @@ class Event < ActiveRecord::Base
 
   def self.process p, predicted_time
     after_create do |record|
-      Range.new(record.time_start.to_i, record.time_end.to_i, true).step(predicted_time) do |new_time|
+      Range.new(record.date_start.to_i, record.date_end.to_i, true).step(predicted_time) do |new_time|
         e = p.new
-        e.date_start = record.date_start
-        e.date_end = record.date_end
-        e.time_start = Time.at(new_time)
-        e.time_end = Time.at(new_time) + predicted_time
+        e.date_start = Time.at(new_time).to_datetime
+        e.date_end = (Time.at(new_time) + predicted_time).to_datetime
         e.summary = 'Free appointment'
         e.event = self
         e.user = ManagerUser.first
@@ -124,11 +104,7 @@ class Event < ActiveRecord::Base
 
   # Вычисляем продолжительность события
   def calculate_duration
-    unless self.duration.present? || self.time_start.present? || self.time_end.present?
-      self.time_start = self.date_start.beginning_of_day
-      self.time_end = self.date_end.end_of_day
-    end
-    self.duration = self.time_end - self.time_start
+    self.duration = self.date_end - self.date_start
   end
 
   # Отслеживаем изменение статуса события

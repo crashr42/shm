@@ -26,10 +26,7 @@ Role.all.each do |role|
   user.email = "#{role.name.downcase}@shm.com"
   user.password = 123456
   user.save!
-  ur = UsersToRoles.new
-  ur.user = user
-  ur.role = role
-  ur.save!
+  UsersToRoles.create({:user => user, :role => role})
 end
 
 (0..10).each do
@@ -41,31 +38,22 @@ end
   u.email = Faker::Internet.email
   u.password = u.email
   u.save!
-  ur = UsersToRoles.new
-  ur.user = u
-  ur.role = Role.find_by_name 'doctor'
-  ur.save!
+  UsersToRoles.create({:user => u, :role => Role.find_by_name('doctor')})
 end
 
 DoctorUser.all.each do |d|
-  from_date = DateTime.now - Random.rand(1..10).days
-  to_date = DateTime.now + Random.rand(1..10).days
+  from_date = DateTime.now.to_date - Random.rand(1..10).days
+  to_date = DateTime.now.to_date + Random.rand(1..10).days
   from_date.step(to_date).each do |date|
     e = AppointmentHourEvent.new
     e.summary = "Summary for appointment hour for user #{d.email}"
     e.description = "Description for appointment hour for user #{d.email}"
-    e.date_start = date
-    e.date_end = date
-    e.time_start = e.date_start.to_time
-    e.time_end = e.time_start + Random.rand(1..8).hours
+    e.date_start = date.to_datetime.change({:hour => Random.rand(8..12)})
+    e.date_end = e.date_start.change({:hour => e.date_start.hour + Random.rand(1..6)})
     e.user = d
     e.save!
 
-    a = Attendee.new
-    a.event = e
-    a.user = d
-    a.role = 'attending_doctor'
-    a.save!
+    AttendingDoctorAttendee.create({:user => d, :event => e})
   end
 end
 
@@ -79,25 +67,13 @@ end
   u.password = u.email
   u.doctor_user = DoctorUser.first(:offset => rand(DoctorUser.count))
   u.save!
-  ur = UsersToRoles.new
-  ur.user = u
-  ur.role = Role.find_by_name 'patient'
-  ur.save!
+  UsersToRoles.create({:user => u, :role => Role.find_by_name('patient')})
 
   (0..10).each do
-    appointment_event = AppointmentEvent.first(:offset => rand(AppointmentEvent.count))
-    appointment_event.attendees.delete_all
+    ae = AppointmentEvent.first(:offset => rand(AppointmentEvent.count))
+    ae.attendees.destroy_all
 
-    a = Attendee.new
-    a.event = appointment_event
-    a.user = u
-    a.role = 'patient'
-    a.save!
-
-    a = Attendee.new
-    a.event = appointment_event
-    a.user = appointment_event.event.attendees.where(:role => 'attending_doctor').first.user
-    a.role = 'attending_doctor'
-    a.save!
+    PatientAttendee.create({:user => u, :event => ae})
+    AttendingDoctorAttendee.create({:user => ae.attending_doctor, :event => ae})
   end
 end
