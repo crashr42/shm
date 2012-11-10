@@ -28,6 +28,22 @@ class Event < ActiveRecord::Base
   validates :time_end, :timeliness => {:type => :time, :on_or_after => :time_start}
   validates :time_start, :timeliness => {:type => :time, :on_or_before => :time_end}
 
+  # Дата и время начала события
+  def datetime_start
+    DateTime.new(
+        self.date_start.year, self.date_start.month, self.date_start.day,
+        self.time_start.hour, self.time_start.min, self.time_start.sec
+    )
+  end
+
+  # Дата и время окончания события
+  def datetime_end
+    DateTime.new(
+        self.date_end.year, self.date_end.month, self.date_end.day,
+        self.time_end.hour, self.time_end.min, self.time_end.sec
+    )
+  end
+
   # Поиск событий, в которых пользователь участвует или которые он организует, за указанный промежуток времени
   def self.find_by_user_and_date user_id, start_date, end_date = nil
     if end_date.present?
@@ -93,6 +109,7 @@ class Event < ActiveRecord::Base
         e.time_end = Time.at(new_time) + predicted_time
         e.summary = 'Free appointment'
         e.event = self
+        e.user = ManagerUser.first
         e.save!
       end
     end

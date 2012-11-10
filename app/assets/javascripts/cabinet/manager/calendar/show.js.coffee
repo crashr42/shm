@@ -2,7 +2,12 @@ App.module('/cabinet/manager/calendar/show', ->
   $ = jQuery
 
   $('#calendar').fullCalendar
+    header:
+      left: 'prev,next today'
+      center: 'title'
+      right: 'month,agendaWeek,agendaDay'
     firstDay: 1
+    allDayDefault: false
     eventSources: [
       {
       url: '/cabinet/manager/event.json'

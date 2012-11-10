@@ -10,8 +10,8 @@ class Cabinet::Patient::EventController < Cabinet::PatientController
         render :json => events.map {|e|{
             id:    e.id,
             title: t("event.categories.#{e.type.underscore.gsub('_event', '')}"),
-            start: e.date_start,
-            end:   e.date_end
+            start: e.datetime_start,
+            end:   e.datetime_end
         }}
       }
     end
