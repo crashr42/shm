@@ -11,6 +11,7 @@ class Cabinet::Manager::EventController < Cabinet::ManagerController
         render :json => events.map {|e|{
             id:    e.id,
             title: t("event.categories.#{e.type.underscore.gsub('_event', '')}"),
+            className: e.status_to_css,
             start: e.date_start,
             end:   e.date_end
         }}

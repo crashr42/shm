@@ -71,6 +71,15 @@ class Event < ActiveRecord::Base
     process(processes.to_s.classify.constantize, options[:predicted_time]) if processes.is_a? Symbol
   end
 
+  def status_to_css
+    {
+        :free => 'label label-success',
+        :busy => 'label label-important',
+        :process => 'label label-info',
+        :close => 'label'
+    }[self.status.to_sym]
+  end
+
   private
   # Закрываем событи для записи если у него исчерпано свободное время
   def check_duration
