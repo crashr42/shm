@@ -12,9 +12,9 @@
         <h3><%= User.current.email %></h3>
       </div>
     </div>
-    <%= f.input :type, :as => :select, :collection => Event.select(:type).map(&:type).uniq,
-                :label_method => lambda {|e| t("event.categories.#{e.underscore.gsub('_event', '')}")},
-                :selected => Event.select(:type).map(&:type).uniq.first %>
+    <%= f.input :type, :as => :select, :collection => Event.descendants,
+                :label_method => lambda {|e| t("event.categories.#{e.name.underscore.gsub('_event', '')}")},
+                :selected => Event.descendants.first %>
     <div class="control-group">
       <label class="control-label">Whole day?</label>
 
