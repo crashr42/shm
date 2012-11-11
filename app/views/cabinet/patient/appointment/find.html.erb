@@ -1,0 +1,11 @@
+<% if @date - 1.day >= DateTime.now.to_date %>
+    <%= link_to 'Prev', {:controller => :'cabinet/patient/appointment', :action => :find}, {:class => 'jump-day btn', :'data-date' => (@date - 1.day).to_time.to_i} %>
+<% end %>
+<%= link_to 'Next', {:controller => :'cabinet/patient/appointment', :action => :find}, {:class => 'jump-day btn', :'data-date' => (@date + 1.day).to_time.to_i} %>
+<ul>
+  <% @appointments.each do |a| %>
+      <li>
+        <button class="btn subscribe-appointment" data-id="<%= a.id %>"><%= "#{a.date_start} - #{a.date_end} (#{a.status})" %></button>
+      </li>
+  <% end %>
+</ul>

@@ -31,11 +31,11 @@ class Event < ActiveRecord::Base
     if end_date.present?
       Event.joins(:attendees).
           where('attendees.user_id = ? or events.user_id = ?', user_id, user_id).
-          where('date(date_start) >= ? or date(date_end) <= ?', start_date, end_date)
+          where('date(date_start) >= ? or date(date_end) <= ?', start_date, end_date).uniq
     else
       Event.joins(:attendees).
           where('attendees.user_id = ? or events.user_id = ?', user_id, user_id).
-          where('date(date_start) >= ? or date(date_end) <= ?', start_date, start_date)
+          where('date(date_start) >= ? or date(date_end) <= ?', start_date, start_date).uniq
     end
   end
 
