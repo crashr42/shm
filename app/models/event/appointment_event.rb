@@ -11,4 +11,10 @@ class AppointmentEvent < Event
   def self.coming_free
     where('date_start > ?', DateTime.now).where(:status => 'free').order(:date_start).limit(5)
   end
+
+  def unsubsribe id
+    u = User.find id
+    a = self.patient_attendees.where(:user_id => u.id).first
+    a.destroy.destroyed? ? EventMailer::unsubscribe(self, u).deliver : false
+  end
 end

@@ -12,7 +12,8 @@ class Event < ActiveRecord::Base
   # Документы характеризующие события
   has_many :documents
 
-  before_validation :register_organizer, :calculate_duration, :check_duration
+  before_validation :calculate_duration, :check_duration
+  before_save :register_organizer
   after_update :watch_status_changed
 
   attr_accessible :type, :date_start, :time_start, :date_end, :time_end, :summary, :description, :attendees_attributes
@@ -70,6 +71,22 @@ class Event < ActiveRecord::Base
     process_array(processes, options[:predicted_time]) if processes.is_a? Array
     process(processes.to_s.classify.constantize, options[:predicted_time]) if processes.is_a? Symbol
   end
+
+  # Позволяет пользователю отписаться от события (выйти из списка участников).
+  # === Examples
+  # @event = Event.find params[:id]
+  # respond_to do |f|
+  #   if @event.unsubscribe current_user.id
+  #     f.json {:message => 'unsubscribe'}
+  #   else
+  #     f.json {:message => 'error'}
+  #   end
+  # end
+  # === Arguments
+  # [id]
+  #   Идентификатор пользователя которого нужно отписать от события.
+  # Результатом метода должно быть булевое значение или исключение.
+  def unsubsribe id; false end
 
   def status_to_css
     {

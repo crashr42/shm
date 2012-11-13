@@ -22,3 +22,6 @@
       <% end %>
     </ul>
 <% end %>
+<% if @event.is_a? AppointmentEvent %>
+    <%= link_to 'Unsubscribe', {:controller => :'cabinet/patient/event', :action => :unsubscribe, :id => @event.id}, {:class => 'btn'} %>
+<% end %>

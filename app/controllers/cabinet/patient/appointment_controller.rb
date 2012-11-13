@@ -16,7 +16,6 @@ class Cabinet::Patient::AppointmentController < Cabinet::PatientController
 
   def show
     @event = AppointmentEvent.find params[:id]
-    render :json => @event
   end
 
   def find
