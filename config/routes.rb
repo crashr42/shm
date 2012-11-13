@@ -1,5 +1,4 @@
 Shm::Application.routes.draw do
-
   root :to => 'index#index'
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
@@ -11,11 +10,12 @@ Shm::Application.routes.draw do
   match '/error/403', :to => 'error#render_access_denied'
 
   resources :bid
+  resources :user, :path_names => {:show => :profile}
 
-  match '/doctor(/:path)', :to => redirect {|params, request| "/cabinet/doctor/#{params[:path]}"}
-  match '/patient(/:path)', :to => redirect {|params, request| "/cabinet/patient/#{params[:path]}"}
-  match '/admin(/:path)', :to => redirect {|params, request| "/cabinet/admin/#{params[:path]}"}
-  match '/manager(/:path)', :to => redirect {|params, request| "/cabinet/manager/#{params[:path]}"}
+  match '/doctor(/:path)', :to => redirect { |params, request| "/cabinet/doctor/#{params[:path]}" }
+  match '/patient(/:path)', :to => redirect { |params, request| "/cabinet/patient/#{params[:path]}" }
+  match '/admin(/:path)', :to => redirect { |params, request| "/cabinet/admin/#{params[:path]}" }
+  match '/manager(/:path)', :to => redirect { |params, request| "/cabinet/manager/#{params[:path]}" }
 
   namespace :cabinet do
     namespace :doctor do
@@ -66,7 +66,6 @@ Shm::Application.routes.draw do
   match ':controller(/:action(/:id))(.:format)'
 
   if ::Rails.application.config.handle_errors
-    match '*path', :to => redirect {|params, request| "/error/404?from=#{request.url}"}
+    match '*path', :to => redirect { |params, request| "/error/404?from=#{request.url}" }
   end
-
 end
