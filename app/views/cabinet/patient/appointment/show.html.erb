@@ -1,0 +1,11 @@
+<h3>You subscribe to appointment</h3>
+Date start: <%= @event.date_start %>
+Date end: <%= @event.date_end %>
+
+Attendees:
+
+<ul>
+  <% @event.attendees.each do |a| %>
+      <li><%= a.user.email %> (<%= a.user.roles.map(&:name).join(', ') %>)</li>
+  <% end %>
+</ul>

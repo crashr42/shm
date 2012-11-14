@@ -2,10 +2,7 @@
 <p>Orginizer: <%= @event.user.email %></p>
 <p>Summary: <%= @event.summary %></p>
 <p>Date: from <%= @event.date_start.to_s :ru %> to <%= @event.date_end.to_s :ru %></p>
-<% if @event.time_start.present? && @event.time_end.present? %>
-    <p>Time: from <%= @event.time_start.strftime '%H:%M:%S' %> to <%= @event.time_end.strftime '%H:%M:%S' %></p>
-<% end %>
-<p>Category: <%= t "event.categories.#{@event.category}" %></p>
+<p>Type: <%= t "event.categories.#{@event.type.underscore.gsub('_event', '')}" %></p>
 <% if @event.description.present? %>
     <p>Description: <%= @event.description %></p>
 <% end %>
@@ -24,4 +21,7 @@
           <li><%= link_to "rule ##{r.id}", :controller => :recurrence, :action => :show, :id => r.id %></li>
       <% end %>
     </ul>
+<% end %>
+<% if @event.is_a? AppointmentEvent %>
+    <%= link_to 'Unsubscribe', {:controller => :'cabinet/patient/event', :action => :unsubscribe, :id => @event.id}, {:class => 'btn'} %>
 <% end %>

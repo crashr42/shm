@@ -9,7 +9,8 @@ class Cabinet::Patient::EventController < Cabinet::PatientController
 
         render :json => events.map {|e|{
             id:    e.id,
-            title: e.category,
+            title: t("event.categories.#{e.type.underscore.gsub('_event', '')}"),
+            className: e.status_to_css,
             start: e.date_start,
             end:   e.date_end
         }}
@@ -23,6 +24,17 @@ class Cabinet::Patient::EventController < Cabinet::PatientController
     respond_to do |format|
       format.html
       format.json { render :json => @event }
+    end
+  end
+
+  def unsubscribe
+    @event = Event.find params[:id]
+    respond_to do |f|
+      if @event.unsubsribe current_user.id
+        f.html { redirect_to({:controller => :'cabinet/patient/index', :action => :index}, :notice => 'You unsubscribe from event.') }
+      else
+        f.html { redirect_to({:controller => :'cabinet/patient/index', :action => :index}, :notice => 'Can\'t unsubscribe from event.') }
+      end
     end
   end
 end

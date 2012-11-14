@@ -1,22 +1,20 @@
-<%= form_tag({:controller => :event, :action => :new}, :class => 'form-horizontal') do %>
-  <div class="control-group">
-    <label class="control-label">Organizer</label>
-
-    <div class="controls">
-      <h3><%= User.current.email %></h3>
+<% @event.errors.each do |e, m| %>
+    <div class="alert alert-error">
+      <button class="close" data-dismiss="alert">&times;</button>
+      <%= "#{e} #{m} #{@event[e]}" %>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label">Category</label>
+<% end %>
+<%= simple_form_for @event, :as => :event, :validate => true, :url => {:controller => :event, :action => :create}, :html => {:class => 'form-horizontal'} do |f| %>
+    <div class="control-group">
+      <label class="control-label">Organizer</label>
 
-    <div class="controls">
-      <select name="event[category]" id="category">
-        <% Event.categories.each do |c| %>
-            <option value="<%= c %>"><%= t "event.categories.#{c}" %></option>
-        <% end %>
-      </select>
+      <div class="controls">
+        <h3><%= User.current.email %></h3>
+      </div>
     </div>
-  </div>
+    <%= f.input :type, :as => :select, :collection => Event.descendants,
+                :label_method => lambda {|e| t("event.categories.#{e.name.underscore.gsub('_event', '')}")},
+                :selected => Event.descendants.first %>
     <div class="control-group">
       <label class="control-label">Whole day?</label>
 
@@ -24,36 +22,36 @@
         <input type="checkbox" id="whole_day" name="whole_day" checked="checked">
       </div>
     </div>
-  <div class="control-group">
-    <label class="control-label">Date start</label>
+    <div class="control-group">
+      <label class="control-label">Date start</label>
 
-    <div class="controls">
-      <input type="text" name="event[date_start]" id="date_start" class="datepicker" placeholder="date">
-      <input type="text" name="event[time_start]" id="time_start" class="timepicker" placeholder="time" style="display: none;">
+      <div class="controls">
+        <input type="text" name="event[date_start]" id="date_start" class="datepicker" placeholder="date">
+        <input type="text" name="event[time_start]" id="time_start" class="timepicker" placeholder="time" style="display: none;">
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label">Date end</label>
+    <div class="control-group">
+      <label class="control-label">Date end</label>
 
-    <div class="controls">
-      <input type="text" name="event[date_end]" id="date_end" class="datepicker" placeholder="date">
-      <input type="text" name="event[time_end]" id="time_end" class="timepicker" placeholder="time" style="display: none;">
+      <div class="controls">
+        <input type="text" name="event[date_end]" id="date_end" class="datepicker" placeholder="date">
+        <input type="text" name="event[time_end]" id="time_end" class="timepicker" placeholder="time" style="display: none;">
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label">Summary</label>
+    <div class="control-group">
+      <label class="control-label">Summary</label>
 
-    <div class="controls">
-      <input type="text" name="event[summary]" id="summary" placeholder="summary">
+      <div class="controls">
+        <input type="text" name="event[summary]" id="summary" placeholder="summary">
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label">Description</label>
+    <div class="control-group">
+      <label class="control-label">Description</label>
 
-    <div class="controls">
-      <textarea name="event[description]" id="description" placeholder="description"></textarea>
+      <div class="controls">
+        <textarea name="event[description]" id="description" placeholder="description"></textarea>
+      </div>
     </div>
-  </div>
     <div class="control-group">
       <label class="control-label">Attendees</label>
 
@@ -65,9 +63,9 @@
         </div>
       </div>
     </div>
-  <div class="form-actions">
-    <button class="btn" type="submit">Create</button>
-  </div>
+    <div class="form-actions">
+      <button class="btn" type="submit">Create</button>
+    </div>
 <% end %>
 
 <div class="modal hide fade" id="modal-select-user">

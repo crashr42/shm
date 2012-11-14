@@ -10,7 +10,8 @@ class Cabinet::Manager::EventController < Cabinet::ManagerController
         events = Event.find_by_user_and_date user_id, start_date, end_date
         render :json => events.map {|e|{
             id:    e.id,
-            title: e.category,
+            title: t("event.categories.#{e.type.underscore.gsub('_event', '')}"),
+            className: e.status_to_css,
             start: e.date_start,
             end:   e.date_end
         }}
@@ -23,11 +24,11 @@ class Cabinet::Manager::EventController < Cabinet::ManagerController
   end
 
   def create
-    @event = Event.new params[:event]
+    @event = params[:event][:type].constantize.new params[:event]
 
     respond_to do |f|
-      if @event.save
-        f.html { redirect_to({:action => :show}, :notice => 'Event created.') }
+      if @event.save!
+        f.html { redirect_to({:action => :show, :id => @event.id}, :notice => 'event_created') }
       else
         f.html { render :action => :new }
       end

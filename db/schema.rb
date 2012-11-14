@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105094821) do
+ActiveRecord::Schema.define(:version => 20121110093121) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "event_id"
     t.integer  "user_id"
-    t.string   "role"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "type",       :null => false
   end
 
   add_index "attendees", ["event_id"], :name => "index_attendees_on_event_id"
@@ -50,16 +50,17 @@ ActiveRecord::Schema.define(:version => 20121105094821) do
 
   create_table "events", :force => true do |t|
     t.integer  "user_id"
-    t.date     "date_start",                           :null => false
-    t.time     "time_start"
+    t.datetime "date_start",                      :null => false
     t.string   "description"
-    t.string   "status",      :default => "CONFIRMED", :null => false
-    t.string   "summary",                              :null => false
-    t.date     "date_end"
-    t.time     "time_end"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.string   "status",      :default => "free", :null => false
+    t.string   "summary",                         :null => false
+    t.datetime "date_end"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.string   "category"
+    t.string   "type",                            :null => false
+    t.integer  "duration"
+    t.integer  "event_id"
   end
 
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
@@ -156,6 +157,7 @@ ActiveRecord::Schema.define(:version => 20121105094821) do
   add_foreign_key "documents", "events", :name => "documents_event_id_fk"
   add_foreign_key "documents", "users", :name => "documents_user_id_fk"
 
+  add_foreign_key "events", "events", :name => "events_event_id_fk"
   add_foreign_key "events", "users", :name => "events_user_id_fk"
 
   add_foreign_key "recurrence_rules", "events", :name => "recurrence_rules_event_id_fk"
