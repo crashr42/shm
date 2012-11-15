@@ -42,4 +42,28 @@ class Cabinet::Doctor::DocumentController < ApplicationController
 
     return redirect_to '/cabinet/doctor/document/index'
   end
+
+  #
+  #Here we introduce the default action for the Rails resource
+  #create, new, edit, show, update, destroy
+  #
+
+  def index
+  end
+
+  def new
+  end
+
+  def edit
+  end
+
+  def show
+  end
+
+  def update
+  end
+
+  def destroy
+  end
+
 end

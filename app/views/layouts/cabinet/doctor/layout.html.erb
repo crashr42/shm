@@ -35,7 +35,7 @@
           <ul class="nav">
           <%= link_to_active_wrapper 'Dashboard', :li, :controller => :index, :action => :index %>
           <%= link_to_active_wrapper 'My Patients', :li,  cabinet_doctor_patients_path %>
-          <%= link_to_active_wrapper 'My Appointments', :li, cabinet_doctor_appointment_index_path %>
+          <%= link_to_active_wrapper 'My Appointments', :li, cabinet_doctor_appointments_path %>
           <%= link_to_active_wrapper 'Document Archive', :li, cabinet_doctor_documents_path %>
           <%= link_to_active_wrapper 'Log out', :li, destroy_user_session_path, :method => :delete%>
         </ul>
