@@ -1,1 +1,30 @@
 <h3>Мои приемы</h3>
+<% if flash[:notice] %>
+  <span class="label label-success"><%= flash[:notice] %></span>
+<% end %>
+<% if flash[:error] %>
+  <span class="label label-important"><%= flash[:error] %></span>
+<% end %>
+
+
+<h3>Выберите прием:</h3>
+<table class="table table-striped">
+ <tr>
+  <th>Дата</th>
+  <th>Пациент</th>
+  <th>Описание</th>
+ </tr>
+
+<%  User.current.attendees.each do |a|
+    event = a.event if a.present? %>
+<% unless event.blank? %>
+   <tr>
+     <td>
+     <%= event.date_start.strftime("%d %m %yг. ") %><br/>
+     <%= link_to(event.date_start.strftime("%H:%M") + '-' + event.date_end.strftime("%H:%M"), "new-for-event/#{event.id}") %></td>
+     <td><%= User.find_by_id(event.user_id).first_name + ' ' + User.find_by_id(event.user_id).last_name%></td>
+     <td><%= event.description %></td>
+   </tr>
+<% end %>
+<% end %>
+</table>

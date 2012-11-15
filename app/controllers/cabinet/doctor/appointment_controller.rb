@@ -4,7 +4,8 @@ class Cabinet::Doctor::AppointmentController < ApplicationController
   
   #get appointment index page (earh and select patient)
   def index 
-
+    @events = Event.all
+    #@events = Event.where(:id => Attendee.select("event_id").where("user_id = ? AND role = ?", User.current.id, 'attending_doctor'))
   end 
 
   #get form create appointments event
