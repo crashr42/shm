@@ -7,14 +7,7 @@ class Cabinet::Doctor::DocumentController < ApplicationController
     @events = Event.where(:id => Attendee.select("event_id").where("user_id = ? AND role = ?", User.current.id, 'attending_doctor'))
   end
 
-  #Get form for creating new document
-  def new
-    @event = Event.find_by_id params['event_id']
-    if @event.blank?
-      flash[:error] = "Event #{params['event_id']} was not found!"
-      redirect_to '/cabinet/doctor/document/index'
-    end
-  end
+ 
   
   #Creting new document
   def create 
@@ -51,9 +44,11 @@ class Cabinet::Doctor::DocumentController < ApplicationController
   def index
   end
 
+  #Get form for creating new document
   def new
+    
   end
-
+  
   def edit
   end
 

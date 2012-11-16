@@ -9,9 +9,7 @@ class Cabinet::Doctor::AppointmentController < ApplicationController
 
   #get form create appointments event
   def new
-   @event = Event.new
-   @event.user_id = User.current.id
-   @event.category = 'appointment'
+   
   end
 
   #create new appontment
