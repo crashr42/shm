@@ -1,6 +1,7 @@
 class Parameter < ActiveRecord::Base
   has_many :parameters_to_patientses, :class_name => ParametersToPatients
   has_many :patient_users, :through => :parameters_to_patientses, :foreign_key => :user_id
+  has_many :parameters_datas
 
   attr_accessible :type, :name, :metadata
   attr_accessor :metadata
