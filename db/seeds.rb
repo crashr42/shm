@@ -1,4 +1,6 @@
-require "faker"
+#encoding: utf-8
+
+require 'faker'
 
 UsersToRoles.delete_all
 Role.delete_all
@@ -6,6 +8,9 @@ RecurrenceRule.delete_all
 Attendee.delete_all
 Document.delete_all
 Event.delete_all
+ParametersData.delete_all
+ParametersToPatients.delete_all
+Parameter.delete_all
 User.delete_all
 Bid.delete_all
 
@@ -57,6 +62,22 @@ DoctorUser.all.each do |d|
   end
 end
 
+BoolParameter.create({:name => 'Головная боль'})
+IntegerParameter.create({:name => 'Температура', :metadata => {
+    'default' => '36',
+    'validators' => {
+        'min' => '0',
+        'max' => '100'
+    }
+}})
+SelectParameter.create({:name => 'Возрастная категория', :metadata => {
+    'default' => '0-9',
+    'values' => %w(0-9 9-18 18-27 27-36)
+}})
+StringParameter.create({:name => '2х2', :metadata => {
+    'default' => '4'
+}})
+
 (0..50).each do
   u = PatientUser.new
   u.first_name = Faker::Name.first_name
@@ -68,6 +89,11 @@ end
   u.doctor_user = DoctorUser.first(:offset => rand(DoctorUser.count))
   u.save!
   UsersToRoles.create({:user => u, :role => Role.find_by_name('patient')})
+
+  ParametersToPatients.create({:user_id => u.id, :parameter_id => BoolParameter.first.id})
+  ParametersToPatients.create({:user_id => u.id, :parameter_id => IntegerParameter.first.id})
+  ParametersToPatients.create({:user_id => u.id, :parameter_id => SelectParameter.first.id})
+  ParametersToPatients.create({:user_id => u.id, :parameter_id => StringParameter.first.id})
 
   (0..10).each do
     ae = AppointmentEvent.first(:offset => rand(AppointmentEvent.count))

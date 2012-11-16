@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121110093121) do
+ActiveRecord::Schema.define(:version => 20121116153917) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "event_id"
@@ -71,6 +71,21 @@ ActiveRecord::Schema.define(:version => 20121110093121) do
     t.text     "metadata",   :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "parameters_data", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "parameter_id"
+    t.string   "value"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "parameters_to_patients", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "parameter_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "rails_admin_histories", :force => true do |t|
@@ -159,6 +174,12 @@ ActiveRecord::Schema.define(:version => 20121110093121) do
 
   add_foreign_key "events", "events", :name => "events_event_id_fk"
   add_foreign_key "events", "users", :name => "events_user_id_fk"
+
+  add_foreign_key "parameters_data", "parameters", :name => "parameters_data_parameter_id_fk"
+  add_foreign_key "parameters_data", "users", :name => "parameters_data_user_id_fk"
+
+  add_foreign_key "parameters_to_patients", "parameters", :name => "parameters_to_patients_parameter_id_fk"
+  add_foreign_key "parameters_to_patients", "users", :name => "parameters_to_patients_user_id_fk"
 
   add_foreign_key "recurrence_rules", "events", :name => "recurrence_rules_event_id_fk"
 
