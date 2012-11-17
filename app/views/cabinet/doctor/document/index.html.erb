@@ -1,1 +1,17 @@
 <h4>Doc's list</h4>
+<!--form a table header-->
+
+<table class="table">
+<tr><th>Date</th>
+<th>Event Summay</th>
+<th>Doctor record</th></tr>
+
+<% Document.where(user_id: User.current.id).each do |doc| %>
+	<!--Form a table row-->
+	<tr>
+		<td><%= doc.created_at.strftime("%A") %></td>
+		<td><%= Event.find(doc.event_id).summary  %></td>
+		<td><%= doc.record %></td>
+	</tr>
+	<% end %>
+</table>

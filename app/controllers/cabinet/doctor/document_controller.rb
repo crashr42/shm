@@ -30,10 +30,10 @@ class Cabinet::Doctor::DocumentController < ApplicationController
       
     rescue Exception => exp
       flash[:error] = exp.message
-      return redirect_to "/cabinet/doctor/document/new-for-event/#{params['event_id']}" if params[:event_id].present?
+      return redirect_to new_cabinet_doctor_document_path(event_id: params[:event_id]) if params[:event_id].present?
     end
 
-    return redirect_to '/cabinet/doctor/document/index'
+    return redirect_to cabinet_doctor_documents_path()
   end
 
   #
@@ -46,7 +46,7 @@ class Cabinet::Doctor::DocumentController < ApplicationController
 
   #Get form for creating new document
   def new
-    
+   @event = Event.find_by_id(params[:event_id]) 
   end
   
   def edit
