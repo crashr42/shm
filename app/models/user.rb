@@ -53,5 +53,20 @@ class User < ActiveRecord::Base
     'email ILIKE :name', {:name => "%#{search_name}%"}).where('type = ?', "DoctorUser").limit(200)
   
   end
+  
+  #Getting all names of user
+  def get_FIO
+    return "#{last_name} #{first_name}  #{third_name}"
+  end
+
+  #Getting only first and last names
+  def get_FI
+    return "#{last_name} #{first_name}"  
+  end
+
+  #Getting full first and abbreviated last and third names
+  def get_FIO_shortcut
+    return "#{last_name} #{first_name[0]}."
+  end
 
 end
