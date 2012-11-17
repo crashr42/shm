@@ -26,7 +26,7 @@ class Cabinet::Doctor::DocumentController < ApplicationController
       @document.record = params[:doc_content]
       @document.user = User.current
       @document.save!
-      flash[:notice] = "Document was succefly cretating #{@document.id}"      
+      flash[:notice] = "Document was succefly cretating"      
       result = true
 
      rescue Exception => exp
@@ -66,7 +66,7 @@ class Cabinet::Doctor::DocumentController < ApplicationController
   def show
 
     #Get the document by id
-    @doc = Document.where("id = ? AND user_id = ?", params[:id], User.current.id)
+    @doc = Document.where("id = ? AND user_id = ?", params[:id], User.current.id).first()
     
     respond_to do |f|
       f.html do

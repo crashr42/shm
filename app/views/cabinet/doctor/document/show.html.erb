@@ -1,5 +1,17 @@
 <% content_for :local_menu do %>
   <li><%= link_to 'some_link', '.link1' %></li>
 <% end  %>
-<%= debug @doc %>
-<h4>Reviewing document #<small></small></h4>
+
+
+<div class="page-header">
+<h4>Reviewing document # <strong> <%= @doc.id %> </strong><br/>
+ <small>Created by </small> <%= User.find(@doc.user_id).first_name %>
+</h4>
+</div>
+
+<h5>
+	Created_at: <small><%= @doc.created_at.strftime("%v") %></small>
+</h5>
+
+<h5>Doctor records:</h5>
+<p><%= @doc.record  %></p>
