@@ -11,12 +11,7 @@
 
 <%= simple_form_for @event, :url => {:controller => "appointment", :action => "create"},  :class => 'form-horizontal' do |f| %>
   <%= f.input :date_start, :label => "Дата начала приема" %>
-  <%= f.input :time_start, :label => "Время начала приема" %>
   <%= f.input :date_end, :label => "Дата окончания приема" %>
-  <%= f.input :time_end, :label => "Время окончания приема" %>
-
-  <%= f.input :user_id, :as => :hidden %>
-  <%= f.input :category, :as => :hidden %>
   <%= f.input :summary, :placeholder => "summary" %>
   <%= f.input :description, :placeholder => "Описание приема" %>   
   <div class="form-actions">
@@ -26,3 +21,5 @@
   <%= hidden_field_tag('patient_id') %>
   <%= hidden_field_tag('doctor_id') %>
 <% end %>
+
+<%= debug @event %>

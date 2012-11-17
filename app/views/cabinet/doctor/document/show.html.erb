@@ -5,7 +5,7 @@
 
 <div class="page-header">
 <h4>Reviewing document # <strong> <%= @doc.id %> </strong><br/>
- <small>Created by </small> <%= User.find(@doc.user_id).first_name %>
+ <small>Created by </small> <%= User.find(@doc.user_id).get_FI %>
 </h4>
 </div>
 

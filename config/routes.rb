@@ -26,15 +26,8 @@ Shm::Application.routes.draw do
       resources :appointments, :controller => 'appointment'
       resources :documents, :controller => 'document'
       
-      #match '/document/index' => 'document#show_events'
-      #match '/document/new-for-event(/:event_id)' => 'document#new'
-      #match '/document/save' => 'document#create'
-
-      #match 'appointment/index' => 'appointment#index'
-      #match 'appointment/new' => 'appointment#new'
-      #match 'appointment/save' => 'appointment#create'
-      #match 'user/find' => 'user#find', :via => :post
-      #match 'user/find_doctor' => 'user#find_doctor', :via => :post
+      match 'user/find' => 'user#find', :via => :post
+      match 'user/find_doctor' => 'user#find_doctor', :via => :post
     end
     namespace :patient do
       root :to => 'index#index'
