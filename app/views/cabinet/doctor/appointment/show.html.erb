@@ -2,5 +2,31 @@
   <li><%= link_to 'some_link', '.link1' %></li>
 <% end  %>
 
-<h4>Appointment for ...</h4>
+<div class="page-header">
+<h4>Reviewing appointment # <strong> <%= @a.id %> </strong><br/>
+ <small>Created by </small> <%= User.find(@a.user_id).get_FI %>
+</h4>
 
+<h5>
+	Created_at: <small><%= @a.created_at.strftime("%v") %></small>
+</h5>
+</div>
+
+<h5>
+ <%= @a.summary  %><br/>
+ <small><%= @a.description  %></small>
+</h5>
+
+<h5>Attendees:</h5>
+<table class="table">
+<tr>
+  <th>FIO</th>
+  <th>Type</th>
+</tr>
+ <% @a.attendees.each do |attendee|%>
+   <tr>
+     <td><%= User.find_by_id(attendee.user_id).get_FI %></td>
+     <td><%= attendee.type  %></td>
+   </tr>
+ <% end %>
+</table>

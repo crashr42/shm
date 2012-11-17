@@ -22,16 +22,14 @@ class Cabinet::Doctor::AppointmentController < ApplicationController
         raise "There'nt patient_id" if params['patient_id'].blank?
 
         @event.save!
-        @event.event_id = @event.id
-        @event.save!
 
         @at_doctor = DoctorAttendee.new
         @at_doctor.user_id = params['doctor_id']
-        @at_doctor.event_id = @event.event_id
+        @at_doctor.event_id = @event.id
 
         @at_patient = PatientAttendee.new
         @at_patient.user_id = params['patient_id']
-        @at_patient.event_id = @event.event_id
+        @at_patient.event_id = @event.id
 
         @at_doctor.save
         @at_patient.save
@@ -49,6 +47,11 @@ class Cabinet::Doctor::AppointmentController < ApplicationController
 
   #show appointment
   def show
-
+    #Get appointment
+    @a = AppointmentEvent.find_by_id(params[:id]) if params[:id].present?
+    unless @a.present? then
+       flash[:error] = "Cannot appointment for this id"
+       redirect_to cabinet_doctor_appointments_path()
+    end
   end
 end

@@ -8,8 +8,7 @@
   <th>Описание</th>
  </tr>
 
-<%  User.current.attendees.each do |a|
-    event = a.event if a.present? %>
+<%  AppointmentEvent.where(user_id: User.current.id).each do |event|%>
 <% unless event.blank? %>
    <tr>
      <td>
