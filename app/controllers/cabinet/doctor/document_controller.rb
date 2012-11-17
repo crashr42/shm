@@ -25,15 +25,26 @@ class Cabinet::Doctor::DocumentController < ApplicationController
       @document.event_id = params[:event_id]
       @document.record = params[:doc_content]
       @document.user = User.current
-      @document.save
-      flash[:notice] = 'Document was succefly cretating'
-      
-    rescue Exception => exp
-      flash[:error] = exp.message
-      return redirect_to new_cabinet_doctor_document_path(event_id: params[:event_id]) if params[:event_id].present?
+      @document.save!
+      flash[:notice] = "Document was succefly cretating #{@document.id}"      
+      result = true
+
+     rescue Exception => exp
+        result = false
+	flash[:error] = exp.message
+     end   
+
+    respond_to do |f|
+      f.html do
+        #if there are exceprtion redirect to back        
+        if result then
+          return redirect_to cabinet_doctor_document_path(@document.id)
+	else
+	  return redirect_to new_cabinet_doctor_document_path(event_id: params[:event_id])
+	end #unless
+      end
     end
 
-    return redirect_to cabinet_doctor_documents_path()
   end
 
   #
@@ -53,6 +64,18 @@ class Cabinet::Doctor::DocumentController < ApplicationController
   end
 
   def show
+
+    #Get the document by id
+    @doc = Document.where("id = ? AND user_id = ?", params[:id], User.current.id)
+    
+    respond_to do |f|
+      f.html do
+         unless @doc.present? then
+           flash[:error] = "requst document was not found or your  access denied"
+	   redirect_to  cabinet_doctor_documents_path() 
+	 end
+       end
+    end
   end
 
   def update

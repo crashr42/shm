@@ -59,7 +59,18 @@
       <div class="content">
         <div class="row">
           <div class="span9">
-            <%= yield %>
+          
+	  <% if flash[:notice] %>
+          <span class="label label-success"><%= flash[:notice] %></span>
+          <br/>
+	  <% end %>
+          <% if flash[:error] %>
+          <span class="label label-important"><%= flash[:error] %></span>
+          <br/>
+	  <% end %>
+
+
+	   <%= yield %>
           </div>
             
 

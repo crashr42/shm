@@ -9,7 +9,7 @@
 <% Document.where(user_id: User.current.id).each do |doc| %>
 	<!--Form a table row-->
 	<tr>
-		<td><%= doc.created_at.strftime("%A") %></td>
+		<td><%= link_to(doc.created_at.strftime("%v"), cabinet_doctor_document_path(doc.id)) %></td>
 		<td><%= Event.find(doc.event_id).summary  %></td>
 		<td><%= doc.record %></td>
 	</tr>
