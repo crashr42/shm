@@ -64,18 +64,18 @@ end
 
 BoolParameter.create({:name => 'Головная боль'})
 IntegerParameter.create({:name => 'Температура', :metadata => {
-    'default' => '36',
-    'validators' => {
-        'min' => '0',
-        'max' => '100'
+    :default => '36',
+    :validators => {
+        :min => '0',
+        :max => '100'
     }
 }})
 SelectParameter.create({:name => 'Возрастная категория', :metadata => {
-    'default' => '0-9',
-    'values' => %w(0-9 9-18 18-27 27-36)
+    :default => '0-9',
+    :values => %w(0-9 9-18 18-27 27-36)
 }})
 StringParameter.create({:name => '2х2', :metadata => {
-    'default' => '4'
+    :default => '4'
 }})
 
 (0..50).each do

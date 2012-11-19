@@ -10,7 +10,7 @@
       <label class="control-label">Default</label>
 
       <div class="controls">
-        <%= check_box_tag 'parameter[metadata][default]', 'true', p.metadata['default'] == 'true' %>
+        <%= check_box_tag 'parameter[metadata][default]', 'true', p.metadata[:default] == 'true' %>
       </div>
     </div>
     <div class="form-actions">
