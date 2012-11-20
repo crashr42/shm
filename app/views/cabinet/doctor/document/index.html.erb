@@ -1,3 +1,14 @@
+<% @apd = Document::AppointmentDocumentInfo.new() %>
+<%= 
+debug Document::AppointmentDocumentInfo.all() %>
+
+
+<% @apd.anamnesis = "test"
+@apd.appointment_result = "test"
+@apd.document_id = 1
+@apd.save! %>
+
+<%= debug @apd  %>
 <h4>Doc's list</h4>
 <!--form a table header-->
 
