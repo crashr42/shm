@@ -29,4 +29,9 @@ class IntegerParameter < Parameter
         }
     }
   end
+
+  def validate_value value
+    v = Integer(value)
+    v.between? metadata[:validators][:min].to_i, metadata[:validators][:max].to_i
+  end
 end

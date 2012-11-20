@@ -18,4 +18,8 @@ class BoolParameter < Parameter
         }
     }
   end
+
+  def validate_value value
+    metadata[:values].include? value.to_s
+  end
 end

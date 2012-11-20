@@ -1,6 +1,8 @@
 class Parameter < ActiveRecord::Base
   has_many :parameters_to_patientses, :class_name => ParametersToPatients
+  # Пациенты которым назначен данный параметр
   has_many :patient_users, :through => :parameters_to_patientses, :foreign_key => :user_id
+  # Введенные значения для параметра
   has_many :parameters_datas
 
   attr_accessible :type, :name, :metadata
@@ -9,8 +11,12 @@ class Parameter < ActiveRecord::Base
   validate :validate_metadata_structure
   validates_presence_of :name
 
+  # Метаданные параметра по-умолчанию
   def default_metadata ; {} end
+  # Метод для валидации структуры метаданных
   def metadata_validator ; {} end
+  # Метод для валидации значения параметра
+  def validate_value ; false end
 
   def metadata= value
     write_attribute(:metadata, default_metadata.merge(value).to_json)
@@ -22,16 +28,20 @@ class Parameter < ActiveRecord::Base
   end
 
   private
+
+  # Слияние дефолтных метаданных с указанными
   def merge_with_default_metadata
     write_attribute(:metadata, default_metadata.merge(
         read_attribute(:metadata) ?
             JSON.parse(read_attribute(:metadata), {:symbolize_names => true}).to_hash : {}).to_json)
   end
 
+  # Проверка структуру метаданных
   def validate_metadata_structure
     validate_hashes metadata_validator, metadata
   end
 
+  # Валидация структуры хэш-таблицы на основе другой хэш-таблицы
   def validate_hashes validator_hash, validated_hash
     validated_hash.each do |k, v|
       if k[0] != '_'

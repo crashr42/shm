@@ -13,4 +13,6 @@ class StringParameter < Parameter
         }
     }
   end
+
+  def validate_value value ; true end
 end
