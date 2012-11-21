@@ -1,32 +1,37 @@
 class IntegerParameter < Parameter
   def default_metadata
     {
-        'default' => nil,
-        'validators' => {
-            'min' => nil,
-            'max' => nil
+        :default => nil,
+        :validators => {
+            :min => nil,
+            :max => nil
         }
     }
   end
 
   def metadata_validator
     {
-        'default' => {
-            '@validate' => lambda {|v| Integer(v) rescue false},
-            '@error_message' => 'parameter.integer.metadata.errors.default'
+        :default => {
+            :_validate => lambda { |v| Integer(v) rescue false },
+            :_error_message => 'parameter.integer.metadata.errors.default'
         },
-        'validators' => {
-            '@validate' => lambda {|v| v.is_a? Hash},
-            '@error_message' => 'parameter.integer.metadata.errors.validators',
-            'min' => {
-                '@validate' => lambda {|v| Integer(v) rescue false},
-                '@error_message' => 'parameter.integer.metadata.errors.validators.min'
+        :validators => {
+            :_validate => lambda { |v| v.is_a? Hash },
+            :_error_message => 'parameter.integer.metadata.errors.validators',
+            :min => {
+                :_validate => lambda { |v| Integer(v) rescue false },
+                :_error_message => 'parameter.integer.metadata.errors.validators.min'
             },
-            'max' => {
-                '@validate' => lambda {|v| Integer(v) rescue false},
-                '@error_message' => 'parameter.integer.metadata.errors.validators.max'
+            :max => {
+                :_validate => lambda { |v| Integer(v) rescue false },
+                :_error_message => 'parameter.integer.metadata.errors.validators.max'
             }
         }
     }
+  end
+
+  def validate_value value
+    v = Integer(value)
+    v.between? metadata[:validators][:min].to_i, metadata[:validators][:max].to_i
   end
 end

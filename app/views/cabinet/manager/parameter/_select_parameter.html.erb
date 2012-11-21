@@ -18,12 +18,12 @@
     </div>
     <div class="control-group">
       <div id="select-p-values-box">
-        <% p.metadata['values'].each do |v| %>
+        <% p.metadata[:values].each do |v| %>
             <div class="alert alert-info">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
               <input type="hidden" name="parameter[metadata][values][]" value="<%= v %>">
               <label class="as-default radio">
-                <%= radio_button_tag 'parameter[metadata][default]', v, v == p.metadata['default'] %>
+                <%= radio_button_tag 'parameter[metadata][default]', v, v == p.metadata[:default] %>
                 <%= v %>
               </label>
             </div>

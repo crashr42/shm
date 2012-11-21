@@ -1,0 +1,6 @@
+<h3>Assigned parameters</h3>
+<ul>
+  <% @parameters.each do |p| %>
+      <li><%= link_to 'Fill', edit_cabinet_patient_parameter_path(p) %>  <%= p.name %></li>
+  <% end %>
+</ul>
