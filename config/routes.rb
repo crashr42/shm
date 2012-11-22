@@ -21,10 +21,13 @@ Shm::Application.routes.draw do
     namespace :doctor do
       root :to => 'index#index'
       match '/' => 'index#index'
-      
-      resources :patients, :controller => 'user'
+
       resources :appointments, :controller => 'appointment'
       resources :documents, :controller => 'document'
+      resources :patient, :parameter, :user
+
+      match 'link/parameter/:parameter_id/to/:patient_id' => 'parameter#link', :via => :post
+      match 'unlink/parameter/:parameter_id/from/:patient_id' => 'parameter#unlink', :via => :post
       
       match 'user/find' => 'user#find', :via => :post
       match 'user/find_doctor' => 'user#find_doctor', :via => :post
