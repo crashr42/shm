@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121120150357) do
+ActiveRecord::Schema.define(:version => 20121122112847) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "event_id"
@@ -66,11 +66,12 @@ ActiveRecord::Schema.define(:version => 20121120150357) do
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
 
   create_table "parameters", :force => true do |t|
-    t.string   "name",       :null => false
-    t.string   "type",       :null => false
-    t.text     "metadata",   :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "name",                    :null => false
+    t.string   "type",                    :null => false
+    t.text     "metadata",                :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.integer  "rule_parameter_input_id"
   end
 
   create_table "parameters_data", :force => true do |t|
@@ -142,6 +143,12 @@ ActiveRecord::Schema.define(:version => 20121120150357) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "rule_parameter_inputs", :force => true do |t|
+    t.string   "rule"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
@@ -185,6 +192,8 @@ ActiveRecord::Schema.define(:version => 20121120150357) do
 
   add_foreign_key "events", "events", :name => "events_event_id_fk"
   add_foreign_key "events", "users", :name => "events_user_id_fk"
+
+  add_foreign_key "parameters", "rule_parameter_inputs", :name => "parameters_rule_parameter_input_id_fk"
 
   add_foreign_key "parameters_data", "parameters", :name => "parameters_data_parameter_id_fk"
   add_foreign_key "parameters_data", "users", :name => "parameters_data_user_id_fk"

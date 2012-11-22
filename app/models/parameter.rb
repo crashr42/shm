@@ -4,12 +4,15 @@ class Parameter < ActiveRecord::Base
   has_many :patient_users, :through => :parameters_to_patientses, :foreign_key => :user_id
   # Введенные значения для параметра
   has_many :parameters_datas
+  # Правило ввода параметра
+  belongs_to :rule_parameter_input
 
-  attr_accessible :type, :name, :metadata
+  attr_accessible :type, :name, :metadata, :rule_parameter_input, :rule_parameter_input_id
   attr_accessor :metadata
   before_save :merge_with_default_metadata
   validate :validate_metadata_structure
   validates_presence_of :name
+  validates_presence_of :rule_parameter_input_id
 
   # Метаданные параметра по-умолчанию
   def default_metadata ; {} end

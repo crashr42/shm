@@ -1,11 +1,6 @@
-<%= form_for p, :as => :parameter, :url => url_for(:controller => :parameter, :action => p.new_record? ? :create : :update), :html => {:class => 'form-horizontal'} do |f| %>
+<%= simple_form_for p, :as => :parameter, :url => url_for(:controller => :parameter, :action => p.new_record? ? :create : :update), :html => {:class => 'form-horizontal'} do |f| %>
     <%= f.hidden_field :type, :value => 'BoolParameter' %>
-    <div class="control-group">
-      <%= f.label :name, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :name, :placeholder => 'parameter name' %>
-      </div>
-    </div>
+    <%= f.input :name, :input_html => {:placeholder => 'parameter name'} %>
     <div class="control-group">
       <label class="control-label">Default</label>
 
@@ -13,6 +8,7 @@
         <%= check_box_tag 'parameter[metadata][default]', 'true', p.metadata[:default] == 'true' %>
       </div>
     </div>
+    <%= f.input :rule_parameter_input_id, :collection => RuleParameterInput.all, :value_method => :id, :label_method => :rule %>
     <div class="form-actions">
       <%= link_to 'Back', {:controller => :parameter, :action => :index}, :class => 'btn' %>
       <button type="submit" class="btn btn-success">

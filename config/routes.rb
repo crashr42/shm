@@ -47,7 +47,7 @@ Shm::Application.routes.draw do
       root :to => 'index#index'
       match '/' => 'index#index'
 
-      resources :parameter, :bid, :event, :user
+      resources :parameter, :bid, :event, :user, :rule_parameter_input
 
       match '/event/find' => 'event#find', :via => :post
       match '/event/find_attendee' => 'event#find_attendee', :via => :post

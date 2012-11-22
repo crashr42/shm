@@ -11,6 +11,7 @@ Event.delete_all
 ParametersData.delete_all
 ParametersToPatients.delete_all
 Parameter.delete_all
+RuleParameterInput.delete_all
 User.delete_all
 Bid.delete_all
 
@@ -62,21 +63,29 @@ DoctorUser.all.each do |d|
   end
 end
 
-BoolParameter.create({:name => 'Головная боль'})
+RuleParameterInput.create({:rule => '2 раза в день после еды'})
+RuleParameterInput.create({:rule => '3 раза в день на голодный желудок'})
+RuleParameterInput.create({:rule => 'утром'})
+RuleParameterInput.create({:rule => 'вечером'})
+
+BoolParameter.create({
+                         :name => 'Головная боль',
+                         :rule_parameter_input => RuleParameterInput.first(:offset => rand(RuleParameterInput.count))
+                     })
 IntegerParameter.create({:name => 'Температура', :metadata => {
     :default => '36',
     :validators => {
         :min => '0',
         :max => '100'
     }
-}})
+}, :rule_parameter_input => RuleParameterInput.first(:offset => rand(RuleParameterInput.count))})
 SelectParameter.create({:name => 'Возрастная категория', :metadata => {
     :default => '0-9',
     :values => %w(0-9 9-18 18-27 27-36)
-}})
+}, :rule_parameter_input => RuleParameterInput.first(:offset => rand(RuleParameterInput.count))})
 StringParameter.create({:name => '2х2', :metadata => {
     :default => '4'
-}})
+}, :rule_parameter_input => RuleParameterInput.first(:offset => rand(RuleParameterInput.count))})
 
 (0..50).each do
   u = PatientUser.new

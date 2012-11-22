@@ -39,6 +39,7 @@
             <ul class="dropdown-menu">
               <%= link_to_active_wrapper 'List', :li, :controller => :parameter, :action => :index %>
               <%= link_to_active_wrapper 'Add', :li, :controller => :parameter, :action => :new %>
+              <%= link_to_active_wrapper 'Rules', :li, cabinet_manager_rule_parameter_input_index_path %>
             </ul>
           </li>
           <%= link_to_active_wrapper 'Bids', :li, :controller => :'cabinet/manager/bid', :action => :index %>
