@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shm</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= csrf_meta_tags %>
+</head>
+<body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
+<div class="container">
+  <div class="row">
+    <div class="offset4 span4">
+      <%= yield %>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag "application" %>
+</body>
+</html>

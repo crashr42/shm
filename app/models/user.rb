@@ -69,4 +69,13 @@ class User < ActiveRecord::Base
     return "#{last_name} #{first_name[0]}."
   end
 
+  def timeout_blocked
+    self.timeout_block = true
+    self.save!
+  end
+
+  def timeout_unblocked
+    self.timeout_block = false
+    self.save!
+  end
 end

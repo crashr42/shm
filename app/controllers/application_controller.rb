@@ -2,11 +2,21 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper :all
 
-  before_filter :manage_user
+  before_filter :manage_user, :timeout_block, :current_url
 
   private
+  def current_url
+    cookies[:current_url] = request.url if request.get?
+  end
+
   def manage_user
     User.current = current_user
+  end
+
+  def timeout_block
+    if current_user.present? && current_user.timeout_block
+      redirect_to :controller => :'/block', :action => :new
+    end
   end
 
   if ::Rails.application.config.handle_errors
