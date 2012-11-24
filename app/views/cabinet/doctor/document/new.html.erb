@@ -8,9 +8,9 @@
 <%= simple_form_for @adoc.appointment_document_info, validate: true, url: {:controller => :document, :action => :create},
                     :html => {:multipart => true, :class => 'form-vertical'} do |f| %>
 
-    <%= f.input :anamnesis, placeholder: "Enter anamnesis", label: false, rows: 5,
+    <%= f.input :anamnesis, placeholder: "Enter anamnesis", label: "Anamnesis", rows: 5,
                 :input_html => {:cols => 150, :rows => 10, style: "min-width: 450px;"} %>
-    <%= f.input :appointment_result, placeholder: "Enter appointment results", label: false,
+    <%= f.input :appointment_result, placeholder: "Enter appointment results", label: "Appointment result",
                 :input_html => {:cols => 50, :rows => 10, style: "min-width: 450px;"} %>
     <%= hidden_field_tag('event_id', @adoc.event.id) %>
 

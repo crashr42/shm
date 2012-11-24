@@ -6,4 +6,9 @@ class Document < ActiveRecord::Base
 
   #The event that reference current document
   belongs_to :event
+
+  private
+  def initialize_creator_user
+    self.user_id = User.current.id
+  end
 end
