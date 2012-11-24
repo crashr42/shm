@@ -4,7 +4,7 @@
 
 <div class="page-header">
 <h4>Reviewing appointment # <strong> <%= @a.id %> </strong><br/>
- <small>Created by </small> <%= User.find(@a.user_id).get_FI %>
+ <small>Created by </small> <%= get_appointment_organizer(@a) %>
 </h4>
 
 <h5>
