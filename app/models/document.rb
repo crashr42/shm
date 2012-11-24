@@ -1,6 +1,8 @@
 class Document < ActiveRecord::Base
   attr_accessible :event_id
 
+  before_save :initialize_creator_user
+
   #That user is who by create current document. The attendees reference with document by entity "Event"
   belongs_to :user
 
