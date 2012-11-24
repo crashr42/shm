@@ -1,17 +1,16 @@
-<h4>Doc's list</h4>
+<h4>Recent's (5) appointment doc's list</h4>
 <!--form a table header-->
 
 <table class="table">
-<tr><th>Date</th>
-<th>Event Summay</th>
-<th>Doctor record</th></tr>
+  <tr>
+    <th>Date</th>
+    <th>Event Summary</th>
 
-<% Document.where(user_id: User.current.id).each do |doc| %>
-	<!--Form a table row-->
-	<tr>
-		<td><%= link_to(doc.created_at.strftime("%v"), cabinet_doctor_document_path(doc.id)) %></td>
-		<td><%= Event.find(doc.event_id).summary  %></td>
-		<td><%= doc.record %></td>
-	</tr>
-	<% end %>
+    <% Document.where(user_id: User.current.id).order("created_at DESC").limit(5).each do |doc| %>
+        <!--Form a table row-->
+      <tr>
+        <td><%= link_to(doc.created_at.strftime("%v"), cabinet_doctor_document_path(doc.id)) %></td>
+        <td><%= Event.find(doc.event_id).summary %></td>
+      </tr>
+  <% end %>
 </table>

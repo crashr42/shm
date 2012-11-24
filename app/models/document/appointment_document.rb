@@ -1,5 +1,5 @@
 class AppointmentDocument < Document
-  has_one :appointment_document_info, autosave: true
+  has_one :appointment_document_info, foreign_key: "document_id", autosave: true
   #accepts_nested_attributes_for :appointment_document_info
   validates_associated :appointment_document_info
   #attr_accessible :appointment_document_info_attributes

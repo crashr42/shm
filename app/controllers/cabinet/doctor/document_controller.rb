@@ -42,7 +42,7 @@ class Cabinet::Doctor::DocumentController < ApplicationController
   def show
 
     #Get the document by id
-    @doc = Document.where("id = ? AND user_id = ?", params[:id], User.current.id).first()
+    @doc = AppointmentDocument.where("id = ? AND user_id = ?", params[:id], User.current.id).first()
 
     respond_to do |f|
       f.html do

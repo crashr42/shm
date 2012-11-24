@@ -13,5 +13,7 @@
 	Created_at: <small><%= @doc.created_at.strftime("%v") %></small>
 </h5>
 
-<h5>Doctor records:</h5>
-<p><%= @doc.record  %></p>
+<h5>Anamnesis:</h5>
+<p><%= @doc.appointment_document_info.anamnesis  %></p>
+<h5>Appointment result's</h5>
+<p><%= @doc.appointment_document_info.appointment_result %></p>
