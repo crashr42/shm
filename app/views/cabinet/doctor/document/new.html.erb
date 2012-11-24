@@ -1,10 +1,21 @@
-<%= form_tag(cabinet_doctor_documents_path(), :method => :post) do %>
-    <h4>Введите результаты осмотра для приема №<%= @event.id %><br/><small>(<%= @event.description %>)</small></h4>
-    
-    <%= hidden_field_tag('event_id', @event.id) %>
-    
-    <%= label_tag(:doc_content, "Введите результат осмотра:") %>
-    <%= text_area_tag(:doc_content) %>
-    <br/>
-    <%= submit_tag("Сохранить") %>
+<legend>
+  Enter appointment results for:
+  <h5><%= @adoc.event.summary %> (
+    <small><%= @adoc.event.description %></small>
+    )
+  </h5>
+</legend>
+<%= simple_form_for @adoc.appointment_document_info, validate: true, url: {:controller => :document, :action => :create},
+                    :html => {:multipart => true, :class => 'form-vertical'} do |f| %>
+
+    <%= f.input :anamnesis, placeholder: "Enter anamnesis", label: "Anamnesis", rows: 5,
+                :input_html => {:cols => 150, :rows => 10, style: "min-width: 450px;"} %>
+    <%= f.input :appointment_result, placeholder: "Enter appointment results", label: "Appointment result",
+                :input_html => {:cols => 50, :rows => 10, style: "min-width: 450px;"} %>
+    <%= hidden_field_tag('event_id', @adoc.event.id) %>
+
+    <div class="form-actions">
+      <%= f.button :submit, 'Save document', :class => 'btn-success' %>
+      <%= link_to 'Back', :back, :class => 'btn' %>
+    </div>
 <% end %>
