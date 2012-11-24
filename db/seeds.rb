@@ -87,33 +87,6 @@ StringParameter.create({:name => '2х2', :metadata => {
     :default => '4'
 }, :rule_parameter_input => RuleParameterInput.first(:offset => rand(RuleParameterInput.count))})
 
-def create_appointment(doctor)
-  @new_appointment = AppointmentEvent.new()
-
-  start_time = DateTime.now.to_date - Random.rand(1..10).days
-  end_time = start_time + 1.hour
-
-  @new_appointment.date_start = start_time
-  @new_appointment.date_end = end_time
-
-  @new_appointment.summary = "Test summary test summary"
-  @new_appointment.description = "Very test description"
-
-  @new_appointment.save!
-
-  #at - сокращение от attendee
-  @at_doctor = DoctorAttendee.new
-  @at_doctor.user_id = doctor.id
-  @at_doctor.event_id = @new_appointment.id
-
-  @at_patient = PatientAttendee.new
-  @at_patient.user_id = PatientUser.first.id
-  @at_patient.event_id = @new_appointment.id
-
-  @at_doctor.save!
-  @at_patient.save!
-end
-
 (0..50).each do
   u = PatientUser.new
   u.first_name = Faker::Name.first_name
@@ -138,10 +111,4 @@ end
     PatientAttendee.create({:user => u, :event => ae})
     AttendingDoctorAttendee.create({:user => ae.attending_doctor, :event => ae})
   end
-
-  #Добавим для докторов по 2 тестовых приема:
-  DoctorUser.all.each { |doctor|
-    create_appointment(doctor)
-    create_appointment(doctor)
-  }
 end
