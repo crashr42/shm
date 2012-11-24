@@ -2,9 +2,22 @@ class Cabinet::Doctor::AppointmentController < ApplicationController
 
   layout 'cabinet/doctor/layout'
 
-  #get appointment index page (earh and select patient)
+  #get appointment index page (search and select patient)
   def index
+    respond_to { |f|
+      begin
+        @me_attendees = DoctorUser.find(User.current.id).attendees.where(type: "DoctorAttendee")
+        raise "Yo have no appointments" if @me_attendees.blank?
 
+        @appointments = @me_attendees.map { |a| a.event }
+        f.html { return render 'cabinet/doctor/appointment/index' }
+
+      rescue Exception => exp
+        flash[:error] = exp.message
+        f.html {
+          return redirect_to cabinet_doctor_root_path() }
+      end
+    }
   end
 
   #get form create appointments event
@@ -38,7 +51,7 @@ class Cabinet::Doctor::AppointmentController < ApplicationController
       rescue Exception => exp
         flash[:error] = exp.message
         f.html do
-            redirect_to new_cabinet_doctor_appointment_path()
+          redirect_to new_cabinet_doctor_appointment_path()
         end
       end
 
@@ -50,8 +63,8 @@ class Cabinet::Doctor::AppointmentController < ApplicationController
     #Get appointment
     @a = AppointmentEvent.find_by_id(params[:id]) if params[:id].present?
     unless @a.present? then
-       flash[:error] = "Cannot appointment for this id"
-       redirect_to cabinet_doctor_appointments_path()
+      flash[:error] = "Cannot appointment for this id"
+      redirect_to cabinet_doctor_appointments_path()
     end
   end
 end

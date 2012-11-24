@@ -2,22 +2,28 @@
 
 <h3>Выберите прием:</h3>
 <table class="table table-striped">
- <tr>
-  <th>Дата<br/><small>(Click to show)</small></th>
-  <th>Пациент<br/><small>(Click to appointment)</small></th>
-  <th>Описание</th>
- </tr>
+  <tr>
+    <th>Дата<br/>
+      <small>(Click to show)</small>
+    </th>
+    <th>Пациент<br/>
+      <small>(Click to appointment)</small>
+    </th>
+    <th>Описание</th>
+  </tr>
 
-<%  AppointmentEvent.where(user_id: User.current.id).each do |event|%>
-<% unless event.blank? %>
-   <tr>
-     <td>
-     <%= event.date_start.strftime("%d %m %yг. ") %><br/>
-     <%= link_to(event.date_start.strftime("%H:%M") + '-' + event.date_end.strftime("%H:%M"), cabinet_doctor_appointment_path(event.id)) %></td>
-     <td><%= link_to(User.find_by_id(event.user_id).first_name + ' ' + User.find_by_id(event.user_id).last_name,
-     new_cabinet_doctor_document_path(event_id: event.id))%></td>
-     <td><%= event.description %></td>
-   </tr>
-<% end %>
-<% end %>
+  <% @appointments.each do |event| %>
+      <% unless event.blank? %>
+          <tr>
+            <td>
+              <%= event.date_start.strftime("%d %m %yг. ") %>
+              <br/>
+              <%= link_to(event.date_start.strftime("%H:%M") + '-' + event.date_end.strftime("%H:%M"),
+                          cabinet_doctor_appointment_path(event.id)) %>
+            </td>
+            <td><%= link_to(get_patient_by_event(event), new_cabinet_doctor_document_path(event_id: event.id)) %></td>
+            <td><%= event.description %></td>
+          </tr>
+      <% end %>
+  <% end %>
 </table>
