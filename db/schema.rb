@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126151139) do
+ActiveRecord::Schema.define(:version => 20121126152609) do
 
   create_table "appointment_document_infos", :force => true do |t|
     t.text     "anamnesis"
@@ -43,6 +43,17 @@ ActiveRecord::Schema.define(:version => 20121126151139) do
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
     t.string   "email",                                :null => false
+  end
+
+  create_table "diagnoses", :force => true do |t|
+    t.string   "class_code", :null => false
+    t.string   "class_name", :null => false
+    t.string   "block_code", :null => false
+    t.string   "block_name", :null => false
+    t.string   "code",       :null => false
+    t.string   "code_name",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "documents", :force => true do |t|
@@ -185,8 +196,10 @@ ActiveRecord::Schema.define(:version => 20121126151139) do
     t.integer  "doctor_user_id"
     t.boolean  "timeout_block",          :default => false, :null => false
     t.integer  "specialty_id"
+    t.integer  "diagnosis_id"
   end
 
+  add_index "users", ["diagnosis_id"], :name => "index_users_on_diagnosis_id"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["specialty_id"], :name => "index_users_on_specialty_id"
@@ -223,6 +236,7 @@ ActiveRecord::Schema.define(:version => 20121126151139) do
 
   add_foreign_key "recurrence_rules", "events", :name => "recurrence_rules_event_id_fk"
 
+  add_foreign_key "users", "diagnoses", :name => "users_diagnosis_id_fk"
   add_foreign_key "users", "specialties", :name => "users_specialty_id_fk"
   add_foreign_key "users", "users", :name => "users_doctor_user_id_fk", :column => "doctor_user_id"
 

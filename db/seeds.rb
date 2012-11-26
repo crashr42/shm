@@ -13,6 +13,7 @@ ParametersToPatients.delete_all
 Parameter.delete_all
 RuleParameterInput.delete_all
 User.delete_all
+Diagnosis.delete_all
 Specialty.delete_all
 Bid.delete_all
 
@@ -26,6 +27,15 @@ Specialty.create :name => 'Ортопед'
 Specialty.create :name => 'Логопед'
 Specialty.create :name => 'Оттоларинголог'
 Specialty.create :name => 'Окулист'
+
+Diagnosis.create({
+                     :class_code => 'I',
+                     :class_name => 'Некоторые инфекционные и паразитарные болезни',
+                     :block_code => 'A30-A49',
+                     :block_name => 'Другие бактериальные болезни',
+                     :code       => 'A39.5',
+                     :code_name  => 'Менингококковая болезнь сердца'
+                 })
 
 Role.all.each do |role|
   user = "#{role.name.capitalize!}User".constantize.new
@@ -104,6 +114,7 @@ StringParameter.create({:name => '2х2', :metadata => {
   u.email = Faker::Internet.email
   u.password = u.email
   u.doctor_user = DoctorUser.first(:offset => rand(DoctorUser.count))
+  u.diagnosis = Diagnosis.first(:offset => rand(Diagnosis.count))
   u.save!
   UsersToRoles.create({:user => u, :role => Role.find_by_name('patient')})
 
