@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121122144240) do
+ActiveRecord::Schema.define(:version => 20121126151139) do
 
   create_table "appointment_document_infos", :force => true do |t|
     t.text     "anamnesis"
@@ -90,6 +90,17 @@ ActiveRecord::Schema.define(:version => 20121122144240) do
     t.datetime "updated_at",   :null => false
   end
 
+  create_table "parameters_storages", :force => true do |t|
+    t.integer  "parameter_id"
+    t.integer  "user_id"
+    t.string   "value"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "parameters_storages", ["parameter_id"], :name => "index_parameters_storages_on_parameter_id"
+  add_index "parameters_storages", ["user_id"], :name => "index_parameters_storages_on_user_id"
+
   create_table "parameters_to_patients", :force => true do |t|
     t.integer  "user_id"
     t.integer  "parameter_id"
@@ -146,6 +157,12 @@ ActiveRecord::Schema.define(:version => 20121122144240) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "specialties", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",    :null => false
     t.string   "encrypted_password",     :default => "",    :null => false
@@ -167,10 +184,12 @@ ActiveRecord::Schema.define(:version => 20121122144240) do
     t.string   "policy"
     t.integer  "doctor_user_id"
     t.boolean  "timeout_block",          :default => false, :null => false
+    t.integer  "specialty_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["specialty_id"], :name => "index_users_on_specialty_id"
 
   create_table "users_to_roles", :force => true do |t|
     t.integer  "user_id"
@@ -196,11 +215,15 @@ ActiveRecord::Schema.define(:version => 20121122144240) do
   add_foreign_key "parameters_data", "parameters", :name => "parameters_data_parameter_id_fk"
   add_foreign_key "parameters_data", "users", :name => "parameters_data_user_id_fk"
 
+  add_foreign_key "parameters_storages", "parameters", :name => "parameters_storages_parameter_id_fk"
+  add_foreign_key "parameters_storages", "users", :name => "parameters_storages_user_id_fk"
+
   add_foreign_key "parameters_to_patients", "parameters", :name => "parameters_to_patients_parameter_id_fk"
   add_foreign_key "parameters_to_patients", "users", :name => "parameters_to_patients_user_id_fk"
 
   add_foreign_key "recurrence_rules", "events", :name => "recurrence_rules_event_id_fk"
 
+  add_foreign_key "users", "specialties", :name => "users_specialty_id_fk"
   add_foreign_key "users", "users", :name => "users_doctor_user_id_fk", :column => "doctor_user_id"
 
   add_foreign_key "users_to_roles", "roles", :name => "users_to_roles_role_id_fk"

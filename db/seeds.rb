@@ -13,12 +13,19 @@ ParametersToPatients.delete_all
 Parameter.delete_all
 RuleParameterInput.delete_all
 User.delete_all
+Specialty.delete_all
 Bid.delete_all
 
 Role.create :name => 'doctor'
 Role.create :name => 'patient'
 Role.create :name => 'admin'
 Role.create :name => 'manager'
+
+Specialty.create :name => 'Кардиолог'
+Specialty.create :name => 'Ортопед'
+Specialty.create :name => 'Логопед'
+Specialty.create :name => 'Оттоларинголог'
+Specialty.create :name => 'Окулист'
 
 Role.all.each do |role|
   user = "#{role.name.capitalize!}User".constantize.new
@@ -43,6 +50,7 @@ end
   u.policy = Faker::Lorem.characters 32
   u.email = Faker::Internet.email
   u.password = u.email
+  u.specialty = Specialty.first(:offset => rand(Specialty.count))
   u.save!
   UsersToRoles.create({:user => u, :role => Role.find_by_name('doctor')})
 end
