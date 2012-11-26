@@ -8,6 +8,10 @@
 //= require rails.validations
 //= require_tree .
 
+rails = {
+    env: '<%= Rails.env %>'
+};
+
 function bind_datepicker() {
     $('input.datepicker').datepicker({
         format:'dd.mm.yyyy',
@@ -23,10 +27,9 @@ function bind_timepicker() {
     $('input.timepicker').timepicker();
 }
 
-bind_datepicker();
-bind_timepicker();
-
 $(document).ready(function(){
+    bind_datepicker();
+    bind_timepicker();
     App.load_module();
     $('.b_file').each(function () {
         var i_file = $(this).prev();
@@ -38,4 +41,5 @@ $(document).ready(function(){
             file.click();
         })
     });
+    alert(rails.env);
 });

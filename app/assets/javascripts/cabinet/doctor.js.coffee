@@ -1,3 +1,3 @@
 App.module('/cabinet/doctor', ->
-
+  App.idle() if (rails.env != 'development') # Редирект на страницу блокировки при долгом бездействии
 )

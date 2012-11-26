@@ -1,4 +1,6 @@
 App.module('/cabinet/manager', ->
+  App.idle() if (rails.env != 'development') # Редирект на страницу блокировки при долгом бездействии
+
   $ = jQuery
 
   $('#search-user').click ->
