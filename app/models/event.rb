@@ -2,7 +2,7 @@ class Event < ActiveRecord::Base
   # Организатор события
   belongs_to :user
   # Родительское событие/процесс
-  belongs_to :event
+  belongs_to :event, :autosave => true
   # Дочерние события
   has_many :events
   # Рекурентные правила
@@ -12,9 +12,8 @@ class Event < ActiveRecord::Base
   # Документы характеризующие события
   has_many :documents
 
-  before_validation :calculate_duration, :check_duration
-  before_save :register_organizer
-  after_update :watch_status_changed
+  before_validation :calculate_duration, :watch_status_changed, :watch_duration_changed
+  before_create :register_organizer
 
   attr_accessible :type, :date_start, :time_start, :date_end, :time_end, :summary, :description, :attendees_attributes
   accepts_nested_attributes_for :attendees, :allow_destroy => true
@@ -25,7 +24,8 @@ class Event < ActiveRecord::Base
   validates :date_start, :presence => true, :timeliness => {:type => :date, :on_or_before => :date_end}
   validates :type, :presence => true
   validates :summary, :presence => true
-  validates :duration, :presence => true
+  validates :duration, :presence => true, :numericality => {:greater_than_or_equal_to => 0}
+  validate  :validate_duration
 
   # Поиск событий, в которых пользователь участвует или которые он организует, за указанный промежуток времени
   def self.find_by_user_and_date user_id, start_date, end_date = nil
@@ -86,7 +86,9 @@ class Event < ActiveRecord::Base
   # [id]
   #   Идентификатор пользователя которого нужно отписать от события.
   # Результатом метода должно быть булевое значение или исключение.
-  def unsubsribe id; false end
+  def unsubsribe id;
+    false
+  end
 
   def status_to_css
     {
@@ -98,9 +100,24 @@ class Event < ActiveRecord::Base
   end
 
   private
+  def validate_duration
+    if self.status == 'free' && self.duration.to_i == 0
+      errors.add(:duaration, 'duration.must_be.greater.than.0')
+    end
+    if %w(busy process close).include?(self.status) && self.duration.to_i > 0
+      errors.add(:status, 'duration.must.be.equal.to.0')
+    end
+  end
+
   # Закрываем событи для записи если у него исчерпано свободное время
-  def check_duration
-    self.status = 'busy' if self.duration == 0
+  def watch_duration_changed
+    if self.duration_changed? && !self.status_changed?
+      if self.duration.to_i == 0
+        self.status = 'busy'
+      else
+        self.status = 'free'
+      end
+    end
   end
 
   def self.process_array processes, predicted_time
@@ -130,26 +147,46 @@ class Event < ActiveRecord::Base
 
   # Вычисляем продолжительность события
   def calculate_duration
-    self.duration = self.date_end - self.date_start
+    if self.new_record?
+      if self.status == 'free'
+        self.duration = self.date_end - self.date_start
+      else
+        self.duration = 0
+      end
+    end
   end
 
   # Отслеживаем изменение статуса события
   def watch_status_changed
-    if self.status_changed?
+    if self.status_changed? && !new_record?
       signal = "change_status_#{self.status_was}_to_#{self.status}"
-      if self.respond_to? signal
+      if self.respond_to? signal, true
         send(signal)
+      else
+        errors.add(:status, "status.cannot.be.change.from.#{self.status_was}.to.#{self.status}")
       end
     end
   end
 
   def change_status_free_to_busy
-    self.event.duration = self.event.duration - self.time_end.to_i + self.time_start.to_i
-    self.event.save!
+    if self.event.present?
+      self.event.duration = self.event.duration - self.time_end.to_i + self.time_start.to_i
+    end
+    self.duration = 0
   end
 
   def change_status_busy_to_free
-    self.event.duration = self.event.duration + self.time_end.to_i - self.time_start.to_i
-    self.event.save!
+    if self.event.present?
+      self.event.duration = self.event.duration + self.time_end.to_i - self.time_start.to_i
+    end
+    self.duration = self.date_end - self.date_start
+  end
+
+  def change_status_busy_to_process
+
+  end
+
+  def change_status_process_to_close
+
   end
 end

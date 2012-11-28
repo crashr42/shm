@@ -6,7 +6,7 @@ class CreateEvents < ActiveRecord::Migration
       t.date      :date_start,  :null => false
       t.time      :time_start,  :null => false
       t.string    :description
-      t.string    :status,      :null => false, :default => 'CONFIRMED'
+      t.string    :status,      :null => false
       t.string    :summary,     :null => false
       t.date      :date_end
       t.time      :time_end

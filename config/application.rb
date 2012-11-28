@@ -72,10 +72,5 @@ module Shm
       Devise::UnlocksController.layout 'devise/sessions'
       Devise::PasswordsController.layout 'devise/sessions'
     end
-
-    config.generators do |g|
-      g.test_framework :mini_test, :spec => true, :fixture => true
-      g.integration_tool :mini_test
-    end
   end
 end

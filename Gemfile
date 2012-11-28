@@ -12,6 +12,11 @@ group :development do
   gem 'mailcatcher'
   gem 'faker'
 end
+group :test do
+  gem 'rspec-rails'
+  gem 'autotest'
+  gem 'factory_girl'
+end
 gem 'jquery-rails'
 gem 'rails_admin'
 gem 'devise'

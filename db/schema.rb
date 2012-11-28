@@ -69,15 +69,15 @@ ActiveRecord::Schema.define(:version => 20121126152609) do
 
   create_table "events", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "date_start",                      :null => false
+    t.datetime "date_start",  :null => false
     t.string   "description"
-    t.string   "status",      :default => "free", :null => false
-    t.string   "summary",                         :null => false
+    t.string   "status",      :null => false
+    t.string   "summary",     :null => false
     t.datetime "date_end"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "category"
-    t.string   "type",                            :null => false
+    t.string   "type",        :null => false
     t.integer  "duration"
     t.integer  "event_id"
   end
@@ -100,17 +100,6 @@ ActiveRecord::Schema.define(:version => 20121126152609) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
-
-  create_table "parameters_storages", :force => true do |t|
-    t.integer  "parameter_id"
-    t.integer  "user_id"
-    t.string   "value"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  add_index "parameters_storages", ["parameter_id"], :name => "index_parameters_storages_on_parameter_id"
-  add_index "parameters_storages", ["user_id"], :name => "index_parameters_storages_on_user_id"
 
   create_table "parameters_to_patients", :force => true do |t|
     t.integer  "user_id"
@@ -227,9 +216,6 @@ ActiveRecord::Schema.define(:version => 20121126152609) do
 
   add_foreign_key "parameters_data", "parameters", :name => "parameters_data_parameter_id_fk"
   add_foreign_key "parameters_data", "users", :name => "parameters_data_user_id_fk"
-
-  add_foreign_key "parameters_storages", "parameters", :name => "parameters_storages_parameter_id_fk"
-  add_foreign_key "parameters_storages", "users", :name => "parameters_storages_user_id_fk"
 
   add_foreign_key "parameters_to_patients", "parameters", :name => "parameters_to_patients_parameter_id_fk"
   add_foreign_key "parameters_to_patients", "users", :name => "parameters_to_patients_user_id_fk"
