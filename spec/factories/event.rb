@@ -4,20 +4,10 @@ FactoryGirl.define do
     date_end    DateTime.now + 15.minutes
     description 'some description'
 
-    factory :free_event do
-      status 'free'
-    end
-
-    factory :busy_event do
-      status 'busy'
-    end
-
-    factory :process_event do
-      status 'process'
-    end
-
-    factory :close_event do
-      status 'close'
+    Event.statuses.each do |s|
+      factory "#{s}_event".to_sym do
+        status s
+      end
     end
 
     summary 'some summary'

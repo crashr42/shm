@@ -1,0 +1,8 @@
+# encoding: utf-8
+# Включаем оповещение о результатах тестов
+require "test_notifier/runner/autotest"
+ 
+Autotest.add_hook :initialize do |at|
+    # Добавляем директорию с git как неотслеживаемую при автоматическом тестировании
+    at.add_exception(%r{^\./\.git})
+end
