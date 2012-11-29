@@ -11,8 +11,8 @@ class Parameter < ActiveRecord::Base
   attr_accessor :metadata
   before_save :merge_with_default_metadata
   validate :validate_metadata_structure
-  validates_presence_of :name
-  validates_presence_of :rule_parameter_input_id
+  validates :name, :presence => true
+  validates :rule_parameter_input_id, :presence => true
 
   # Метаданные параметра по-умолчанию
   def default_metadata ; {} end
