@@ -33,7 +33,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private
   # Hook для ajax запрсов view будет отдаваться без layout
   def render(options = nil, extra_options = {}, &block)
     if !options.nil? && options.is_a?(Hash)
