@@ -14,15 +14,13 @@ group :development do
   gem 'rails-erd'
   # почтовый сервер
   gem 'mailcatcher'
-  # фэйковые данные
-  gem 'faker'
 end
 
 group :test do
   # сам rspec
   gem 'rspec-rails'
   # автоматический запуск тестов
-  gem 'autotest'
+  gem 'autotest-rails'
   # фабрика, моки, стабы
   gem 'factory_girl'
   # ускоритель тестов
@@ -31,6 +29,8 @@ group :test do
   gem 'test_notifier'
 end
 
+# фэйковые данные
+gem 'faker'
 # сами рельсы
 gem 'rails', '3.2.6'
 # подключение к postgresql
