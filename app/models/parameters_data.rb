@@ -9,7 +9,7 @@ class ParametersData < ActiveRecord::Base
   validates :parameter_id, :presence => true
   validate :valid_for_parameter_metadata
 
-  attr_protected :id, :updated_at, :created_at
+  attr_accessible :parameter, :parameter_id, :patient_user, :user_id, :value
 
   private
 
