@@ -1,8 +1,8 @@
 class SelectParameter < Parameter
   def default_metadata
     {
-        :default => '',
-        :values => []
+        :default => nil,
+        :values => nil
     }
   end
 
