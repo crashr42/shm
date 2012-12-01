@@ -19,7 +19,7 @@ class Parameter < ActiveRecord::Base
   # Метод для валидации структуры метаданных
   def metadata_validator ; {} end
   # Метод для валидации значения параметра
-  def validate_value ; false end
+  def validate_value value ; false end
 
   def metadata= value
     write_attribute(:metadata, default_metadata.merge(value).to_json)

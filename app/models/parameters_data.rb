@@ -15,10 +15,6 @@ class ParametersData < ActiveRecord::Base
 
   # Валидация введенного значения параметра
   def valid_for_parameter_metadata
-    begin
-      errors.add(:value, 'invalid value') unless self.parameter.validate_value(self.value)
-    rescue
-      errors.add(:value, 'invalid value')
-    end
+    errors.add(:value, 'parameter.data.invalid.value') unless self.parameter.validate_value(self.value)
   end
 end

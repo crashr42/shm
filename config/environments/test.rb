@@ -1,6 +1,6 @@
 Shm::Application.configure do
   # Отключаем кэширование классов, необходимо чтобы spork перезагружал их при каждом запуске
-  config.cache_classes = false
+  config.cache_classes = !ENV['DRB']
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true

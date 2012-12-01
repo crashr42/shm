@@ -31,8 +31,10 @@ class IntegerParameter < Parameter
   end
 
   def validate_value value
-    v = Integer(value)
-    raise TypeError.new 'value.type.not.allowed' unless v.to_s == value.to_s
-    v.between? metadata[:validators][:min].to_i, metadata[:validators][:max].to_i
+    if (value.to_s =~ /^[-+]?[0-9]+$/).nil?
+      false
+    else
+      value.to_i.between? metadata[:validators][:min].to_i, metadata[:validators][:max].to_i
+    end
   end
 end

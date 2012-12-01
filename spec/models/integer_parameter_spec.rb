@@ -50,9 +50,8 @@ describe IntegerParameter do
     end
 
     it 'should be invalid' do
-      lambda { @pr.validate_value(Class) }.should raise_error(TypeError)
-      lambda { @pr.validate_value(1.1) }.should raise_error(TypeError)
+      @pr.validate_value(Class).should eq(false)
+      @pr.validate_value(1.1).should eq(false)
     end
   end
-
 end
