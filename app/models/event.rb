@@ -14,7 +14,7 @@ class Event < ActiveRecord::Base
 
   before_validation :calculate_duration, :watch_status_changed, :watch_duration_changed
   before_create :register_organizer
-  after_initialize :default_values
+  after_initialize :default_values, :if => :new_record?
 
   attr_accessible :type, :date_start, :time_start, :date_end, :time_end, :summary, :description, :attendees_attributes
   accepts_nested_attributes_for :attendees, :allow_destroy => true
