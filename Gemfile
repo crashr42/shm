@@ -75,3 +75,5 @@ gem 'coffeebeans'
 gem 'validates_timeliness', '~> 3.0'
 # работа с датами в js
 gem 'momentjs-rails'
+# backbone.js
+gem 'rails-backbone'

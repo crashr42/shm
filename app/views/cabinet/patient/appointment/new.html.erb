@@ -1,7 +1,23 @@
-<div class="span3">
-  <button class="btn" id="doctor-selector">Select doctor</button>
+<div class="span3" id="toolbar">
+  <h3>My doctor</h3>
+  <button class="btn btn-link" id="my-doctor" data-id="<%= User.current.doctor_user.id %>">Select my doctor</button>
+
+  <h3>Select doctor</h3>
+  <button class="btn btn-link" id="doctor-selector">Select doctor</button>
+  <button class="btn btn-link hide" id="use-doctor">Use doctor</button>
   <div id="selected-doctor"></div>
+
+  <h3>Recent doctors</h3>
 </div>
 <div class="span9">
-  <div id="appointments"></div>
+  <div id="result"></div>
+</div>
+<div class="modal hide fade" id="subscribe-result">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Subscribe</h3>
+    </div>
+    <div class="modal-body">
+
+    </div>
 </div>

@@ -102,8 +102,8 @@ class Event < ActiveRecord::Base
 
   private
   def default_values
-    self.status ||= 'free'
-    self.type   ||= 'Event'
+    #self.status ||= 'free'
+    #self.type   ||= 'Event'
   end
 
   def validate_duration

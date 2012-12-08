@@ -29,7 +29,8 @@
           </a>
           <%= link_to_active 'Shm', {:controller => :'/index', :action => :index}, :class => 'brand' %>
           <div class="nav-collapse">
-            <ul class="nav">
+            <ul class="nav" id="menu">
+              <%= link_to_active_wrapper 'Home', :li, cabinet_patient_path %>
               <%= link_to_active_wrapper 'Calendar', :li, cabinet_patient_calendar_path(current_user.id) %>
               <%= link_to_active_wrapper 'Appointments', :li, new_cabinet_patient_appointment_path %>
               <%= link_to_active_wrapper 'Parameters', :li, cabinet_patient_parameter_index_path %>
@@ -42,7 +43,9 @@
     <div class="container-fluid">
       <div class="content">
         <div class="row-fluid">
-          <%= yield %>
+          <div id="content">
+              <%= yield %>
+          </div>
         </div><!--/row-->
       </div><!--/content-->
     </div> <!-- /container -->
