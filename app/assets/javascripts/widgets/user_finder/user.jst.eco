@@ -1,6 +1,0 @@
-<div class="padding-box5">
-  <button type="button" class="btn btn-large span12 text-left" data-id="<%= @index %>">
-    <i class="icon-user"></i>
-    <%= @user.email %>
-  </button>
-</div>

@@ -77,3 +77,5 @@ gem 'validates_timeliness', '~> 3.0'
 gem 'momentjs-rails'
 # backbone.js
 gem 'rails-backbone'
+# модульная структура для js
+gem 'requirejs-rails'

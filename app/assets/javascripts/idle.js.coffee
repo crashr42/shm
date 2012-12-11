@@ -1,3 +1,4 @@
+# Переписать!!!
 App.module('idle', ->
   $ = jQuery
 

@@ -1,5 +1,5 @@
 class Cabinet::Patient::AppointmentController < Cabinet::PatientController
-  def new
+  def index
   end
 
   def create
@@ -9,7 +9,7 @@ class Cabinet::Patient::AppointmentController < Cabinet::PatientController
       if PatientAttendee.create({:user => current_user, :event => @event})
         f.html { redirect_to({:action => :show, :id => @event.id}, :notice => 'Appointment created.') }
       else
-        f.html { redirect_to({:action => :new}, :error => 'Appointment not created.') }
+        f.html { redirect_to({:action => :index}, :error => 'Appointment not created.') }
       end
     end
   end

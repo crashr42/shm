@@ -1,3 +1,4 @@
+# Переписать!!!
 getLoader = ->
   loader = $('.loader')
   unless loader.length > 0
@@ -8,8 +9,10 @@ getLoader = ->
 
 $(document).ajaxStart -> getLoader().show()
 
-$(document).ajaxError ->
-  alert('error!!!!')
+$(document).ajaxError (event, jqXHR, ajaxSettings, thrownError) ->
+  alert(thrownError)
   getLoader().hide()
 
 $(document).ajaxSuccess -> getLoader().hide()
+$(document).ajaxComplete -> getLoader().hide()
+$.ajaxSetup beforeSend: (xhr) -> xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))

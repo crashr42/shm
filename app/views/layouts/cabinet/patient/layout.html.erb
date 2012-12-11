@@ -31,8 +31,8 @@
           <div class="nav-collapse">
             <ul class="nav" id="menu">
               <%= link_to_active_wrapper 'Home', :li, cabinet_patient_path %>
-              <%= link_to_active_wrapper 'Calendar', :li, cabinet_patient_calendar_path(current_user.id) %>
-              <%= link_to_active_wrapper 'Appointments', :li, new_cabinet_patient_appointment_path %>
+              <%= link_to_active_wrapper 'Calendar', :li, cabinet_patient_calendar_index_path %>
+              <%= link_to_active_wrapper 'Appointments', :li, cabinet_patient_appointment_index_path %>
               <%= link_to_active_wrapper 'Parameters', :li, cabinet_patient_parameter_index_path %>
             </ul>
           </div><!--/.nav-collapse -->
@@ -44,7 +44,7 @@
       <div class="content">
         <div class="row-fluid">
           <div id="content">
-              <%= yield %>
+
           </div>
         </div><!--/row-->
       </div><!--/content-->
@@ -54,7 +54,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <%= include_gon %>
-    <%= javascript_include_tag "application" %>
+    <script data-main="/assets/cabinet/patient/app" src="/assets/require.js"></script>
 
   </body>
 </html>

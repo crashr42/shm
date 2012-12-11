@@ -26,9 +26,23 @@
       @bind_events()
 
     init_body: ->
-      @modal = $(JST['widgets/user_finder/modal'](
-        url: @options.url
-      ))
+      @modal = $('
+          <div class="modal hide fade">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Search user</h3>
+          </div>
+          <div class="modal-body">
+            <div class="row-fluid">
+              <input type="text" style="padding: 10px !important; font-size: 18px; height: 40px !important;" class="span12" placeholder="Enter user name">
+
+              <div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      ')
       $(document.body).append(@modal)
 
     bind_events: ->
@@ -39,10 +53,14 @@
         $.post(that.options.url, {name: input_field.val()}, (request) ->
           users_box.html('')
           for user, index in request
-            user_box = JST['widgets/user_finder/user'](
-              user: user
-              index: index
-            )
+            user_box = '
+              <div class="padding-box5">
+                <button type="button" class="btn btn-large span12 text-left" data-id="' + index + '">
+                  <i class="icon-user"></i>
+                    ' + user.email + '
+                </button>
+              </div>
+            '
             users_box.append(user_box)
           users_box.find('button').click -> that.options.selected(request[$(@).attr('data-id')])
         )
