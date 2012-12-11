@@ -28,7 +28,8 @@ require([
   'backbone',
   'views/application',
   'routers/router',
-  'ajax'
+  'ajax',
+  'jquery_ujs'
 ], ($, Backbone, Application, Router) ->
   $(document).ready ->
     Router.instance(app: new Application())
