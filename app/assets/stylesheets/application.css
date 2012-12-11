@@ -45,7 +45,7 @@
     background-position: center center;
     background-color: rgba(45, 45, 45, 1);
     z-index: 1000;
-    position: absolute;
+    position: fixed;
     background-repeat: no-repeat;
     top: 0;
     left: 0;
