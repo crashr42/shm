@@ -31,9 +31,9 @@ class Cabinet::Patient::EventController < Cabinet::PatientController
     @event = Event.find params[:id]
     respond_to do |f|
       if @event.unsubsribe current_user.id
-        f.html { redirect_to({:controller => :'cabinet/patient/index', :action => :index}, :notice => 'You unsubscribe from event.') }
+        f.html { redirect_to({:controller => :'cabinet/patient/calendar', :action => :index}, :notice => 'You unsubscribe from event.') }
       else
-        f.html { redirect_to({:controller => :'cabinet/patient/index', :action => :index}, :notice => 'Can\'t unsubscribe from event.') }
+        f.html { redirect_to({:controller => :'cabinet/patient/calendar', :action => :index}, :notice => 'Can\'t unsubscribe from event.') }
       end
     end
   end
