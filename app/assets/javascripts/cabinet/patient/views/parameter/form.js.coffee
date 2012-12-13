@@ -1,7 +1,8 @@
 define([
   'jquery',
-  'backbone'
-], ($, Backbone) ->
+  'backbone',
+  'views/notification'
+], ($, Backbone, Notification) ->
   Backbone.View.extend
     events:
       'click .btn': 'save'
@@ -9,5 +10,5 @@ define([
     save: (e) ->
       e.preventDefault()
       form = @$el.find('form')
-      $.post(form.attr('href'), form.serialize(), (request) -> alert('saved'))
+      $.post(form.attr('action'), form.serialize(), (request) -> Notification.success(request.message))
 )

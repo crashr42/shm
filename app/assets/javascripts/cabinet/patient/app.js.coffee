@@ -4,6 +4,7 @@ require.config(
     app: 'cabinet/patient'
     views: 'cabinet/patient/views'
     routers: 'cabinet/patient/routers'
+    templates: 'cabinet/patient/templates'
   shim:
     underscore:
       exports: '_'
