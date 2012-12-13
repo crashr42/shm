@@ -29,10 +29,12 @@ require([
   'backbone',
   'views/application',
   'routers/router',
+  'blocker'
   'ajax',
   'jquery_ujs'
-], ($, Backbone, Application, Router) ->
+], ($, Backbone, Application, Router, Blocker) ->
   $(document).ready ->
     Router.instance(app: new Application())
     Backbone.history.start(pushState: true)
+    Blocker.start()
 )

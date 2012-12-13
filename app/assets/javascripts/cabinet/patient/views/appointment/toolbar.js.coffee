@@ -1,7 +1,7 @@
 define([
   'jquery',
   'backbone',
-  'widgets/user_finder/user_finder'
+  'widgets/user_finder'
 ], ($, Backbone) ->
   Backbone.View.extend
     events:

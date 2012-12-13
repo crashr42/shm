@@ -1,4 +1,4 @@
-<h2>You are blocking!</h2>
+<h2><%= current_user.email %>, you are blocking!</h2>
 <% if flash[:error] %>
     <div class="alert alert-error"><%= flash[:error] %></div>
 <% end %>

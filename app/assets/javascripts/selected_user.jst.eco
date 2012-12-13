@@ -1,4 +1,0 @@
-<div>
-  <%= @user.email %>
-  <input type="hidden" name="<%= @hidden_field %>" value="<%= @user.id %>">
-</div>
