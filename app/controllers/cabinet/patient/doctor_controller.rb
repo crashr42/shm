@@ -1,6 +1,5 @@
 class Cabinet::Patient::DoctorController < Cabinet::PatientController
-  layout 'cabinet/patient/doctor
-'
+  layout 'cabinet/patient/doctor'
   skip_before_filter :_check_doctor_exists
 
   def index
