@@ -13,12 +13,14 @@ class ApplicationController < ActionController::Base
     User.current = current_user
   end
 
+  # Перехват запросов от пользователей заблокированных по таймауту
   def timeout_block
     if current_user.present? && current_user.timeout_block
       redirect_to :controller => :'/block', :action => :new
     end
   end
 
+  # Перехват ошибок
   if ::Rails.application.config.handle_errors
     rescue_from Exception do |exception|
       redirect_to "/error/500"
@@ -33,7 +35,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Hook для ajax запрсов view будет отдаваться без layout
+  # Hook: для ajax запрсов - view будет отдаваться без layout
   def render(options = nil, extra_options = {}, &block)
     if !options.nil? && options.is_a?(Hash)
       options = {:layout => !request.xhr?}.merge(options)

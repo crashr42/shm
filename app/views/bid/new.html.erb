@@ -1,5 +1,5 @@
 <h3>New bid</h3>
-<%= simple_form_for @bid, :validate => true, :url => {:controller => :bid, :action => :create}, :html => {:multipart => true, :class => 'form-horizontal'} do |f| %>
+<%= simple_form_for @bid, :url => {:controller => :bid, :action => :create}, :html => {:multipart => true, :class => 'form-horizontal'} do |f| %>
     <%= f.input :first_name, :placeholder => 'enter first name' %>
     <%= f.input :last_name,  :placeholder => 'enter last name' %>
     <%= f.input :third_name, :placeholder => 'enter third name' %>

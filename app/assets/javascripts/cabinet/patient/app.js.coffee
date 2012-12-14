@@ -1,4 +1,4 @@
-require.config(
+require.config
   baseUrl: '/assets'
   paths:
     app: 'cabinet/patient'
@@ -9,37 +9,33 @@ require.config(
     underscore:
       exports: '_'
     backbone_datalink:
-      deps: ['jquery', 'underscore']
+      deps: ['jquery', 'underscore', 'backbone']
     backbone_rails_sync:
-      deps: ['jquery', 'underscore']
+      deps: ['jquery', 'underscore', 'backbone']
     backbone:
-      deps: ['jquery', 'underscore', 'backbone_datalink', 'backbone_rails_sync']
+      deps: ['jquery', 'underscore']
       exports: 'Backbone'
-    fullcalendar:
-      deps: ['jquery']
-      exports: 'Fullcalendar'
-    ajax:
-      deps: ['jquery']
-      exports: 'ajax'
-    rails:
-      exports: 'Rails'
-    bootstrap:
-      deps: ['jquery']
-      exports: 'Bootstrap'
-)
 
 require([
+  'application',
   'jquery',
   'backbone',
   'views/application',
   'routers/router',
   'rails',
   'blocker'
-  'ajax',
-  'jquery_ujs'
-], ($, Backbone, Application, Router, Rails, Blocker) ->
-  $(document).ready ->
-    Router.instance(app: new Application())
-    Backbone.history.start(pushState: true)
-    Blocker.start() unless Rails.env == 'development'
+], (App, $, Backbone, Application, Router, Rails, Blocker) ->
+  class PatientCabinet extends App
+    constructor: ->
+      $(document).ready $.proxy( ->
+        super()
+        # главный роут
+        Router.instance(app: new Application())
+        # запускаем прослушку истории
+        Backbone.history.start(pushState: true)
+        # блокировка при таймауте
+        Blocker.start() unless Rails.env == 'development'
+      , @)
+
+  new PatientCabinet()
 )

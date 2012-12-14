@@ -67,8 +67,6 @@ gem 'gon'
 gem 'carrierwave'
 # расширение для работы с формами
 gem 'simple_form'
-# автоматическая валидация на стороне клиента
-gem 'client_side_validations'
 # coffee-script во вьюхах
 gem 'coffeebeans'
 # валидация временных промежутков

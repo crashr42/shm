@@ -1,7 +1,6 @@
 define([
   'jquery',
   'backbone',
-  'exports',
   'fullcalendar',
   'bootstrap'
 ], ($, Backbone) ->

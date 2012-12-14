@@ -1,5 +1,10 @@
 define([], function(){
     return {
-        env: '<%= Rails.env %>'
+        // Текущая среда разработки
+        env: '<%= Rails.env %>',
+        // Текущий контроллер
+        controller: document.body.getAttribute('data-controller') || undefined,
+        // Текущее действие
+        action: document.body.getAttribute('data-action') || undefined
     };
 });

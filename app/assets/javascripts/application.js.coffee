@@ -1,37 +1,30 @@
-#= require ./rails
-#= require jquery
-#= require ./ajax
-#= require jquery-ui
-#= require jquery_ujs
-#= require twitter/bootstrap
-#= require fullcalendar
-#= require moment
-#= require rails.validations
-#= require underscore
-#= require backbone
-#= require backbone_rails_sync
-#= require backbone_datalink
-#= require_tree .
+require.config
+  baseUrl: '/assets'
+  shim:
+    underscore:
+      exports: '_'
+    backbone_datalink:
+      deps: ['jquery', 'underscore', 'backbone']
+    backbone_rails_sync:
+      deps: ['jquery', 'underscore', 'backbone']
+    backbone:
+      deps: ['jquery', 'underscore']
+      exports: 'Backbone'
+    'bootstrap-datepicker':
+      deps: ['jquery']
+    'bootstrap-timepicker':
+      deps: ['jquery']
 
-bind_datepicker = ->
-  $('input.datepicker').datepicker(
-    format: 'dd.mm.yyyy',
-    weekStart: 1,
-    todayBtn: true,
-    todayHighlight: true
-  ).keydown(-> return false)
+define([
+  'binder',
+  'ajax',
+  'jquery_ujs',
+  'backbone_rails_sync',
+  'backbone_datalink'
+], (Binder) ->
+  class App
+    constructor: ->
+      Binder.bind()
 
-bind_timepicker = -> $('input.timepicker').timepicker()
-
-bind_file_input = ->
-  $('.b_file').each ->
-    i_file = $(this).prev()
-    file = $(this).parent().prev()
-    file.change -> i_file.val(file.val())
-    $(@).click -> file.click()
-
-$(document).ready ->
-  App.load_module()
-  bind_datepicker()
-  bind_timepicker()
-  bind_file_input()
+  App
+)
