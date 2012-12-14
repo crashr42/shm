@@ -1,3 +1,0 @@
-App.module('/admin/sessions', ->
-
-)

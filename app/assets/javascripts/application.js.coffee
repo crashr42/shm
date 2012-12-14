@@ -1,5 +1,4 @@
-#= require ./environment
-#= require ./modules
+#= require ./rails
 #= require jquery
 #= require ./ajax
 #= require jquery-ui
