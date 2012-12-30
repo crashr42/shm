@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Shm</title>
-  <%= stylesheet_link_tag "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+    <title>Shm</title>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= csrf_meta_tags %>
 </head>
 <body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
 <div class="container-fluid">
-  <div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container">
-        <a class="brand" href="/">SHM</a>
-        <ul class="nav">
-          <% if user_signed_in? %>
-              <li>
-                <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-              </li>
-          <% else %>
-              <li>
-                <%= link_to('Login', new_user_session_path)  %>
-              </li>
-          <% end %>
-          <li><%= link_to 'Bid', new_bid_path %></li>
-        </ul>
-      </div>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="/">SHM</a>
+                <ul class="nav">
+                    <% if user_signed_in? %>
+                        <li>
+                            <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+                        </li>
+                    <% else %>
+                        <li>
+                            <%= link_to('Login', new_user_session_path) %>
+                        </li>
+                    <% end %>
+                    <li><%= link_to 'Bid', new_bid_path %></li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="well" style="width: 320px; margin: 0 auto;">
-      <%= yield %>
+    <div class="row">
+        <div class="well" style="width: 320px; margin: 0 auto;">
+            <%= yield %>
+        </div>
     </div>
-  </div>
 </div>
+
+<%= include_gon %>
+<script data-main="/assets/application" src="/assets/require.js"></script>
+
 </body>
 </html>

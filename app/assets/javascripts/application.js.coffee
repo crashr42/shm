@@ -14,6 +14,8 @@ require.config
       deps: ['jquery']
     'bootstrap-timepicker':
       deps: ['jquery']
+    jquery_ujs:
+      deps: ['jquery']
 
 define([
   'binder',
