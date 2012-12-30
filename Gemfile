@@ -10,7 +10,7 @@ group :assets do
 end
 
 group :development do
-  # посмпроение диаграммы классов для моделей
+  # построение диаграммы классов для моделей
   gem 'rails-erd'
   # почтовый сервер
   gem 'mailcatcher'
@@ -46,6 +46,8 @@ gem 'thin'
 # среда для исполнения js
 gem 'execjs'
 # v8
+gem 'libv8'
+# mapping v8 to ruby
 gem 'therubyracer'
 # twitter bootstrap
 gem 'twitter-bootstrap-rails'
@@ -53,12 +55,8 @@ gem 'twitter-bootstrap-rails'
 gem 'foreigner'
 # контроль прав доступа
 gem 'cancan'
-# стандарт icalendar
-gem 'icalendar'
 # генерация уникальных идентификаторов
 gem 'uuidtools'
-# js шаблонизатор
-gem 'eco'
 # jquery plugin календарь
 gem 'fullcalendar-rails'
 # переброс переменных из контроллеров в js
