@@ -131,3 +131,15 @@ StringParameter.create({:name => '2х2', :metadata => {
     AttendingDoctorAttendee.create({:user => ae.attending_doctor, :event => ae})
   end
 end
+
+(0..10).each do
+  b = Bid.new
+  b.address = "#{Faker::Address.country} #{Faker::Address.city} #{Faker::Address.street_address}"
+  b.email = Faker::Internet.email
+  b.first_name = Faker::Name.first_name
+  b.last_name = Faker::Name.last_name
+  b.third_name = Faker::Name.last_name
+  b.passport_scan = open("#{Rails.root}/spec/images/test.jpg")
+  b.policy = Faker::Lorem.characters(5)
+  b.save!
+end
