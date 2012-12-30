@@ -3,7 +3,7 @@
   <% @parameters.each do |p| %>
       <tr>
         <td>
-          <%= link_to 'Edit', edit_cabinet_manager_parameter_path(p), :class => 'btn pull-right' %>
+          <%= link_to 'Edit', edit_cabinet_manager_parameter_path(p), :class => 'btn pull-right parameter-edit' %>
           <%= link_to 'Delete', cabinet_manager_parameter_path(p), :confirm => 'Are you sure you want to destroy parameter?', :method => :delete, :class => 'btn btn-danger pull-right' %>
           <div style="margin: 8px 8px 0 0">
               <div class="label label-info pull-right"><%= p.class.name.gsub('Parameter', '').downcase %></div>

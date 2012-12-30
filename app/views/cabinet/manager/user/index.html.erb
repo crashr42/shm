@@ -1,4 +1,4 @@
-<%= form_tag({:controller => :user, :action => :find}, :class => 'form-search-large', :id => 'user-main-search-form') do %>
+<%= form_tag({:controller => :'cabinet/manager/user', :action => :find}, :class => 'form-search-large', :id => 'user-main-search-form') do %>
     <input type="text" id="name" name="name" placeholder="Enter user name">
 <% end %>
 <div id="user-main-list">

@@ -10,6 +10,7 @@ class Parameter < ActiveRecord::Base
   attr_accessible :type, :name, :metadata, :rule_parameter_input, :rule_parameter_input_id
   attr_accessor :metadata
   before_save :merge_with_default_metadata
+  after_initialize :merge_with_default_metadata
   validate :validate_metadata_structure
   validates :name, :presence => true
   validates :rule_parameter_input_id, :presence => true
@@ -26,8 +27,8 @@ class Parameter < ActiveRecord::Base
   end
 
   def metadata
-    return read_attribute(:metadata) ?
-        default_metadata.merge(JSON.parse(read_attribute(:metadata), {:symbolize_names => true}).to_hash) : default_metadata
+    read_attribute(:metadata) ?
+            default_metadata.merge(JSON.parse(read_attribute(:metadata), {:symbolize_names => true}).to_hash) : default_metadata
   end
 
   private

@@ -2,9 +2,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper :all
 
-  before_filter :manage_user, :timeout_block, :current_url
+  before_filter :manage_user, :timeout_block, :current_url, :disable_cache_for_xhr
 
   private
+  # Отключаем кэширование ajax запросов в браузере
+  def disable_cache_for_xhr
+    response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
+  end
+
   def current_url
     cookies[:current_url] = request.url if request.get?
   end

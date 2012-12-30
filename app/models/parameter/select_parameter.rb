@@ -2,7 +2,7 @@ class SelectParameter < Parameter
   def default_metadata
     {
         :default => nil,
-        :values => nil
+        :values => []
     }
   end
 
@@ -13,7 +13,7 @@ class SelectParameter < Parameter
             :_error_message => 'parameter.select.metadata.errors.default'
         },
         :values => {
-            :_validate => lambda { |v| v.is_a? Array },
+            :_validate => lambda { |v| v.is_a? Array and v.length > 0 },
             :_error_message => 'parameter.select.metadata.errors.values'
         }
     }
