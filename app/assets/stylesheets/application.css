@@ -4,6 +4,10 @@
  *= require_tree .
  */
 
+body {
+    overflow-y: scroll;
+}
+
 .input-mega-large {
     width: 300px;
     height: 30px !important;
