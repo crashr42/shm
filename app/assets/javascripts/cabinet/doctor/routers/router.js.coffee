@@ -6,7 +6,7 @@ define([
     initialize: (options) -> @app = options.app
 
     routes:
-      'cabinet/manager': 'index'
+      'cabinet/doctor': 'index'
 
     index: -> @app.content.showIndex()
 
