@@ -30,4 +30,5 @@ class Cabinet::Doctor::ParameterController < Cabinet::DoctorController
       end
     end
   end
+
 end
