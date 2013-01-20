@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :users_to_roleses, :class_name => UsersToRoles, :dependent => :delete_all
   has_many :events
   has_many :attendees
+  has_many :attending_doctor_attendees
 
   attr_protected :created_at, :current_sign_in_at, :current_sign_in_ip, :encrypted_password,
                  :id, :last_sign_in_at, :last_sign_in_ip, :remember_created_at,

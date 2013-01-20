@@ -2,7 +2,7 @@
     <td><%= p.id %></td>
     <td><%= p.first_name %></td>
     <td><%= p.last_name %></td>
-    <td><i class="icon-eye-open"></i><a href="/cabinet/patient/appointmet/me" id="appointment-me">app-nt</a> &nbsp
-    <i class=" icon-user"></i><a href="/cabinet/patient/appointmet/colleague" id="appointment-coll">to colleguae</a> &nbsp
-    <i class="icon-pencil"></i><a href="/cabinet/patient/appointmet/new" id="appointment-new">new app-nt</a></td>
+    <td><i class="icon-eye-open"></i><a href="/cabinet/doctor/appointment/me/<%= p.id %>" class="appointment-me">app-nt</a> &nbsp
+    <i class=" icon-user"></i><a href="/cabinet/doctor/appointment/colleague/<%= p.id %>" class="appointment-coll">to colleguae</a> &nbsp
+    <i class="icon-pencil"></i><a href="/cabinet/doctor/appointment/new/<%= p.id %>" class="appointment-new">new app-nt</a></td>
 </tr>

@@ -1,22 +1,39 @@
-class Cabinet::Doctor::AppointmentController < ApplicationController
+class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
 
   layout 'cabinet/doctor/layout'
 
   #get appointment index page (search and select patient)
   def index
     respond_to { |f|
-      begin
-        @me_attendees = DoctorUser.find(User.current.id).attendees.where(type: "DoctorAttendee")
-        raise "Yo have no appointments" if @me_attendees.blank?
+      #begin
+      #  @me_attendees = DoctorUser.find(User.current.id).attendees.where(type: "DoctorAttendee")
+      #  raise "Yo have no appointments" if @me_attendees.blank?
+      #
+      #  @appointments = @me_attendees.map { |a| a.event }
+      #  f.html { return render 'cabinet/doctor/appointment/index' }
+      #
+      #rescue Exception => exp
+      #  flash[:error] = exp.message
+      #  f.html {
+      #    return redirect_to cabinet_doctor_root_path() }
+      #end
 
-        @appointments = @me_attendees.map { |a| a.event }
-        f.html { return render 'cabinet/doctor/appointment/index' }
+      @attendees = current_user.attending_doctor_attendees
+      @attendees.map! { |a|
+        event = a.event
+        {
+            date_start: event.date_start,
+            date_end: event.date_end,
+            description: event.description,
+            summary: event.summary,
+            duration: event.duration
+        }
 
-      rescue Exception => exp
-        flash[:error] = exp.message
-        f.html {
-          return redirect_to cabinet_doctor_root_path() }
-      end
+      }
+      f.json {
+        render :json => @attendees.to_json
+      }
+      f.html {}
     }
   end
 
