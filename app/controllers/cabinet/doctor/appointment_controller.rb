@@ -22,11 +22,13 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
       @attendees.map! { |a|
         event = a.event
         {
-            date_start: event.date_start,
+            id: event.id,
+	    date_start: event.date_start,
             date_end: event.date_end,
             description: event.description,
             summary: event.summary,
-            duration: event.duration
+            duration: event.duration,
+	    status: event.status
         }
 
       }
