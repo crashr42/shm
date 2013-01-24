@@ -51,6 +51,7 @@ GEM
     coffeebeans (1.0.1)
       actionpack (>= 3.0.0)
       coffee-script
+    commonjs (0.2.6)
     daemons (1.1.9)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
@@ -90,6 +91,11 @@ GEM
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    less (2.2.2)
+      commonjs (~> 0.2.6)
+    less-rails (2.2.6)
+      actionpack (>= 3.1)
+      less (~> 2.2.0)
     libv8 (3.11.8.4)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -250,6 +256,8 @@ DEPENDENCIES
   fullcalendar-rails
   gon
   jquery-rails
+  less
+  less-rails
   libv8
   mailcatcher
   momentjs-rails
