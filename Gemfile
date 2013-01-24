@@ -2,24 +2,29 @@ source 'https://rubygems.org'
 
 group :assets do
   # компилятор sass
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'sass-rails'
   # компилятор coffee-script
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'coffee-rails'
   # компрессор
-  gem 'uglifier', '>= 1.0.3'
-
-  #less
-  gem 'less'
+  gem 'uglifier'
+  # компилятор less
+  gem 'less-rails'
 end
 
 group :development do
+  # удобный вывод ошибок
+  gem 'better_errors'
   # построение диаграммы классов для моделей
   gem 'rails-erd'
   # почтовый сервер
   gem 'mailcatcher'
+  # rails panel
+  gem 'meta_request'
 end
 
 group :test do
+  # ZenTest (bug in gemspec http://stackoverflow.com/questions/14488605/cant-install-zentest-4-8-4)
+  gem 'ZenTest', '4.8.3'
   # сам rspec
   gem 'rspec-rails'
   # автоматический запуск тестов
@@ -35,7 +40,7 @@ end
 # фэйковые данные
 gem 'faker'
 # сами рельсы
-gem 'rails', '3.2.6'
+gem 'rails'
 # подключение к postgresql
 gem 'pg'
 # jquery
@@ -52,7 +57,6 @@ gem 'execjs'
 gem 'libv8'
 # mapping v8 to ruby
 gem 'therubyracer'
-gem 'less-rails'
 # twitter bootstrap
 gem 'twitter-bootstrap-rails'
 # определение связей в миграциях
@@ -72,7 +76,7 @@ gem 'simple_form'
 # coffee-script во вьюхах
 gem 'coffeebeans'
 # валидация временных промежутков
-gem 'validates_timeliness', '~> 3.0'
+gem 'validates_timeliness'
 # работа с датами в js
 gem 'momentjs-rails'
 # backbone.js
