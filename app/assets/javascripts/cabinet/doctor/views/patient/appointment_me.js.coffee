@@ -18,7 +18,15 @@ define([
       alert('This AppointmenrHour is busy, Please take another!')
     
     isFree: (e)->
-      alert('ready to post!')
+      ajax_param = 
+        url: '/cabinet/doctor/appointment/confirm'
+        type: 'post'
+        dataType: 'json'
+        success: (data) ->
+          alert(data)
+        error: (e, errorText) ->
+          alert errorText
+      $.ajax ajax_param
 
     render: (callback, id) ->
       $.getJSON '/cabinet/doctor/appointments', $.proxy((response) ->

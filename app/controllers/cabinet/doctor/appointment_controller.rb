@@ -38,6 +38,14 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
       f.html {}
     }
   end
+  
+  def confirm
+    respond_to {|f|
+      f.json{ 
+       "status test"
+      } 
+    }
+  end
 
   #get form create appointments event
   def new
