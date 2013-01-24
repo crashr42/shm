@@ -7,6 +7,9 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   # компрессор
   gem 'uglifier', '>= 1.0.3'
+
+  #less
+  gem 'less'
 end
 
 group :development do
@@ -49,6 +52,7 @@ gem 'execjs'
 gem 'libv8'
 # mapping v8 to ruby
 gem 'therubyracer'
+gem 'less-rails'
 # twitter bootstrap
 gem 'twitter-bootstrap-rails'
 # определение связей в миграциях
