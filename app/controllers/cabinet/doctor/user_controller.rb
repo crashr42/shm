@@ -23,4 +23,11 @@ class Cabinet::Doctor::UserController < ApplicationController
   def index
   
   end
+
+  def get_doctors
+    respond_to{|f|
+      f.html { render :layout => false }
+      f.json { render :json => DoctorUser.select("users.id, first_name, last_name").where("users.id <> ?", User.current.id).to_json }
+    }
+  end
 end

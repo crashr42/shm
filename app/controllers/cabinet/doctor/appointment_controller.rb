@@ -36,6 +36,37 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
     }
   end
 
+  def get_appointments_for
+    @attendees = DoctorUser.find(params[:id]).attending_doctor_attendees
+
+    #Формируем ответ для отрисовки в браузере
+    @attendees.map! { |a|
+      event = a.event
+      {
+          id: event.id,
+          date_start: event.date_start,
+          date_end: event.date_end,
+          description: event.description,
+          summary: event.summary,
+          duration: event.duration,
+          status: event.status,
+          type: event.type
+      }
+    }
+
+    #А тепеь исключим лишние элементы.
+    #Здесь я делаю исключение после формирования ответа. Это необходимо, так как если исключать до формирования
+    #,то будет происходить больше запросов к БД.
+    @attendees.reject! {|a|
+      not (a[:type] == 'AppointmentEvent')
+    }
+
+    respond_to{|f|
+      f.html { render :layout => false }
+      f.json { render :json => @attendees.to_json }
+    }
+  end
+
   def confirm
     @appointment_id = params['apptId']
     @patientId = params['patId']
