@@ -15,6 +15,8 @@ require.config
     backbone:
       deps: ['jquery', 'underscore']
       exports: 'Backbone'
+    bootstrap:
+      deps: ['jquery']
 
 require([
   'application',

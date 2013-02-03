@@ -16,6 +16,8 @@ require.config
       deps: ['jquery']
     jquery_ujs:
       deps: ['jquery']
+    bootstrap:
+      deps: ['jquery']
 
 define([
   'binder',
