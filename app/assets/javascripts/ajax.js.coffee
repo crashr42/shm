@@ -4,9 +4,7 @@ define([
   getLoader = ->
     loader = $('.loader')
     unless loader.length > 0
-      loader = $('
-        <div class="loader"><span>Loading...</span></div>
-      ')
+      loader = $('<div class="loader"><span>Loading...</span></div>')
       $('body').append(loader)
     loader
 
