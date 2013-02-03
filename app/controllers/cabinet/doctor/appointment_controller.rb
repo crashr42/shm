@@ -5,46 +5,51 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
   #get appointment index page (search and select patient)
   def index
     respond_to { |f|
-      #begin
-      #  @me_attendees = DoctorUser.find(User.current.id).attendees.where(type: "DoctorAttendee")
-      #  raise "Yo have no appointments" if @me_attendees.blank?
-      #
-      #  @appointments = @me_attendees.map { |a| a.event }
-      #  f.html { return render 'cabinet/doctor/appointment/index' }
-      #
-      #rescue Exception => exp
-      #  flash[:error] = exp.message
-      #  f.html {
-      #    return redirect_to cabinet_doctor_root_path() }
-      #end
-
       @attendees = current_user.attending_doctor_attendees
+
+      #Формируем ответ для отрисовки в браузере
       @attendees.map! { |a|
         event = a.event
         {
-            id: event.id,
-	    date_start: event.date_start,
-            date_end: event.date_end,
-            description: event.description,
-            summary: event.summary,
-            duration: event.duration,
-	    status: event.status
+          id: event.status,
+          date_start: event.date_start,
+          date_end: event.date_end,
+          description: event.description,
+          summary: event.summary,
+          duration: event.duration,
+          status: event.status,
+          type: event.type
         }
-
       }
+
+      #А тепеь исключим лишние элементы.
+      #Здесь я делаю исключение после формирования ответа. Это необходимо, так как если исключать до формирования
+      #,то будет происходить больше запросов к БД.
+      @attendees.reject! {|a|
+        not (a[:type] == 'AppointmentEvent')
+      }
+
       f.json {
         render :json => @attendees.to_json
       }
       f.html {}
     }
   end
-  
+
   def confirm
-    respond_to {|f|
-      f.json{ 
-       "status test"
-      } 
-    }
+    @appointment_id = params['apptId']
+    @patientId = params['patId']
+
+    @event = AppointmentEvent.find(@appointment_id)
+    @event.status = 'busy'
+
+    @new_Attendee = Attendee.new
+    @new_Attendee.user_id=@patientId
+    @new_Attendee.event_id=@event.id
+
+    @event.save!
+    @new_Attendee.save!
+    render :text => "Status of event has been changed. Now is #{@event.status}"
   end
 
   #get form create appointments event

@@ -2,8 +2,9 @@ define([
   'jquery',
   'backbone',
   'text!templates/appointment_list.html',
-  'text!templates/appointment_list_row.html'
-], ($, Backbone, AppointmentListTemplate, AppointmentListRowTemplate) ->
+  'text!templates/appointment_list_row.html',
+  'routers/router'
+], ($, Backbone, AppointmentListTemplate, AppointmentListRowTemplate, Router) ->
   Backbone.View.extend
 
     initialize: ->
@@ -18,21 +19,27 @@ define([
       alert('This AppointmenrHour is busy, Please take another!')
     
     isFree: (e)->
-      ajax_param = 
+      e.preventDefault()
+      element = $(e.currentTarget)
+      console.log(document.patient_id)
+      ajax_param =
         url: '/cabinet/doctor/appointment/confirm'
         type: 'post'
-        dataType: 'json'
+        dataType: 'text'
+        data:
+          apptId: element.attr('id')
+          patId: document.patient_id
         success: (data) ->
           alert(data)
-        error: (e, errorText) ->
-          alert errorText
+          Router.instance().navigate('/cabinet/doctor/patient', true)
+
       $.ajax ajax_param
 
     render: (callback, id) ->
+      document.patient_id = id
       $.getJSON '/cabinet/doctor/appointments', $.proxy((response) ->
         @$el.html(@_list())
-        
-	#Rendering appointment list
+	      #Rendering appointment list
         row_render = (el, row) ->
           el.find('#appointment-list').append row(a: appointment) for appointment in response
         row_render(@$el, @_row)

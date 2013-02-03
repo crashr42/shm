@@ -6,9 +6,9 @@
     <td><%= a.summary %></td>
     <td><%= a.duration %></td>
     <% if(a.status == 'free') { %>
-    <td class="free" id='<%= a.id  %>'><a class="btn btn-success"><%= a.status %></a></td>
+    <td><a class="btn btn-success free" href="" id='<%= a.id  %>'><%= a.status %></a></td>
     <% } else { %>
-    <td class="busy"><a class="btn btn-danger"><%= a.status %></a></td>
+    <td><a class="btn btn-danger busy"><%= a.status %></a></td>
     <% } %>
 </tr>
 
