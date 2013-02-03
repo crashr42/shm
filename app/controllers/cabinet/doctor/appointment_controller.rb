@@ -5,7 +5,7 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
   #get appointment index page (search and select patient)
   def index
     respond_to { |f|
-      @attendees = current_user.attending_doctor_attendees
+      @attendees = User.current.attending_doctor_attendees
 
       #Формируем ответ для отрисовки в браузере
       @attendees.map! { |a|
@@ -29,6 +29,7 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
         not (a[:type] == 'AppointmentEvent')
       }
 
+      @attendees.sort!{|a, b| b[:date_start] <=> a[:date_start]}
       f.json {
         render :json => @attendees.to_json
       }
@@ -60,6 +61,8 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
     @attendees.reject! {|a|
       not (a[:type] == 'AppointmentEvent')
     }
+
+    @attendees.sort!{|a, b| b[:date_start] <=> a[:date_start]}
 
     respond_to{|f|
       f.html { render :layout => false }
