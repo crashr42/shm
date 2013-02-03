@@ -1,4 +1,5 @@
 require.config
+  urlArgs: 'v=' + Math.random()
   baseUrl: '/assets'
   paths:
     app: 'cabinet/manager'
