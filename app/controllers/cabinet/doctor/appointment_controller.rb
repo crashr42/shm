@@ -11,7 +11,7 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
       @attendees.map! { |a|
         event = a.event
         {
-          id: event.status,
+          id: event.id,
           date_start: event.date_start,
           date_end: event.date_end,
           description: event.description,
@@ -40,16 +40,12 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
     @appointment_id = params['apptId']
     @patientId = params['patId']
 
-    @event = AppointmentEvent.find(@appointment_id)
-    @event.status = 'busy'
-
-    @new_Attendee = Attendee.new
+    @new_Attendee = PatientAttendee.new
     @new_Attendee.user_id=@patientId
-    @new_Attendee.event_id=@event.id
+    @new_Attendee.event_id=@appointment_id
 
-    @event.save!
     @new_Attendee.save!
-    render :text => "Status of event has been changed. Now is #{@event.status}"
+    render :text => "Status of event has been changed. Now is #{@new_Attendee.event.status}"
   end
 
   #get form create appointments event

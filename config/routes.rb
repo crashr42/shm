@@ -33,6 +33,7 @@ Shm::Application.routes.draw do
       match 'user/find_doctor' => 'user#find_doctor', :via => :post
 
       match 'appointment/confirm' => 'appointment#confirm', :via => :post
+      match 'appointment/me/(:id)' => 'appointment#index', :via => :get
     end
     namespace :patient do
       root :to => 'index#index'
