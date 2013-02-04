@@ -44,7 +44,7 @@ define([
       e.preventDefault()
       element = $(e.currentTarget)
 
-      $.getJSON '/cabinet/doctor/appointments/' + element.attr('id'), $.proxy((response) ->
+      $.getJSON '/cabinet/doctor/appointments/for/' + element.attr('id'), $.proxy((response) ->
         #Rendering appointment list
         row_render = (el, row) ->
           $('<tr><td colspan="4">' + row(a: appointment) + '</td></tr>').insertAfter("tr#" + element.attr('id')) for appointment in response

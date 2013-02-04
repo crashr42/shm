@@ -2,9 +2,9 @@ define([
   'jquery',
   'backbone',
   'text!templates/appointment_list.html',
-  'text!templates/appointment_list_row.html',
+  'text!templates/appointment_list_row_all.html',
   'routers/router'
-], ($, Backbone, AppointmentListTemplate, AppointmentListRowTemplate, Router) ->
+], ($, Backbone, AppointmentListTemplate, AppointmentListRowTemplate,  Router) ->
   Backbone.View.extend
 
     initialize: ->

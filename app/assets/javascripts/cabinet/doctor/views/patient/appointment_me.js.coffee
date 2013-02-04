@@ -21,7 +21,6 @@ define([
     isFree: (e)->
       e.preventDefault()
       element = $(e.currentTarget)
-      console.log(document.patient_id)
       ajax_param =
         url: '/cabinet/doctor/appointment/confirm'
         type: 'post'
@@ -37,7 +36,7 @@ define([
 
     render: (callback, id) ->
       document.patient_id = id
-      $.getJSON '/cabinet/doctor/appointments', $.proxy((response) ->
+      $.getJSON '/cabinet/doctor/appointments/for/me', $.proxy((response) ->
         @$el.html(@_list())
 	      #Rendering appointment list
         row_render = (el, row) ->

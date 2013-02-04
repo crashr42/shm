@@ -18,6 +18,7 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
           summary: event.summary,
           duration: event.duration,
           status: event.status,
+          css_status: event.status_to_css,
           type: event.type
         }
       }
@@ -38,7 +39,9 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
   end
 
   def get_appointments_for
-    @attendees = DoctorUser.find(params[:id]).attending_doctor_attendees
+    @doctor_id = params[:id] == "me" ? User.current.id : params[:id]
+
+    @attendees = DoctorUser.find(@doctor_id).attending_doctor_attendees
 
     #Формируем ответ для отрисовки в браузере
     @attendees.map! { |a|
@@ -59,7 +62,7 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
     #Здесь я делаю исключение после формирования ответа. Это необходимо, так как если исключать до формирования
     #,то будет происходить больше запросов к БД.
     @attendees.reject! {|a|
-      not (a[:type] == 'AppointmentEvent')
+      not (a[:type] == 'AppointmentEvent') or not(a[:status] == "free")
     }
 
     @attendees.sort!{|a, b| b[:date_start] <=> a[:date_start]}

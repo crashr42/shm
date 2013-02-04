@@ -6,6 +6,7 @@ define([
   'views/patient/appointment_me',
   'views/patient/appointment_coll',
   'views/patient/all_appointmentes'
+  'views/patient/new_appointment'
 ], ($, Backbone, Index, PatientIndex, AppointmentMe, AppointmentColl, AppointmentesAll) ->
   Backbone.View.extend
     initialize: ->
