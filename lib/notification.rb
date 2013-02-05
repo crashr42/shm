@@ -1,11 +1,16 @@
 module Notification
   class Broadcast
-    def self.send(message)
+    def self.send(channel, message)
+      sending_message = {
+          :channel => channel,
+          :data => message
+      }.to_json
+
       # Check the reactor already running
       if EM.reactor_running?
-        self.sender(message, false)
+        self.sender(sending_message, false)
       else
-        EM.run { self.sender(message, true) }
+        EM.run { self.sender(sending_message, true) }
       end
     end
 
