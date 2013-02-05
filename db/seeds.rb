@@ -46,6 +46,9 @@ Role.all.each do |role|
     user.policy = Faker::Lorem.characters 32
     user.doctor_user = DoctorUser.first
   end
+  if user.is_a? DoctorUser
+    user.specialty = Specialty.first(:offset => rand(Specialty.count))
+  end
   user.email = "#{role.name.downcase}@shm.com"
   user.password = 123456
   user.save!
