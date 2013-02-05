@@ -13,6 +13,7 @@ define([
     events:
       'click .appointment-me': 'gotoAppointmentMe'
       'click .appointment-coll': 'gotoAppointmentColleguae'
+      'click .appointment-new': 'gotoAppointmentNew'
 
     gotoAppointmentMe: (e) ->
       e.preventDefault()
@@ -20,6 +21,11 @@ define([
       Router.instance().navigate(element.attr('href'), true)
 
     gotoAppointmentColleguae: (e) ->
+      e.preventDefault()
+      element = $(e.currentTarget)
+      Router.instance().navigate(element.attr('href'), true)
+
+    gotoAppointmentNew: (e) ->
       e.preventDefault()
       element = $(e.currentTarget)
       Router.instance().navigate(element.attr('href'), true)
