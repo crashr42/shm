@@ -1,4 +1,5 @@
 require.config
+  urlArgs: 'v=' + Math.random()
   baseUrl: '/assets'
   paths:
     app: 'cabinet/manager'
@@ -15,6 +16,8 @@ require.config
     backbone:
       deps: ['jquery', 'underscore']
       exports: 'Backbone'
+    bootstrap:
+      deps: ['jquery']
 
 require([
   'application',

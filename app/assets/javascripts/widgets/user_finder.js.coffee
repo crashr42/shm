@@ -26,7 +26,7 @@
       @bind_events()
 
     init_body: ->
-      @modal = $('
+      @modal = $($.trim('
           <div class="modal hide fade">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -42,7 +42,7 @@
             </div>
           </div>
         </div>
-      ')
+      '))
       $(document.body).append(@modal)
 
     bind_events: ->
@@ -53,14 +53,14 @@
         $.post(that.options.url, {name: input_field.val()}, (request) ->
           users_box.html('')
           for user, index in request
-            user_box = '
+            user_box = $.trim('
               <div class="padding-box5">
                 <button type="button" class="btn btn-large span12 text-left" data-id="' + index + '">
                   <i class="icon-user"></i>
                     ' + user.email + '
                 </button>
               </div>
-            '
+            ')
             users_box.append(user_box)
           users_box.find('button').click -> that.options.selected(request[$(@).attr('data-id')])
         )

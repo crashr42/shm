@@ -7,9 +7,11 @@ class ApplicationController < ActionController::Base
   private
   # Отключаем кэширование ajax запросов в браузере
   def disable_cache_for_xhr
-    response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
-    response.headers['Pragma'] = 'no-cache'
-    response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
+    if request.xhr?
+      response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
+      response.headers['Pragma'] = 'no-cache'
+      response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
+    end
   end
 
   def current_url
