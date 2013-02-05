@@ -13,6 +13,7 @@ define([
     render: (callback, id) ->
       $.get("/cabinet/doctor/diagnostic/show/#{id}", $.proxy((response) ->
         @$el.html(response)
+        @delegateEvents()
         callback(@)
       , @))
 )
