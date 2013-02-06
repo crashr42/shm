@@ -8,12 +8,7 @@ class Cabinet::Doctor::DiagnosticController < Cabinet::DoctorController
     to   = Time.at(params[:to].to_i)
 
     respond_to do |f|
-      f.json { render :json => ParametersData.where({
-          :user_id      => params[:patient_id],
-          :parameter_id => params[:parameter_id]
-      }).where('created_at between ? and ?', from.to_datetime, to.to_datetime).order(:created_at).map { |p|
-        [p.created_at.to_i * 1000, p.value.to_i]
-      } }
+      f.json { render :json => ParametersData.diagnostic(params[:patient_id], params[:parameter_id], from, to) }
     end
   end
 end
