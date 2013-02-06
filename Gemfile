@@ -83,3 +83,5 @@ gem 'momentjs-rails'
 gem 'rails-backbone'
 # модульная структура для js
 gem 'requirejs-rails'
+# графики
+gem 'highcharts-rails'

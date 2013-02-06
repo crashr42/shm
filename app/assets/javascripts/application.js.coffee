@@ -22,7 +22,8 @@ define([
   'ajax',
   'jquery_ujs',
   'backbone_rails_sync',
-  'backbone_datalink'
+  'backbone_datalink',
+  'highcharts'
 ], (Binder) ->
   class App
     constructor: ->
