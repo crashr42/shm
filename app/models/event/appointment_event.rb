@@ -4,6 +4,8 @@ class AppointmentEvent < Event
   has_many :doctor_attendees, :foreign_key => :event_id
   has_many :patient_attendees, :foreign_key => :event_id
 
+  has_many :doctor_user, :through => :attending_doctor_attendees, :foreign_key => :event_id
+
   def attending_doctor
     self.appointment_hour_event.attending_doctor_attendees.first.user
   end
