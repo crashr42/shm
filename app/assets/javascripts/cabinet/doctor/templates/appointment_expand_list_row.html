@@ -1,0 +1,16 @@
+<tr>
+    <td colspan="4" class="doctorAppointmentsId<%= dAId %>">
+
+    <%= a.id %>&nbsp
+    <%= a.date_start %>&nbsp
+    <%= a.date_end %>&nbsp
+    <%= a.description %>&nbsp
+    <%= a.summary %>&nbsp
+    <%= a.duration %>&nbsp
+    <% if(a.status == 'free') { %>
+    <a class="btn btn-success free" href="" id='<%= a.id  %>'><%= a.status %></a>
+    <% } else { %>
+    <a class="btn btn-danger busy"><%= a.status %></a>
+    <% } %>
+</tr>
+

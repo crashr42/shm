@@ -2,7 +2,7 @@ define([
   'jquery',
   'backbone',
   'text!templates/appointment_list.html',
-  'text!templates/appointment_list_row.html',
+  'text!templates/appointment_expand_list_row.html',
   'text!templates/doctors_list.html',
   'text!templates/doctor_list_row.html',
   'routers/router'
@@ -20,8 +20,9 @@ define([
       'click .busy': 'isBusy'
       'click .free': 'isFree'
       'click .expand': 'getDoctors'
+      'click .hideExpand': 'hideDoctorAppointmentsList'
 
-    isBusy:  ->
+    isBusy: ->
       alert('This AppointmenrHour is busy, Please take another!')
 
     isFree: (e)->
@@ -47,9 +48,18 @@ define([
       $.getJSON '/cabinet/doctor/appointments/for/' + element.attr('id'), $.proxy((response) ->
         #Rendering appointment list
         row_render = (el, row) ->
-          $('<tr><td colspan="4">' + row(a: appointment) + '</td></tr>').insertAfter("tr#" + element.attr('id')) for appointment in response
+          $(row(a: appointment, dAId: element.attr('id'))).insertAfter("tr#" + element.attr('id')) for appointment in response
         row_render(@$el, @_row)
+        element.attr("class", "btn btn-inverse hideExpand")
+        element.html("Hide them")
       , @)
+
+     hideDoctorAppointmentsList: (e) ->
+       e.preventDefault()
+       element = $(e.currentTarget)
+       $('.doctorAppointmentsId' + element.attr('id')).remove()
+       element.attr("class", "btn btn-primary expand")
+       element.html("Get App-ts")
 
     render: (callback, id) ->
       document.patient_id = id
