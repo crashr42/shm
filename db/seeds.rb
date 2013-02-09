@@ -147,9 +147,3 @@ end
   b.save!
 end
 
-#Для каждого доктора заполним специальность
-DoctorUser.all.each {|doctor|
-  doctor.specialty_id = Specialty.first(order: 'RANDOM()').id
-  doctor.save
-}
-
