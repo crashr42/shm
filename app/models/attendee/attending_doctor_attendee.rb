@@ -1,7 +1,7 @@
 class AttendingDoctorAttendee < Attendee
   after_create :add_attending_doctor_to_child
 
-  belongs_to :doctor_user, :foreign_key =>  :user_id
+  belongs_to :doctor_user, :foreign_key => :user_id
   belongs_to :appointment_event, :foreign_key => :event_id
 
   private

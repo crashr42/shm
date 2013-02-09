@@ -5,71 +5,22 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
   #get appointment index page (search and select patient)
   def index
     respond_to { |f|
-      @attendees = User.current.attending_doctor_attendees
+      @appntEvents = DoctorUser.current.appointment_events.order("date_start DESC")
 
-      #Формируем ответ для отрисовки в браузере
-      @attendees.map! { |a|
-        event = a.event
-        {
-          id: event.id,
-          date_start: event.date_start,
-          date_end: event.date_end,
-          description: event.description,
-          summary: event.summary,
-          duration: event.duration,
-          status: event.status,
-          css_status: event.status_to_css,
-          type: event.type
-        }
-      }
-
-      #А тепеь исключим лишние элементы.
-      #Здесь я делаю исключение после формирования ответа. Это необходимо, так как если исключать до формирования
-      #,то будет происходить больше запросов к БД.
-      @attendees.reject! {|a|
-        not (a[:type] == 'AppointmentEvent')
-      }
-
-      @attendees.sort!{|a, b| b[:date_start] <=> a[:date_start]}
       f.json {
-        render :json => @attendees.to_json
+        render :json => @appntEvents.to_json
       }
       f.html {}
     }
   end
 
-  def get_appointments_for
+  def get_free_appointments_for
     @doctor_id = params[:id] == "me" ? User.current.id : params[:id]
-
-    @attendees = DoctorUser.find(@doctor_id).attending_doctor_attendees
-
-    #Формируем ответ для отрисовки в браузере
-    @attendees.map! { |a|
-      event = a.event
-      {
-          id: event.id,
-          date_start: event.date_start,
-          date_end: event.date_end,
-          description: event.description,
-          summary: event.summary,
-          duration: event.duration,
-          status: event.status,
-          type: event.type
-      }
-    }
-
-    #А тепеь исключим лишние элементы.
-    #Здесь я делаю исключение после формирования ответа. Это необходимо, так как если исключать до формирования
-    #,то будет происходить больше запросов к БД.
-    @attendees.reject! {|a|
-      not (a[:type] == 'AppointmentEvent') or not(a[:status] == "free")
-    }
-
-    @attendees.sort!{|a, b| b[:date_start] <=> a[:date_start]}
+    @appntEvents = DoctorUser.find(@doctor_id).appointment_events.where("events.status = 'free'").order("date_start DESC")
 
     respond_to{|f|
       f.html { render :layout => false }
-      f.json { render :json => @attendees.to_json }
+      f.json { render :json => @appntEvents.to_json }
     }
   end
 
