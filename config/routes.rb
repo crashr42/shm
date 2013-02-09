@@ -71,6 +71,10 @@ Shm::Application.routes.draw do
     end
   end
 
+  scope :diagnostic do
+    match '/parameter' => 'diagnostic#parameter', :via => :post
+  end
+
   match ':controller(/:action(/:id))(.:format)'
 
   if ::Rails.application.config.handle_errors

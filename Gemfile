@@ -83,3 +83,7 @@ gem 'momentjs-rails'
 gem 'rails-backbone'
 # модульная структура для js
 gem 'requirejs-rails'
+# websocket server
+gem 'em-websocket'
+# websocket client
+gem 'em-websocket-client'

@@ -67,4 +67,7 @@ Shm::Application.configure do
 
   # Handle error in controllers
   config.handle_errors = true
+
+  # Websocket server address
+  config.wsserver = 'ws://localhost:8081'
 end
