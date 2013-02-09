@@ -38,6 +38,7 @@ define([
       document.patient_id = id
       $.getJSON '/cabinet/doctor/appointments/for/me', $.proxy((response) ->
         @$el.html(@_list())
+
 	      #Rendering appointment list
         row_render = (el, row) ->
           el.find('#appointment-list').append row(a: appointment) for appointment in response

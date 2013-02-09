@@ -19,7 +19,7 @@ define([
     events:
       'click .busy': 'isBusy'
       'click .free': 'isFree'
-      'click .expand': 'getDoctors'
+      'click .expand': 'getAndExpandDoctorAppointmentsList'
       'click .hideExpand': 'hideDoctorAppointmentsList'
 
     isBusy: ->
@@ -41,7 +41,7 @@ define([
 
       $.ajax ajax_param
 
-    getDoctors: (e) ->
+    getAndExpandDoctorAppointmentsList: (e) ->
       e.preventDefault()
       element = $(e.currentTarget)
 
@@ -54,7 +54,7 @@ define([
         element.html("Hide them")
       , @)
 
-     hideDoctorAppointmentsList: (e) ->
+    hideDoctorAppointmentsList: (e) ->
        e.preventDefault()
        element = $(e.currentTarget)
        $('.doctorAppointmentsId' + element.attr('id')).remove()
