@@ -3,3 +3,6 @@
 
 en:
   hello: "Hello world"
+  date:
+    formats:
+      short: "%d.%m.%Y"

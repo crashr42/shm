@@ -1,6 +1,7 @@
 define([
-  'jquery'
-], ($) ->
+  'jquery',
+  'binder'
+], ($, Binder) ->
   getLoader = ->
     loader = $('.loader')
     unless loader.length > 0
@@ -19,7 +20,13 @@ define([
     )
     getLoader().hide()
 
-  $(document).ajaxSuccess -> getLoader().hide()
-  $(document).ajaxComplete -> getLoader().hide()
+  $(document).ajaxSuccess ->
+    getLoader().hide()
+    Binder.bind()
+
+  $(document).ajaxComplete ->
+    getLoader().hide()
+    Binder.bind()
+
   $.ajaxSetup beforeSend: (xhr) -> xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
 )

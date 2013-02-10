@@ -83,3 +83,5 @@ gem 'momentjs-rails'
 gem 'rails-backbone'
 # модульная структура для js
 gem 'requirejs-rails'
+# удобная работа с датами в js
+gem 'momentjs-rails'

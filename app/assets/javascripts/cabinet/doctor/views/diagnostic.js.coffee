@@ -3,7 +3,8 @@ define([
   'backbone',
   'underscore',
   'highstock',
-  'bootstrap'
+  'bootstrap',
+  'moment'
 ], ($, Backbone, _, Highcharts) ->
   Backbone.View.extend
     events:
@@ -11,10 +12,13 @@ define([
       'click .toogleData': 'toogleData'
 
     postData: ->
+      from = moment(@$el.find('.start-date').val(), 'DD.MM.YYYY')
+      to = moment(@$el.find('.end-date').val(), 'DD.MM.YYYY')
+
       patient_id: @patient_id
       parameter_id: @selected_parameter_id
-      from: +new Date(2012, 0, 1, 0, 0, 0, 0) / 1000
-      to: +new Date(2013, 11, 31, 23, 59, 59, 0) / 1000
+      from: from / 1000
+      to: to / 1000
 
     showParameterDiagnostic: (e) ->
       @$el.find('.data').slideUp().html('')

@@ -21,7 +21,7 @@ require.config
       exports: 'Highcharts'
     highstock:
       exports: 'Highcharts'
-    booststrap:
+    bootstrap:
       deps: ['jquery']
 
 require([
