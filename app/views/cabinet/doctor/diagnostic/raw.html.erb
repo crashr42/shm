@@ -5,7 +5,7 @@
   </tr>
   <% @data.each do |d| %>
       <tr>
-        <td><%= d.created_at %></td>
+        <td><%= l d.created_at, :format => :long %></td>
         <td><%= d.value %></td>
       </tr>
   <% end %>

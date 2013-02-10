@@ -12,7 +12,7 @@ class SelectChart
             text: parameter.name
         },
         subtitle: {
-            text: "#{from} - #{to}"
+            text: "#{I18n.l from.to_date, :format => :short} - #{I18n.l to.to_date, :format => :short}"
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage}%</b>',
