@@ -35,6 +35,7 @@ Shm::Application.routes.draw do
       match 'appointment/confirm' => 'appointment#confirm', :via => :post
       match 'appointment/me/(:id)' => 'appointment#index', :via => :get
       match 'appointments/for/(:id)' => 'appointment#get_free_appointments_for'
+      match 'appointment/new/get_form' => 'appointment#get_patient_searching_form'
 
       match 'appointment/colleague/(:id)' => 'user#index', :via => :get
       match 'users/doctors' => 'user#get_doctors'

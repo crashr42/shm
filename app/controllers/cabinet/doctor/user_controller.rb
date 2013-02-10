@@ -7,7 +7,7 @@ class Cabinet::Doctor::UserController < ApplicationController
     @users = User.searh_patients_by_email params[:name]
     respond_to do |f|
       f.html { render :layout => false }
-      f.json { render :json => @users }
+      f.json { render :json => @users.to_json }
     end
   end
   

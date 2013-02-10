@@ -1,12 +1,12 @@
 <% @users.each do |u| %>
     <div class="user-info-block">
-      <div class="pull-right">
-        <%= link_to('Создать прием', "/cabinet/doctor/appointment/patient/#{u.id}/new", :class => 'btn') %>
-      </div>
       <div class="pull-left">
-        <div class="user-info">
+        <div class="user-info" id="<%= u.id %>">
           <%= u.first_name + ' ' + u.last_name + ' (' + u.email + ')'%>
         </div>
+      </div>
+      <div class="pull-right">
+        <a href="" class="btn btn-primary createApptnt" id="<%= u.id  %>">Create Appt-nt</a>
       </div>
     </div>
 <% end %>

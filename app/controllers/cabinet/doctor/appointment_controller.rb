@@ -38,32 +38,36 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
 
   #get form create appointments event
   def new
-    @event = AppointmentEvent.new
+    @event = AppointmentHourEvent.new
+  end
+
+  def get_patient_searching_form
+
   end
 
   #create new appontment
   def create
-    @event = AppointmentEvent.new params[:appointment_event]
+    @event = AppointmentHourEvent.new params[:appointment_hour_event]
 
     respond_to do |f|
       begin
-        raise "There'nt doctor_id " if params['doctor_id'].blank?
+
         raise "There'nt patient_id" if params['patient_id'].blank?
 
+
+        @event.user = DoctorUser.current
         @event.save!
 
-        @at_doctor = DoctorAttendee.new
-        @at_doctor.user_id = params['doctor_id']
-        @at_doctor.event_id = @event.id
+        @at_doctor = AttendingDoctorAttendee.create({:user => DoctorUser.current, :event => @event})
 
-        @at_patient = PatientAttendee.new
-        @at_patient.user_id = params['patient_id']
-        @at_patient.event_id = @event.id
+        @at_patient = PatientAttendee.create({:user => PatientUser.find(params['patient_id']), :event => @event})
 
         @at_doctor.save
         @at_patient.save
 
-        f.html { redirect_to(cabinet_doctor_appointment_path(@event.id), :notice => 'Event created.') }
+        f.html do
+          redirect_to :controller => 'cabinet/doctor/appointment', :action => 'index'
+        end
       rescue Exception => exp
         flash[:error] = exp.message
         f.html do

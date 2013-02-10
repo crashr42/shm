@@ -1,15 +1,6 @@
-<h3>Добавление нового приема</h3>
- <legend>
-    <%= label_tag(:patient, "Выберите пациента:") %>
-    <%= text_field_tag(:patient, "Кликните для поиска") %><br/>
-
-    <%= label_tag(:doctor, "Выберите принимающего доктора:") %>
-    <%= text_field_tag(:doctor, "Кликните для поиска") %>
-
- </legend>
-
-
 <%= simple_form_for @event, :url => {:controller => "appointment", :action => "create"},  :class => 'form-horizontal' do |f| %>
+
+  <%= hidden_field_tag(:patient_id, "0") %>
   <%= f.input :date_start, :label => "Дата начала приема" %>
   <%= f.input :date_end, :label => "Дата окончания приема" %>
   <%= f.input :summary, :placeholder => "summary" %>
@@ -17,7 +8,5 @@
   <div class="form-actions">
     <%= f.button :submit, 'Сохранить', :class => 'btn-success' %>
     <%= link_to 'Назад', :back, :class => 'btn' %>
-  </div> 
-  <%= hidden_field_tag('patient_id') %>
-  <%= hidden_field_tag('doctor_id') %>
+  </div>
 <% end %>
