@@ -28,7 +28,7 @@ Specialty.create :name => 'Логопед'
 Specialty.create :name => 'Оттоларинголог'
 Specialty.create :name => 'Окулист'
 
-Diagnosis.create({
+Diagnosis.create!({
     :class_code => 'I',
     :class_name => 'Некоторые инфекционные и паразитарные болезни',
     :block_code => 'A30-A49',
@@ -52,7 +52,7 @@ Role.all.each do |role|
   user.email    = "#{role.name.downcase}@shm.com"
   user.password = 123456
   user.save!
-  UsersToRoles.create({:user => user, :role => role})
+  UsersToRoles.create!({:user => user, :role => role})
 end
 
 (0..10).each do
@@ -65,7 +65,7 @@ end
   u.password   = u.email
   u.specialty  = Specialty.first(:offset => rand(Specialty.count))
   u.save!
-  UsersToRoles.create({:user => u, :role => Role.find_by_name('doctor')})
+  UsersToRoles.create!({:user => u, :role => Role.find_by_name('doctor')})
 end
 
 DoctorUser.all.each do |d|
@@ -80,31 +80,31 @@ DoctorUser.all.each do |d|
     e.user        = d
     e.save!
 
-    AttendingDoctorAttendee.create({:user => d, :event => e})
+    AttendingDoctorAttendee.create!({:user => d, :event => e})
   end
 end
 
-RuleParameterInput.create({:rule => '2 раза в день после еды'})
-RuleParameterInput.create({:rule => '3 раза в день на голодный желудок'})
-RuleParameterInput.create({:rule => 'утром'})
-RuleParameterInput.create({:rule => 'вечером'})
+RuleParameterInput.create!({:rule => '2 раза в день после еды'})
+RuleParameterInput.create!({:rule => '3 раза в день на голодный желудок'})
+RuleParameterInput.create!({:rule => 'утром'})
+RuleParameterInput.create!({:rule => 'вечером'})
 
-BoolParameter.create({
+BoolParameter.create!({
     :name                 => 'Головная боль',
     :rule_parameter_input => RuleParameterInput.first(:offset => rand(RuleParameterInput.count))
 })
-IntegerParameter.create({:name => 'Температура', :metadata => {
+IntegerParameter.create!({:name => 'Температура', :metadata => {
     :default    => '36',
     :validators => {
         :min => '0',
         :max => '100'
     }
 }, :rule_parameter_input       => RuleParameterInput.first(:offset => rand(RuleParameterInput.count))})
-SelectParameter.create({:name => 'Возрастная категория', :metadata => {
+SelectParameter.create!({:name => 'Возрастная категория', :metadata => {
     :default => '0-9',
     :values  => %w(0-9 9-18 18-27 27-36)
 }, :rule_parameter_input      => RuleParameterInput.first(:offset => rand(RuleParameterInput.count))})
-StringParameter.create({:name => '2х2', :metadata => {
+StringParameter.create!({:name => '2х2', :metadata => {
     :default => '4'
 }, :rule_parameter_input      => RuleParameterInput.first(:offset => rand(RuleParameterInput.count))})
 
@@ -119,19 +119,19 @@ StringParameter.create({:name => '2х2', :metadata => {
   u.doctor_user = DoctorUser.first(:offset => rand(DoctorUser.count))
   u.diagnosis   = Diagnosis.first(:offset => rand(Diagnosis.count))
   u.save!
-  UsersToRoles.create({:user => u, :role => Role.find_by_name('patient')})
+  UsersToRoles.create!({:user => u, :role => Role.find_by_name('patient')})
 
-  ParametersToPatients.create({:user_id => u.id, :parameter_id => BoolParameter.first.id})
-  ParametersToPatients.create({:user_id => u.id, :parameter_id => IntegerParameter.first.id})
-  ParametersToPatients.create({:user_id => u.id, :parameter_id => SelectParameter.first.id})
-  ParametersToPatients.create({:user_id => u.id, :parameter_id => StringParameter.first.id})
+  ParametersToPatients.create!({:user_id => u.id, :parameter_id => BoolParameter.first.id})
+  ParametersToPatients.create!({:user_id => u.id, :parameter_id => IntegerParameter.first.id})
+  ParametersToPatients.create!({:user_id => u.id, :parameter_id => SelectParameter.first.id})
+  ParametersToPatients.create!({:user_id => u.id, :parameter_id => StringParameter.first.id})
 
   (0..10).each do
     ae = AppointmentEvent.first(:offset => rand(AppointmentEvent.count))
     ae.attendees.destroy_all
 
-    PatientAttendee.create({:user => u, :event => ae})
-    AttendingDoctorAttendee.create({:user => ae.attending_doctor, :event => ae})
+    PatientAttendee.create!({:user => u, :event => ae})
+    AttendingDoctorAttendee.create!({:user => ae.attending_doctor, :event => ae})
   end
 end
 
@@ -154,41 +154,35 @@ DoctorUser.all.each { |doctor|
 }
 
 PatientUser.all.each do |p|
-  (0..50).each do
+  (DateTime.now - 120.days).step(DateTime.now, 1).each do |day|
     pd = ParametersData.new({
         :parameter_id => BoolParameter.first.id,
         :user_id      => p.id,
         :value        => %w(true false).sample
     })
-    pd.created_at = DateTime.now.to_date - rand(1..10).days + rand(1..12).hours
+    pd.created_at = day
     pd.save!
-  end
-  (0..50).each do
     pd = ParametersData.new({
         :parameter_id => IntegerParameter.first.id,
         :user_id      => p.id,
-        :value        => rand(100)
+        :value        => 34 + rand(10)
     })
-    pd.created_at = DateTime.now.to_date - rand(1..10).days + rand(1..12).hours
+    pd.created_at = day
     pd.save!
-  end
-  (0..50).each do
     parameter = SelectParameter.first
     pd = ParametersData.new({
         :parameter_id => parameter.id,
         :user_id      => p.id,
         :value        => parameter.metadata[:values].sample
     })
-    pd.created_at = DateTime.now.to_date - rand(1..10).days + rand(1..12).hours
+    pd.created_at = day
     pd.save!
-  end
-  (0..50).each do
     pd = ParametersData.new({
         :parameter_id => StringParameter.first.id,
         :user_id      => p.id,
         :value        => Faker::Lorem.characters(20)
     })
-    pd.created_at = DateTime.now.to_date - rand(1..10).days + rand(1..12).hours
+    pd.created_at = day
     pd.save!
   end
 end

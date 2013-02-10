@@ -1,19 +1,25 @@
 <div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span3">
-            <h3>Patient parameters</h3>
-            <ul>
-                <% @patient.parameters.each do |p| %>
-                    <li>
-                        <button class="parameter btn btn-link" data-id="<%= p.id %>"><%= p.name %></button>
-                    </li>
-                <% end %>
-            </ul>
-        </div>
-        <div class="span9">
-            <div id="chart">
-
-            </div>
-        </div>
+  <div class="row-fluid">
+    <div class="span3">
+      <h3>Patient parameters</h3>
+      <ul>
+        <% @patient.parameters.each do |p| %>
+            <% unless p.is_a?(StringParameter) %>
+                <li>
+                  <button class="parameter btn btn-link" data-id="<%= p.id %>"><%= p.name %></button>
+                </li>
+            <% end %>
+        <% end %>
+      </ul>
     </div>
+    <div class="span9">
+      <div class="chart">
+
+      </div>
+      <button class="btn toogleData hide full-width" data-loading-text="Loading..." data-toggle="button">Toogle data</button>
+      <div class="data hide">
+
+      </div>
+    </div>
+  </div>
 </div>

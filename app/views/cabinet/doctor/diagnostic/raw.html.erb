@@ -1,0 +1,12 @@
+<table class="table table-striped">
+  <tr>
+    <th>Date</th>
+    <th>Value</th>
+  </tr>
+  <% @data.each do |d| %>
+      <tr>
+        <td><%= d.created_at %></td>
+        <td><%= d.value %></td>
+      </tr>
+  <% end %>
+</table>

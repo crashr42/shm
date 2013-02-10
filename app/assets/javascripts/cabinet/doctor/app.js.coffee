@@ -6,6 +6,7 @@ require.config
     views: 'cabinet/doctor/views'
     routers: 'cabinet/doctor/routers'
     templates: 'cabinet/doctor/templates'
+    'parameters-charts': 'widgets/charts/parameters'
   shim:
     underscore:
       exports: '_'
@@ -16,6 +17,12 @@ require.config
     backbone:
       deps: ['jquery', 'underscore']
       exports: 'Backbone'
+    highcharts:
+      exports: 'Highcharts'
+    highstock:
+      exports: 'Highcharts'
+    booststrap:
+      deps: ['jquery']
 
 require([
   'application',
@@ -39,5 +46,5 @@ require([
         Blocker.start() unless Rails.env == 'development'
       , @)
 
-  new DoctorCabinet()
+  new DoctorCabinet
 )

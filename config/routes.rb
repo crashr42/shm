@@ -26,7 +26,8 @@ Shm::Application.routes.draw do
       resources :documents, :controller => 'document'
       resources :patient, :parameter, :user, :diagnostic
 
-      match 'diagnostic/data' => 'diagnostic#data', :via => :post
+      match 'diagnostic/chart' => 'diagnostic#chart', :via => :post
+      match 'diagnostic/raw' => 'diagnostic#raw', :via => :post
 
       match 'link/parameter/:parameter_id/to/:patient_id' => 'parameter#link', :via => :post
       match 'unlink/parameter/:parameter_id/from/:patient_id' => 'parameter#unlink', :via => :post
