@@ -87,3 +87,5 @@ gem 'requirejs-rails'
 gem 'em-websocket'
 # websocket client
 gem 'em-websocket-client'
+# удобная работа с датами в js
+gem 'momentjs-rails'

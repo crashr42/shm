@@ -14,6 +14,7 @@ define([
       'click .appointment-me': 'gotoAppointmentMe'
       'click .appointment-coll': 'gotoAppointmentColleguae'
       'click .appointment-new': 'gotoAppointmentNew'
+      'click .diagnostic': 'gotoDiagnostic'
 
     gotoAppointmentMe: (e) ->
       e.preventDefault()
@@ -30,12 +31,18 @@ define([
       element = $(e.currentTarget)
       Router.instance().navigate(element.attr('href'), true)
 
+    gotoDiagnostic: (e) ->
+      e.preventDefault()
+      element = $(e.currentTarget)
+      Router.instance().navigate(element.attr('href'), true)
+
     render: (callback) ->
       $.getJSON '/cabinet/doctor/patient', $.proxy((response) ->
         @$el.html(@_template())
         row_render = (el, row) ->
           el.find('#patient-list').append row(p: patient) for patient in response
         row_render(@$el, @_row)
+        @delegateEvents()
         callback(@)
       , @)
 

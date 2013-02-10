@@ -65,4 +65,13 @@ body {
 /* fix отображение иконки поиска в панеле навигации */
 .navbar .icon-search {
     background-image: none;
-}​
+}
+
+.data {
+    overflow-y: scroll;
+    height: 300px;
+}
+
+.full-width {
+    width: 100%;
+}

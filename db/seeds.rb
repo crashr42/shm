@@ -147,3 +147,42 @@ end
   b.save!
 end
 
+#Для каждого доктора заполним специальность
+DoctorUser.all.each { |doctor|
+  doctor.specialty_id = Specialty.first(order: 'RANDOM()').id
+  doctor.save!
+}
+
+PatientUser.all.each do |p|
+  (DateTime.now - 120.days).step(DateTime.now, 1).each do |day|
+    pd = ParametersData.new({
+        :parameter_id => BoolParameter.first.id,
+        :user_id      => p.id,
+        :value        => %w(true false).sample
+    })
+    pd.created_at = day
+    pd.save!
+    pd = ParametersData.new({
+        :parameter_id => IntegerParameter.first.id,
+        :user_id      => p.id,
+        :value        => 34 + rand(10)
+    })
+    pd.created_at = day
+    pd.save!
+    parameter = SelectParameter.first
+    pd = ParametersData.new({
+        :parameter_id => parameter.id,
+        :user_id      => p.id,
+        :value        => parameter.metadata[:values].sample
+    })
+    pd.created_at = day
+    pd.save!
+    pd = ParametersData.new({
+        :parameter_id => StringParameter.first.id,
+        :user_id      => p.id,
+        :value        => Faker::Lorem.characters(20)
+    })
+    pd.created_at = day
+    pd.save!
+  end
+end

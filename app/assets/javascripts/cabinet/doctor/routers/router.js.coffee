@@ -12,13 +12,15 @@ define([
       'cabinet/doctor/appointment/colleague/:id': 'appointmentColl'
       'cabinet/doctor/appointments': 'appointmentesAll'
       'cabinet/doctor/appointment/new/:id': 'appointmentNew'
+      'cabinet/doctor/diagnostic/:id': 'diagnostic'
 
     index: -> @app.content.showIndex()
     patientIndex: -> @app.content.showPatientIndex()
     appointmentMe: (id) -> @app.content.showAppointmentMe(id)
     appointmentColl: (id) -> @app.content.showAppointmentColl(id)
     appointmentesAll: -> @app.content.showAppointmentesAll()
-    appointmentNew: (id)-> @app.content.showAppointmentNew(id)
+    appointmentNew: (id) -> @app.content.showAppointmentNew(id)
+    diagnostic: (id) -> @app.content.showDiagnostic(id)
 
   Router.instance = (options) -> @_instance || (@_instance = new Router(options))
 

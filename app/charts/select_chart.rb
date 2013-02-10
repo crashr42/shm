@@ -1,0 +1,40 @@
+class SelectChart
+  def self.build(patient_id, parameter_id, from, to)
+    data = ::DiagnosticFactory.chart(patient_id, parameter_id, from, to)
+    parameter = SelectParameter.find(parameter_id)
+    {
+        chart: {
+            plotBackgroundColor: nil,
+            plotBorderWidth: nil,
+            plotShadow: false
+        },
+        title: {
+            text: parameter.name
+        },
+        subtitle: {
+            text: "#{I18n.l from.to_date, :format => :short} - #{I18n.l to.to_date, :format => :short}"
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+            percentageDecimals: 1
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false,
+                    color: '#000000',
+                    connectorColor: '#000000'
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: parameter.name,
+            data: data
+        }]
+    }
+  end
+end
