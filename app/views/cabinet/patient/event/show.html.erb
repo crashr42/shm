@@ -10,7 +10,7 @@
     <p>Attendees: </p>
     <ul>
       <% @event.attendees.each do |a| %>
-          <li><%= link_to a.user.email, {:controller => :user, :action => :show, :id => a.user.id} %></li>
+          <li><%= link_to a.user.email, {:controller => :'/user', :action => :profile, :id => a.user.id} %></li>
       <% end %>
     </ul>
 <% end %>
