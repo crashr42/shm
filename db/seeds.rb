@@ -133,6 +133,13 @@ StringParameter.create({:name => '2х2', :metadata => {
     PatientAttendee.create({:user => u, :event => ae})
     AttendingDoctorAttendee.create({:user => ae.attending_doctor, :event => ae})
   end
+
+  u.appointment_events.limit(3).each do |e|
+    e.status = 'process'
+    e.save!
+    e.status = 'close'
+    e.save!
+  end
 end
 
 (0..10).each do

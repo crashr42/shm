@@ -30,10 +30,11 @@
           <%= link_to_active 'Shm', {:controller => :'/index', :action => :index}, :class => 'brand' %>
           <div class="nav-collapse">
             <ul class="nav" id="menu">
-              <%= link_to_active_wrapper 'Home', :li, cabinet_patient_path %>
-              <%= link_to_active_wrapper 'Calendar', :li, cabinet_patient_calendar_index_path %>
-              <%= link_to_active_wrapper 'Appointments', :li, cabinet_patient_appointment_index_path %>
-              <%= link_to_active_wrapper 'Parameters', :li, cabinet_patient_parameter_index_path %>
+              <%= link_to_active_wrapper 'Домашняя', :li, cabinet_patient_path %>
+              <%= link_to_active_wrapper 'Календарь', :li, cabinet_patient_calendar_index_path %>
+              <%= link_to_active_wrapper 'Запись на прием', :li, cabinet_patient_appointment_index_path %>
+              <%= link_to_active_wrapper 'Параметры', :li, cabinet_patient_parameter_index_path %>
+              <%= link_to_active_wrapper 'История', :li, cabinet_patient_event_history_path %>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

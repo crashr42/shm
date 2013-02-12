@@ -1,9 +1,19 @@
-<%= link_to_prev(@id, @date) %>
-<%= link_to_next(@id, @date) %>
-<ul class="unstyled">
+<h3><%= @doctor.email %></h3>
+<table class="table table-striped">
+  <tr>
+    <th>Дата начала</th>
+    <th>Дата окончания</th>
+    <th>Статус</th>
+    <th>Доктор</th>
+    <th></th>
+  </tr>
   <% @appointments.each do |a| %>
-      <li>
-        <button class="btn btn-link subscribe-appointment" data-id="<%= a.id %>"><%= "#{a.date_start} - #{a.date_end} (#{a.status})" %></button>
-      </li>
+      <tr>
+        <td><%= l a.date_start, :format => :long %></td>
+        <td><%= l a.date_end, :format => :long %></td>
+        <td><%= a.status %></td>
+        <td><%= @doctor.email %></td>
+        <td><button class="btn btn-link subscribe-appointment" data-id="<%= a.id %>">Записаться</button></td>
+      </tr>
   <% end %>
-</ul>
+</table>

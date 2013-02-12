@@ -5,7 +5,8 @@ define([
   'views/index',
   'views/parameter',
   'views/calendar',
-  'views/doctor'
+  'views/doctor',
+  'views/history'
 ], (
   $,
   Backbone,
@@ -13,7 +14,8 @@ define([
   Index,
   Parameter,
   Calendar,
-  Doctor
+  Doctor,
+  History
 ) ->
   Backbone.View.extend
     initialize: ->
@@ -22,10 +24,12 @@ define([
       @parameter = new Parameter(parentView: @)
       @calendar = new Calendar(parentView: @)
       @doctor = new Doctor(parentView: @)
+      @history = new History()
 
     showIndex: -> @index.render $.proxy(((v) -> @$el.html(v.el)), @)
     showAppointment: -> @appointment.render $.proxy(((v) -> @$el.html(v.el)), @)
     showParameter: -> @parameter.render $.proxy(((v) -> @$el.html(v.el)), @)
     showCalendar: -> @calendar.render $.proxy(((v) -> @$el.html(v.el);  @calendar.bindCalendar()), @)
     showDoctor: -> @doctor.render $.proxy(((v) -> @$el.html(v.el)), @)
+    showHistory: -> @history.render $.proxy(((v) -> @$el.html(v.el)), @)
 )

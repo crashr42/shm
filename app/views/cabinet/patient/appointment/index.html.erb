@@ -1,13 +1,15 @@
 <div class="span3" id="toolbar">
-  <h3>My doctor</h3>
-  <button class="btn btn-link" id="my-doctor" data-id="<%= User.current.doctor_user.id %>">Select my doctor</button>
-
-  <h3>Select doctor</h3>
-  <button class="btn btn-link" id="doctor-selector">Select doctor</button>
-  <button class="btn btn-link hide" id="use-doctor">Use doctor</button>
-  <div id="selected-doctor"></div>
-
-  <h3>Recent doctors</h3>
+  <ul class="unstyled">
+    <li>
+      <button class="btn" id="my-doctor" data-id="<%= User.current.doctor_user.id %>">Выбрать моего доктора</button>
+    </li>
+    <li>
+      <button class="btn" id="doctor-selector">Выбрать другого доктора</button>
+    </li>
+    <li>
+      <button class="btn hide" id="use-doctor"></button>
+    </li>
+  </ul>
 </div>
 <div class="span9">
   <div id="result"></div>

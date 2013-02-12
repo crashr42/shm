@@ -37,4 +37,12 @@ class Cabinet::Patient::EventController < Cabinet::PatientController
       end
     end
   end
+
+  def history
+    @history = current_user.events_history
+  end
+
+  def documents
+    @event = Event.find(params[:id])
+  end
 end

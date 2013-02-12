@@ -1,16 +1,17 @@
 class Document < ActiveRecord::Base
-  attr_accessible :event_id
-
-  before_save :initialize_creator_user
-
-  #That user is who by create current document. The attendees reference with document by entity "Event"
+  # Создатель документа
   belongs_to :user
-
-  #The event that reference current document
+  # Событие к которому привязан документ
   belongs_to :event
 
-  private
-  def initialize_creator_user
-    self.user_id = User.current.id
+  attr_accessible :event_id
+
+  validates :user_id, :presence => true
+
+  # Назначем создателем события текущего авторизованного пользователя
+  before_create do
+    if User.current.present?
+      self.user_id = User.current.id
+    end
   end
 end

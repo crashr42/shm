@@ -1,4 +1,9 @@
 class PatientAttendee < Attendee
+  # Пациент-участник
+  belongs_to :patient_user, :foreign_key => :user_id
+  # Событие-прием
+  belongs_to :appointment_event, :foreign_key => :event_id
+
   after_create :busy_event
 
   private

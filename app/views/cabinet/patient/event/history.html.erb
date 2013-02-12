@@ -1,0 +1,11 @@
+<div class="span3">
+  <h3>История событий</h3>
+  <% @history.each do |e| %>
+      <button class="btn event" data-id="<%= e.id %>">
+        <%= l e.date_start, :format => :long %> - <%= l e.date_end, :format => :long %> (<%= e.type %>)
+      </button>
+  <% end %>
+</div>
+<div class="span9 event-info">
+
+</div>

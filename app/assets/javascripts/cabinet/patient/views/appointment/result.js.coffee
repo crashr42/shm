@@ -23,7 +23,7 @@ define([
       e.preventDefault()
       target = $(e.currentTarget)
       $.post('/cabinet/patient/appointment', {id: target.attr('data-id')}, $.proxy((request) ->
-        target.parent().fadeOut(300, -> $(@).remove())
+        target.parent().parent().fadeOut(300, -> $(@).remove())
         $('#subscribe-result .modal-body').html(request)
         $('#subscribe-result').modal('show')
       , @))

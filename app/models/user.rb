@@ -1,11 +1,15 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
-
+  # Роли пациента
   has_many :roles, :through => :users_to_roleses, :readonly => false
   has_many :users_to_roleses, :class_name => UsersToRoles, :dependent => :delete_all
+  # События для которых пациент является организатором
   has_many :events
+  # События в которых участвовал пациент
   has_many :attendees
   has_many :attending_doctor_attendees
+  has_many :attendees_events, :through => :attendees, :source => :event
+
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
 
   attr_protected :created_at, :current_sign_in_at, :current_sign_in_ip, :encrypted_password,
                  :id, :last_sign_in_at, :last_sign_in_ip, :remember_created_at,
@@ -27,7 +31,6 @@ class User < ActiveRecord::Base
   def find_events_by_date(date)
     events.where('date_start between ? and ?', DateTime.parse("#{date.year}-#{date.month}-#{date.day} 00:00:00"), DateTime.parse("#{date.year}-#{date.month}-#{date.day} 23:59:59 order by date_start"))
   end
-
  
   def self.searh_patients_by_name search_name
     @users = User.where(
@@ -55,19 +58,14 @@ class User < ActiveRecord::Base
   
   end
   
-  #Getting all names of user
-  def get_FIO
-    return "#{last_name} #{first_name}  #{third_name}"
+  # Getting full user name
+  def fullname
+    "#{last_name} #{first_name} #{third_name}"
   end
 
   #Getting only first and last names
-  def get_FI
-    return "#{last_name} #{first_name}"  
-  end
-
-  #Getting full first and abbreviated last and third names
-  def get_FIO_shortcut
-    return "#{last_name} #{first_name[0]}."
+  def shortname
+    "#{last_name} #{first_name[0]}."
   end
 
   def timeout_blocked
@@ -78,5 +76,9 @@ class User < ActiveRecord::Base
   def timeout_unblocked
     self.timeout_block = false
     self.save!
+  end
+
+  def events_history
+    self.attendees_events.where(:status => 'close').order('updated_at desc')
   end
 end

@@ -19,8 +19,12 @@ class Cabinet::Patient::AppointmentController < Cabinet::PatientController
   end
 
   def find
-    @id = params[:id] || 0
+    @doctor = DoctorUser.find(params[:id])
     @date = params[:date].present? ? Time.at(params[:date].to_i).to_date : DateTime.now.to_date
-    @appointments = AppointmentEvent.joins(:attendees).where(:attendees => {:user_id => @id}).where('date(date_start) = ?', @date).where(:status => 'free')
+    @appointments = AppointmentEvent.
+        joins(:attendees).
+        where(:attendees => {:user_id => @doctor.id}).
+        where('date(date_start) = ?', @date).
+        where(:status => 'free')
   end
 end

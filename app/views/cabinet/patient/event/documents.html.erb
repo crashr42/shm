@@ -1,0 +1,6 @@
+<h3>Документы для события #<%= @event.id %></h3>
+<% @event.documents.each do |d| %>
+    <div class="document">
+      <%= d.type %>
+    </div>
+<% end %>
