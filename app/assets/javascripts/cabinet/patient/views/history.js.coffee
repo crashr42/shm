@@ -15,6 +15,7 @@ define([
     render: (callback) ->
       $.get('/cabinet/patient/event/history', $.proxy((response) ->
         @$el.html(response)
+        @delegateEvents()
         callback(@)
       , @))
 )
