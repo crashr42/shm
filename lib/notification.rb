@@ -2,7 +2,9 @@ module Notification
   class Broadcast
     def self.send(channel, message)
       sending_message = {
-          :channel => channel,
+          :room => channel,
+          :event => :message,
+          :type => :parameter_data,
           :data => message
       }.to_json
 
