@@ -11,15 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126152609) do
-
-  create_table "appointment_document_infos", :force => true do |t|
-    t.text     "anamnesis"
-    t.text     "appointment_result"
-    t.integer  "document_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-  end
+ActiveRecord::Schema.define(:version => 20130216101755) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "event_id"
@@ -62,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20121126152609) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "type"
+    t.text     "body"
   end
 
   add_index "documents", ["event_id"], :name => "index_documents_on_event_id"

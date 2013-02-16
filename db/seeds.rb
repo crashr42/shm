@@ -84,6 +84,19 @@ DoctorUser.all.each do |d|
   end
 end
 
+
+DoctorUser.all.each do |d|
+  doc = Document.new
+  doc.user = d
+  doc.body = 'This is test Document'
+  doc.save
+
+  appointment_document = AppointmentDocument.new
+  appointment_document.user = d
+  appointment_document.body = 'This is test AppointmentDocument'
+  appointment_document.save
+end
+
 RuleParameterInput.create({:rule => '2 раза в день после еды'})
 RuleParameterInput.create({:rule => '3 раза в день на голодный желудок'})
 RuleParameterInput.create({:rule => 'утром'})
