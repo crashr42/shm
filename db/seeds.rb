@@ -154,12 +154,6 @@ end
   b.save!
 end
 
-#Для каждого доктора заполним специальность
-DoctorUser.all.each { |doctor|
-  doctor.specialty_id = Specialty.first(order: 'RANDOM()').id
-  doctor.save!
-}
-
 PatientUser.all.each do |p|
   (DateTime.now - 120.days).step(DateTime.now, 1).each do |day|
     pd = ParametersData.new({
