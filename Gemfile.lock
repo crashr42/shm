@@ -88,6 +88,7 @@ GEM
     gon (4.0.2)
       actionpack (>= 2.3.0)
       json
+    gritter (1.0.3)
     haml (3.1.7)
     hike (1.2.1)
     http_parser.rb (0.5.3)
@@ -129,6 +130,7 @@ GEM
       rack-contrib
       rails
     mime-types (1.19)
+    modernizr-rails (2.6.2)
     momentjs-rails (1.7.2)
       railties (~> 3.1)
     multi_json (1.5.0)
@@ -281,11 +283,13 @@ DEPENDENCIES
   foreigner
   fullcalendar-rails
   gon
+  gritter (= 1.0.3)
   jquery-rails
   less-rails
   libv8
   mailcatcher
   meta_request
+  modernizr-rails
   momentjs-rails
   pg
   rails

@@ -90,3 +90,5 @@ gem 'em-websocket-client'
 # удобная работа с датами в js
 gem 'momentjs-rails'
 gem 'yajl-ruby'
+gem 'modernizr-rails'
+gem 'gritter', '1.0.3'

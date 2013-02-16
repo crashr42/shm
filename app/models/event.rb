@@ -93,10 +93,10 @@ class Event < ActiveRecord::Base
 
   def status_to_css
     {
-        :free => 'label label-success',
-        :busy => 'label label-important',
-        :process => 'label label-info',
-        :close => 'label'
+        :free => 'badge badge-success',
+        :busy => 'badge badge-important',
+        :process => 'badge badge-info',
+        :close => 'badge'
     }[self.status.to_sym]
   end
 

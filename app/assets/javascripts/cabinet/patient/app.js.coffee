@@ -15,6 +15,12 @@ require.config
     backbone:
       deps: ['jquery', 'underscore']
       exports: 'Backbone'
+    page_size:
+      deps: ['jquery']
+    highcharts:
+      exports: 'Highcharts'
+    highstock:
+      exports: 'Highcharts'
 
 require([
   'application',

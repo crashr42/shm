@@ -9,3 +9,6 @@ en:
     categories_label:
       appointment: 'label event-info'
       appointment_hour: 'label event-info'
+    type:
+      Event: Событие
+      AppointmentEvent: Прием у врача

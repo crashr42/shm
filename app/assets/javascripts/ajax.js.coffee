@@ -1,15 +1,16 @@
 define([
   'jquery',
-  'binder'
-], ($, Binder) ->
+  'binder',
+  'notification'
+], ($, Binder, Notification) ->
   getLoader = ->
     loader = $('.loader')
     unless loader.length > 0
-      loader = $('<div class="loader"><span>Loading...</span></div>')
+      loader = $('<div class="loader"><span>Загрузка...</span></div>')
       $('body').append(loader)
     loader
 
-  $(document).ajaxStart -> getLoader().show()
+#  $(document).ajaxStart (e) -> getLoader().stop().fadeIn('fast')
 
   $(document).ajaxError (event, xhr, settings, error) ->
     console.log(
@@ -18,15 +19,15 @@ define([
       settings: settings
       error: error
     )
-    getLoader().hide()
+    getLoader().stop().fadeOut('fast')
+    Notification.error(error)
 
   $(document).ajaxSuccess ->
-    getLoader().hide()
+    getLoader().stop().fadeOut('fast')
     Binder.bind()
 
   $(document).ajaxComplete ->
-    getLoader().hide()
-    Binder.bind()
+    getLoader().stop().fadeOut('fast')
 
   $.ajaxSetup beforeSend: (xhr) -> xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
 )

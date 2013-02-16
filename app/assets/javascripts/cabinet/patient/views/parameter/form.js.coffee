@@ -1,7 +1,7 @@
 define([
   'jquery',
   'backbone',
-  'views/notification'
+  'notification'
 ], ($, Backbone, Notification) ->
   Backbone.View.extend
     events:

@@ -1,3 +1,4 @@
+<h2><%= @doctor.fullname %> (<%= @doctor.specialty.name %>)</h2>
 <div class="well">
   <h3><%= User.human_attribute_name :email %>: <%= @doctor.email %></h3>
   <h4>Attending <%= @doctor.patient_users.count %> patients.</h4>

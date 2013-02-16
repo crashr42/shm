@@ -1,6 +1,12 @@
 /*
  *= require_self
- *= require fullcalendar
+ *= require bootstrap_and_overrides
+ *= require fullcalendar_acme
+ *= require style
+ *= require style-responsive
+ *= require ie
+ *= require ie9
+ *= require gritter
  *= require_tree .
  */
 
@@ -47,17 +53,17 @@ body {
     height: 100%;
     z-index: 1050;
     position: fixed;
-    background: rgba(255, 255, 255, 0.75) no-repeat center center;
+    background: rgba(255, 255, 255, 0.55) no-repeat center center;
     top: 0;
     left: 0;
     display: none;
 }
 
 .loader span {
-    font-size: 1.1em;
+    font-size: 1.4em;
     width: 100%;
     text-align: center;
-    color: #68BCF5;
+    color: #ffffff;
     display: block;
     margin-top: 10px;
 }

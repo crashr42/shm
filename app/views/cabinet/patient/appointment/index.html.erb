@@ -1,25 +1,25 @@
-<div class="span3" id="toolbar">
-  <ul class="unstyled">
-    <li>
-      <button class="btn" id="my-doctor" data-id="<%= User.current.doctor_user.id %>">Выбрать моего доктора</button>
-    </li>
-    <li>
-      <button class="btn" id="doctor-selector">Выбрать другого доктора</button>
-    </li>
-    <li>
-      <button class="btn hide" id="use-doctor"></button>
-    </li>
-  </ul>
-</div>
-<div class="span9">
-  <div id="result"></div>
-</div>
-<div class="modal hide fade" id="subscribe-result">
+<div class="row-fluid">
+  <div class="span12">
+    <h2>Выберите доктора для записи</h2>
+    <div class="row-fluid">
+      <div class="form-inline" id="toolbar">
+        <input type="text" class="datepicker" value="<%= l DateTime.now.to_date, :format => :short %>" />
+        <button class="btn" id="my-doctor" data-id="<%= User.current.doctor_user.id %>">Выбрать моего доктора</button>
+        <button class="btn" id="doctor-selector">Выбрать другого доктора</button>
+        <button class="btn hide" id="use-doctor"></button>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div id="result"></div>
+    </div>
+  </div>
+  <div class="modal hide fade" id="subscribe-result">
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Subscribe</h3>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Subscribe</h3>
     </div>
     <div class="modal-body">
 
     </div>
+  </div>
 </div>

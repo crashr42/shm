@@ -68,17 +68,25 @@ class User < ActiveRecord::Base
     "#{last_name} #{first_name[0]}."
   end
 
+  # Блокируем пользователя по таймауту
   def timeout_blocked
     self.timeout_block = true
     self.save!
   end
 
+  # Разблокировка пользователя
   def timeout_unblocked
     self.timeout_block = false
     self.save!
   end
 
+  # История событий
   def events_history
-    self.attendees_events.where(:status => 'close').order('updated_at desc')
+    self.attendees_events.order('date_start desc')
+  end
+
+  # Ближайшие свободные события
+  def coming_free_events
+    self.attendees_events.where("status = 'busy'").order('date_start desc')
   end
 end

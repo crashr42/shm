@@ -1,7 +1,8 @@
 define([
   'jquery',
   'backbone',
-  'widgets/user_finder'
+  'widgets/user_finder',
+  'moment'
 ], ($, Backbone) ->
   Backbone.View.extend
     events:
@@ -18,9 +19,11 @@ define([
           @$el.find('#use-doctor').removeClass('hide').attr('data-id', user.id).text(user.email)
         , @)).user_finder('show')
 
-    myDoctor: (e) -> @selected($(e.currentTarget).attr('data-id'), Math.round(new Date().getTime() / 1000)) if @selected
+    currentDate: -> moment(@$el.find('.datepicker').first().val(), 'DD.MM.YYYY')
 
-    useDoctor: (e) -> @selected($(e.currentTarget).attr('data-id'), Math.round(new Date().getTime() / 1000)) if @selected
+    myDoctor: (e) -> @selected($(e.currentTarget).attr('data-id'), @currentDate() / 1000) if @selected
+
+    useDoctor: (e) -> @selected($(e.currentTarget).attr('data-id'), @currentDate() / 1000) if @selected
 
     selected: (id) -> throw 'Implementation error'
 )

@@ -1,4 +1,4 @@
-<h3><%= @doctor.email %></h3>
+<h3>Запись к <%= @doctor.shortname %> (<%= @doctor.specialty.name %>) на <%= l @date, :format => :short %></h3>
 <table class="table table-striped">
   <tr>
     <th>Дата начала</th>

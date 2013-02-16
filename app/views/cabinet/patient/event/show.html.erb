@@ -1,27 +1,20 @@
-<h3>Event #<%= @event.id %></h3>
-<p>Orginizer: <%= @event.user.email %></p>
-<p>Summary: <%= @event.summary %></p>
-<p>Date: from <%= @event.date_start.to_s :ru %> to <%= @event.date_end.to_s :ru %></p>
-<p>Type: <%= t "event.categories.#{@event.type.underscore.gsub('_event', '')}" %></p>
-<% if @event.description.present? %>
-    <p>Description: <%= @event.description %></p>
-<% end %>
-<% if @event.attendees.present? %>
-    <p>Attendees: </p>
-    <ul>
-      <% @event.attendees.each do |a| %>
-          <li><%= link_to a.user.email, {:controller => :'/user', :action => :profile, :id => a.user.id} %></li>
-      <% end %>
-    </ul>
-<% end %>
-<% if @event.recurrence_rules.present? %>
-    <p>Recurrency rules: </p>
-    <ul>
-      <% @event.recurrence_rules.each do |r| %>
-          <li><%= link_to "rule ##{r.id}", :controller => :recurrence, :action => :show, :id => r.id %></li>
-      <% end %>
-    </ul>
-<% end %>
-<% if @event.is_a? AppointmentEvent %>
-    <%= link_to 'Unsubscribe', {:controller => :'cabinet/patient/event', :action => :unsubscribe, :id => @event.id}, {:class => 'btn'} %>
-<% end %>
+<div class="row-fluid">
+  <h3><%= t "event.type.#{@event.type}" %></h3>
+  <p>Организатор: <%= @event.user.email %></p>
+  <p>Краткое описание: <%= @event.summary %></p>
+  <p>Дата: с <%= l @event.date_start, :format => :long %> по <%= l @event.date_end, :format => :long %></p>
+  <% if @event.description.present? %>
+      <p>Описание: <%= @event.description %></p>
+  <% end %>
+  <% if @event.attendees.present? %>
+      <p>Участники: </p>
+      <ul>
+        <% @event.attendees.each do |a| %>
+            <li><%= link_to a.user.email, {:controller => :'/user', :action => :profile, :id => a.user.id} %></li>
+        <% end %>
+      </ul>
+  <% end %>
+  <% if @event.is_a?(AppointmentEvent) and @event.status == 'busy' %>
+      <%= link_to 'Не принимать участие', {:controller => :'cabinet/patient/event', :action => :unsubscribe, :id => @event.id}, {:class => 'btn'} %>
+  <% end %>
+</div>

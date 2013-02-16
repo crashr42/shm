@@ -1,19 +1,19 @@
-<h3>Please, select attending doctor!</h3>
+<h3>Пожалуйста, выберите вашего лечащего врача.</h3>
 <div class="row-fluid">
   <div class="span3">
-    <h4>Doctors</h4>
-    <ul>
+    <h4>Доступные доктора</h4>
+    <ul class="unstyled">
       <% @doctors.each do |d| %>
           <li>
-            <button class="btn show-doctor-info" type="button" data-id="<%= d.id %>"><%= d.email %></button>
+            <button class="btn-link show-doctor-info" type="button" data-id="<%= d.id %>"><%= d.email %></button>
           </li>
       <% end %>
     </ul>
-    <h4>5 coming free doctors</h4>
-    <ul>
+    <h4>Ближайшие свободные доктора</h4>
+    <ul class="unstyled">
       <% AppointmentEvent.coming_free.map { |e| e.attending_doctor }.uniq.each do |d| %>
           <li>
-            <button class="btn show-doctor-info" type="button" data-id="<%= d.id %>"><%= d.email %></button>
+            <button class="btn-link show-doctor-info" type="button" data-id="<%= d.id %>"><%= d.email %></button>
           </li>
       <% end %>
     </ul>

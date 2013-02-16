@@ -7,13 +7,13 @@ class Cabinet::Patient::EventController < Cabinet::PatientController
       f.json {
         events = Event.find_by_user_and_date current_user.id, start_date, end_date
 
-        render :json => events.map {|e|{
-            id:    e.id,
-            title: t("event.categories.#{e.type.underscore.gsub('_event', '')}"),
+        render :json => events.map { |e| {
+            id: e.id,
+            title: t("event.type.#{e.type}"),
             className: e.status_to_css,
             start: e.date_start,
-            end:   e.date_end
-        }}
+            end: e.date_end
+        } }
       }
     end
   end
@@ -22,7 +22,7 @@ class Cabinet::Patient::EventController < Cabinet::PatientController
     @event = Event.find params[:id]
 
     respond_to do |format|
-      format.html
+      format.html {}
       format.json { render :json => @event }
     end
   end
@@ -39,7 +39,22 @@ class Cabinet::Patient::EventController < Cabinet::PatientController
   end
 
   def history
-    @history = current_user.events_history
+    @offset = params[:offset] || 0
+    @limit = params[:limit] || 10
+    @history = current_user.events_history.offset(@offset).limit(@limit)
+
+    respond_to do |f|
+      f.html { render :text => '' }
+      f.json { render :json => @history.reverse.each_with_index.map { |e, i| {
+          x: i,
+          y: 1,
+          name: t("event.type.#{e.type}"),
+          id: e.id,
+          type: t("event.type.#{e.type}"),
+          dateStart: l(e.date_start, :format => :short),
+          dateEnd: l(e.date_end, :format => :short)
+      } }.to_json.html_safe }
+    end
   end
 
   def documents
