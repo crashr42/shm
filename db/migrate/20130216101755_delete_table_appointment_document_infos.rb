@@ -1,5 +1,5 @@
 class DelAppointmentDocumentInfos < ActiveRecord::Migration
-  #This name therefore migration_name is very long name for Ruby Class
+  #This name therefore migration filename is very long name for Ruby Class
 
   def up
     drop_table :appointment_document_infos
