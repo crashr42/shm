@@ -9,6 +9,7 @@ define([
       $.get('/cabinet/patient/calendar', $.proxy((response) ->
         @$el.html(response)
         callback(@)
+        @bindCalendar()
       , @))
 
     bindCalendar: ->
