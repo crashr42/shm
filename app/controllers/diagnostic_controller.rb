@@ -5,7 +5,6 @@ class DiagnosticController < ApplicationController
     parameter_data = ParametersData.new(params[:data])
     respond_to do |f|
       if parameter_data.save
-        ::Notification::Broadcast.send "diagnostic-#{parameter_data.user_id}", parameter_data
         f.json { render :json => {
             :message => 'parameter_data.saved'
         } }

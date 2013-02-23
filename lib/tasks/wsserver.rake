@@ -21,6 +21,7 @@ task :wsserver => :environment do
           # Получаем сообщение от клиента
           json_parser = Yajl::Parser.new(:symbolize_keys => true)
           decoded_message = json_parser.parse(message)
+          puts decoded_message
           # Получаем запрашиваемое действие
           event = decoded_message[:event]
           # Выполняем запрашиваемое действие

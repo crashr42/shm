@@ -1,10 +1,11 @@
 module Notification
   class Broadcast
-    def self.send(channel, message)
+    # Отправка сообщения на wsserver
+    # Доступные event => [:message, :join, :leave] см. класс lib/handler.rb
+    def self.send(message, channel = :all, event = :message)
       sending_message = {
           :room => channel,
-          :event => :message,
-          :type => :parameter_data,
+          :event => event,
           :data => message
       }.to_json
 
