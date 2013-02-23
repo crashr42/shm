@@ -29,13 +29,13 @@ Specialty.create :name => 'Оттоларинголог'
 Specialty.create :name => 'Окулист'
 
 Diagnosis.create({
-                     :class_code => 'I',
-                     :class_name => 'Некоторые инфекционные и паразитарные болезни',
-                     :block_code => 'A30-A49',
-                     :block_name => 'Другие бактериальные болезни',
-                     :code       => 'A39.5',
-                     :code_name  => 'Менингококковая болезнь сердца'
-                 })
+    :class_code => 'I',
+    :class_name => 'Некоторые инфекционные и паразитарные болезни',
+    :block_code => 'A30-A49',
+    :block_name => 'Другие бактериальные болезни',
+    :code => 'A39.5',
+    :code_name => 'Менингококковая болезнь сердца'
+})
 
 Role.all.each do |role|
   user = "#{role.name.capitalize!}User".constantize.new
@@ -85,16 +85,21 @@ DoctorUser.all.each do |d|
 end
 
 
-DoctorUser.all.each do |d|
-  doc = Document.new
-  doc.user = d
-  doc.body = 'This is test Document'
-  doc.save
+User.all.each do |u|
+  (0..10).each do
+    d = Document.new
+    d.user = u
+    d.body = Faker::Lorem.paragraphs(4)
+    d.save!
+  end
+end
 
-  appointment_document = AppointmentDocument.new
-  appointment_document.user = d
-  appointment_document.body = 'This is test AppointmentDocument'
-  appointment_document.save
+AppointmentEvent.where(:status => 'free').each do |e|
+  d = AppointmentDocument.new
+  d.user = DoctorUser.first(:offset => rand(DoctorUser.count))
+  d.body = Faker::Lorem.paragraphs(4)
+  d.event = e
+  d.save!
 end
 
 RuleParameterInput.create({:rule => '2 раза в день после еды'})
@@ -103,9 +108,9 @@ RuleParameterInput.create({:rule => 'утром'})
 RuleParameterInput.create({:rule => 'вечером'})
 
 BoolParameter.create({
-                         :name => 'Головная боль',
-                         :rule_parameter_input => RuleParameterInput.first(:offset => rand(RuleParameterInput.count))
-                     })
+    :name => 'Головная боль',
+    :rule_parameter_input => RuleParameterInput.first(:offset => rand(RuleParameterInput.count))
+})
 IntegerParameter.create({:name => 'Температура', :metadata => {
     :default => '36',
     :validators => {
@@ -168,33 +173,33 @@ end
 end
 
 PatientUser.all.each do |p|
-  (DateTime.now - 120.days).step(DateTime.now, 1).each do |day|
+  (DateTime.now - 30.days).step(DateTime.now, 1).each do |day|
     pd = ParametersData.new({
         :parameter_id => BoolParameter.first.id,
-        :user_id      => p.id,
-        :value        => %w(true false).sample
+        :user_id => p.id,
+        :value => %w(true false).sample
     })
     pd.created_at = day
     pd.save!
     pd = ParametersData.new({
         :parameter_id => IntegerParameter.first.id,
-        :user_id      => p.id,
-        :value        => 34 + rand(10)
+        :user_id => p.id,
+        :value => 34 + rand(10)
     })
     pd.created_at = day
     pd.save!
     parameter = SelectParameter.first
     pd = ParametersData.new({
         :parameter_id => parameter.id,
-        :user_id      => p.id,
-        :value        => parameter.metadata[:values].sample
+        :user_id => p.id,
+        :value => parameter.metadata[:values].sample
     })
     pd.created_at = day
     pd.save!
     pd = ParametersData.new({
         :parameter_id => StringParameter.first.id,
-        :user_id      => p.id,
-        :value        => Faker::Lorem.characters(20)
+        :user_id => p.id,
+        :value => Faker::Lorem.characters(20)
     })
     pd.created_at = day
     pd.save!
