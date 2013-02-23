@@ -1,16 +1,29 @@
 <div class="row-fluid">
   <h3><%= t "event.type.#{@event.type}" %></h3>
+
   <p>Организатор: <%= @event.user.email %></p>
-  <p>Краткое описание: <%= @event.summary %></p>
+
+  <% if @event.summary.present? %>
+      <p>Краткое описание: <%= @event.summary %></p>
+  <% end %>
+
   <p>Дата: с <%= l @event.date_start, :format => :long %> по <%= l @event.date_end, :format => :long %></p>
   <% if @event.description.present? %>
       <p>Описание: <%= @event.description %></p>
   <% end %>
   <% if @event.attendees.present? %>
       <p>Участники: </p>
-      <ul>
+      <ul class="attendees">
         <% @event.attendees.each do |a| %>
-            <li><%= link_to a.user.email, {:controller => :'/user', :action => :profile, :id => a.user.id} %></li>
+            <li><%= link_to a.user.fullname, {:controller => :'/user', :action => :profile, :id => a.user.id} %></li>
+        <% end %>
+      </ul>
+  <% end %>
+  <% if @event.documents.present? %>
+      <p>Документы: </p>
+      <ul class="documents">
+        <% @event.documents.each do |d| %>
+            <li><%= link_to d.type, {:controller => :document, :action => :show, :id => d.id}, {:'data-id' => d.id} %></li>
         <% end %>
       </ul>
   <% end %>

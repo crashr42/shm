@@ -1,0 +1,5 @@
+<h2><%= @document.type %></h2>
+<div class="hero">
+  <%= @document.body %>
+</div>
+<h4 class="pull-right"><%= @document.user.shortname %> (<%= l @document.created_at, :format => :long %>)</h4>
