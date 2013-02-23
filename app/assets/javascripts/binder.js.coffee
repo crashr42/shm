@@ -49,7 +49,7 @@ define([
     setNewContentHeight: ->
       content = $('#content')
       new_height = $.pageSize().windowHeight - content.innerHeight() + content.height() - content.offset().top - 20
-      if new_height > content.find('div').first().height()
+      if new_height > content.children('div:visible').first().height()
         content.height(new_height)
       else
         content.height('auto')

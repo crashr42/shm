@@ -46,7 +46,7 @@
         <ul class="nav pull-right">
           <!-- start: User Dropdown -->
           <li class="dropdown">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               <i class="icon-user"></i> <%= current_user.shortname %>
               <span class="caret"></span>
             </a>
@@ -72,31 +72,31 @@
     <div id="sidebar-left" class="span1">
       <div class="nav-collapse sidebar-nav">
         <ul class="nav nav-tabs nav-stacked main-menu" id="menu">
-          <li class="<%= request.path == cabinet_patient_path ? 'active' : '' %>">
+          <li>
             <a href="<%= url_for cabinet_patient_path %>">
               <i class="icon-home"></i>
               <span class="hidden-tablet">Домашняя</span>
             </a>
           </li>
-          <li class="<%= request.path == cabinet_patient_calendar_index_path ? 'active' : '' %>">
+          <li>
             <a href="<%= url_for cabinet_patient_calendar_index_path %>">
               <i class="icon-calendar"></i>
               <span class="hidden-tablet">Календарь</span>
             </a>
           </li>
-          <li class="<%= request.path == cabinet_patient_appointment_index_path ? 'active' : '' %>">
+          <li>
             <a href="<%= url_for cabinet_patient_appointment_index_path %>">
               <i class="icon-file-alt"></i>
               <span class="hidden-tablet">Запись</span>
             </a>
           </li>
-          <li class="<%= request.path == cabinet_patient_event_history_path ? 'active' : '' %>">
-            <a href="<%= url_for cabinet_patient_event_history_path %>">
+          <li>
+            <a href="<%= url_for :controller => 'cabinet/patient/event', :action => :history %>">
               <i class="icon-file-alt"></i>
               <span class="hidden-tablet">История</span>
             </a>
           </li>
-          <li class="<%= request.path == cabinet_patient_parameter_index_path ? 'active' : '' %>">
+          <li>
             <a href="<%= url_for cabinet_patient_parameter_index_path %>">
               <i class="icon-tasks"></i>
               <span class="hidden-tablet">Параметры</span>
