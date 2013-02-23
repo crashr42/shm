@@ -56,8 +56,4 @@ class Cabinet::Patient::EventController < Cabinet::PatientController
       } }.to_json.html_safe }
     end
   end
-
-  def documents
-    @event = Event.find(params[:id])
-  end
 end

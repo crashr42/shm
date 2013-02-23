@@ -87,7 +87,7 @@ class Event < ActiveRecord::Base
   # [id]
   #   Идентификатор пользователя которого нужно отписать от события.
   # Результатом метода должно быть булевое значение или исключение.
-  def unsubsribe id;
+  def unsubsribe id
     false
   end
 
