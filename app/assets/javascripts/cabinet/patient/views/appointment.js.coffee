@@ -8,15 +8,17 @@ define([
     render: (callback) ->
       return callback(@) unless @$el.empty()
 
-      $.get('/cabinet/patient/appointment', $.proxy((request) ->
+      $.get '/cabinet/patient/appointment', $.proxy (request) ->
         @$el.html(request)
 
-        (@toolbar = new Toolbar({el: @$el.find('#toolbar')})).render()
-        @result = new Result({el: @$el.find('#result')})
-        @toolbar.selected = $.proxy((id, date) ->
+        @toolbar = new Toolbar el: @$el.find('#toolbar')
+        @result = new Result el: @$el.find('#result')
+
+        @toolbar.delegateEvents()
+        @toolbar.selected = $.proxy (id, date) ->
           @result.render(id, date)
-        , @)
+        , @
 
         callback(@)
-      , @))
+      , @
 )
