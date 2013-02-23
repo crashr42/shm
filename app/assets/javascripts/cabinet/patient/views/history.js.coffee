@@ -3,46 +3,46 @@ define([
   'backbone',
   'highcharts',
   'underscore',
-  'text!templates/history.html'
-], ($, Backbone, Highcharts, _, Body) ->
+  'text!templates/history.html',
+  'routers/router'
+], ($, Backbone, Highcharts, _, Body, Router) ->
   Backbone.View.extend
     initialize: ->
       @offset = 0
       @limit = 10
 
     events:
-      'click .event': 'showEventInfo'
-      'click .next-ten': 'nextTen'
-      'click .previous-ten': 'previouseTen'
+      'click .documents a': 'showDocumentInfoEvent'
 
-    nextTen: (e) ->
+    showDocumentInfoEvent: (e) ->
       e.preventDefault()
-      @offset -= 10;
-      $(e.currentTarget).hide() if @offset == 0
-      @moveTimeline()
+      id = $(e.currentTarget).attr('data-id')
+      @showDocumentInfo(id)
 
-    previouseTen: (e) ->
-      e.preventDefault()
-      @offset += 10;
-      @$el.find('.next-ten').show()
-      @moveTimeline()
+    showDocumentInfo: (id) ->
+      Router.instance().navigate("/cabinet/patient/event/history/#{@event_id}/#{id}", false)
+      $.post "/cabinet/patient/document/show/#{id}", $.proxy (response) ->
+        @$el.find('.info').html(response)
+      , @
 
     moveTimeline: ->
       $.post('/cabinet/patient/event/history.json', {offset: @offset, limit: @limit}, $.proxy((response) ->
         @chart.series[0].setData(response)
       , @))
 
-    showEventInfo: (e) ->
-      @current_event_id = $(e.currentTarget).attr('data-id')
-      $.post('/cabinet/patient/event/documents', {id: @current_event_id}, $.proxy((response) ->
+    showEventInfo: (id) ->
+      @event_id = id
+      Router.instance().navigate("/cabinet/patient/event/history/#{id}", false)
+      $.get "/cabinet/patient/event/show/#{id}", $.proxy (response) ->
         @$el.find('.event-info').html(response)
-      , @))
+        @$el.find('.info').html('')
+      , @
 
     render: (callback) ->
       $.post('/cabinet/patient/event/history.json', {offset: @offset, limit: @limit}, $.proxy((response) ->
         @$el.html(_.template(Body)())
-        @delegateEvents()
         callback(@)
+        @delegateEvents()
         @renderTimeLine(response)
       , @))
 
@@ -65,10 +65,7 @@ define([
             cursor: 'pointer'
             point:
               events:
-                click: ->
-                  $.get("/cabinet/patient/event/show/#{this.id}", (response) ->
-                    view.$el.find('.event-info').html(response)
-                  )
+                click: -> view.showEventInfo(this.id)
         xAxis:
           title:
             text: 'Выберите событие для просмотра информации'
