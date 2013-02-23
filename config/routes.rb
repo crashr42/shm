@@ -50,10 +50,9 @@ Shm::Application.routes.draw do
       match '/doctor/find' => 'doctor#find'
       match '/appointment/find' => 'appointment#find'
       match '/event/unsubscribe/:id' => 'event#unsubscribe'
-      match '/event/history' => 'event#history'
-      match '/event/documents' => 'event#documents'
+      match '/event/history(/:id)(/:document)' => 'event#history'
 
-      resources :calendar, :event, :doctor, :appointment, :parameter
+      resources :calendar, :event, :doctor, :appointment, :parameter, :document
     end
     namespace :admin do
       root :to => 'index#index'
