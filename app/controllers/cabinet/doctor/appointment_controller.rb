@@ -41,6 +41,13 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
     @event = AppointmentEvent.new
   end
 
+  def new_appointment
+    respond_to do |f|
+      f.html {
+      }
+    end
+  end
+
   def get_patient_searching_form
 
   end
