@@ -49,11 +49,20 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
   def create
     @event = AppointmentEvent.new params[:appointment_event]
 
+    raise 'Not @event object' if @event.nil?
+
     respond_to do |f|
       begin
 
         raise "There'nt patient_id" if params['patient_id'].blank?
 
+        #Getting appointment which collision with new app-t
+        app_nts_by_date_start = DoctorUser.current.appointment_events.where(:date_start => (@event.date_start)..(@event.date_end))
+        app_nts_by_date_end = DoctorUser.current.appointment_events.where(:date_end => (@event.date_start)..(@event.date_end))
+
+        if app_nts_by_date_end.count > 0 or app_nts_by_date_start > 0
+          raise 'Incorrect appointment duration'
+        end
 
         @event.user = DoctorUser.current
         @event.save!
