@@ -38,7 +38,7 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
 
   #get form create appointments event
   def new
-    @event = AppointmentHourEvent.new
+    @event = AppointmentEvent.new
   end
 
   def get_patient_searching_form
@@ -47,7 +47,7 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
 
   #create new appontment
   def create
-    @event = AppointmentHourEvent.new params[:appointment_hour_event]
+    @event = AppointmentEvent.new params[:appointment_event]
 
     respond_to do |f|
       begin
