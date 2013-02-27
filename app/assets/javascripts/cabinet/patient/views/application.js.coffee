@@ -8,6 +8,12 @@ define([
     el: 'body'
 
     initialize: ->
-      (@menu = new Menu({el: '#menu'})).render()
-      (@content = new Content({el: '#content'})).render()
+      @menu = new Menu(el: '#menu')
+      @content = new Content(el: '#content')
+      @content.viewChange = $.proxy (view) ->
+        @menu.activateItem(view)
+      , @
+
+      @menu.render()
+      @content.render()
 )

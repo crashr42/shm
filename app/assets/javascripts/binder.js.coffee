@@ -15,7 +15,7 @@ define([
         weekStart: 1,
         todayBtn: true,
         todayHighlight: true
-      ).keydown(-> return false)
+      ).keydown((e)-> e.preventDefault())
 
     # Вещаем виджет выбора времени
     bindTimepicker: ->
@@ -24,19 +24,19 @@ define([
     # Красивый file input
     bindFileInput: ->
       $('.b_file').each ->
-      i_file = $(this).prev()
-      file = $(this).parent().prev()
-      file.change -> i_file.val(file.val())
-      $(@).click -> file.click()
+        i_file = $(this).prev()
+        file = $(this).parent().prev()
+        file.unbind('change').on('change', -> i_file.val(file.val()))
+        $(@).unbind('click').on('click', -> file.click())
 
     bindDropMenu: ->
-      $('.dropmenu').click((e) ->
+      $('.dropmenu').unbind('click').on('click', (e) ->
         e.preventDefault()
         $(e.currentTarget).parent().find('ul').slideToggle()
       )
 
     minimizeButton: ->
-      $('.btn-minimize').click($.proxy((e) ->
+      $('.btn-minimize').unbind('click').on('click', $.proxy((e) ->
         e.preventDefault()
         target = $(e.currentTarget).parent().parent().next('.box-content')
         unless target.css('display') == 'none'

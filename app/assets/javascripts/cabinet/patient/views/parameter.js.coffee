@@ -11,11 +11,11 @@ define([
     render: (callback) ->
       return callback(@) unless @$el.empty()
 
-      $.get('/cabinet/patient/parameter', $.proxy((response) ->
+      $.get '/cabinet/patient/parameter', $.proxy (response) ->
         @$el.html(response)
         @initializeForms()
         callback(@)
-      , @))
+      , @
 
     initializeForms: -> $.each @$el.find('.parameter'), (i, e) -> new Form(el: e)
 

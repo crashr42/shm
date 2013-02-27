@@ -21,12 +21,14 @@ define([
 ) ->
   Backbone.View.extend
     initialize: ->
-      @appointment = new Appointment(parentView: @)
-      @index = new Index(parentView: @)
-      @parameter = new Parameter(parentView: @)
-      @calendar = new Calendar(parentView: @)
-      @doctor = new Doctor(parentView: @)
-      @history = new History(parentView: @)
+      @appointment = new Appointment()
+      @index = new Index()
+      @parameter = new Parameter()
+      @calendar = new Calendar()
+      @doctor = new Doctor()
+      @history = new History()
+
+    viewChange: (view) -> throw 'Implementation error'
 
     hideAll: ->
       @$el.children('div').hide()
@@ -42,6 +44,7 @@ define([
           @$el.append @index_cache.el
           Binder.setNewContentHeight()
         , @
+      @viewChange('index')
 
     showAppointment: ->
       @hideAll()
@@ -54,6 +57,7 @@ define([
           @$el.append @appointment_cache.el
           Binder.setNewContentHeight()
         , @
+      @viewChange('appointment')
 
     showParameter: ->
       @hideAll()
@@ -66,6 +70,7 @@ define([
           @$el.append @parameter_cache.el
           Binder.setNewContentHeight()
         , @
+      @viewChange('parameter')
 
     showCalendar: ->
       @hideAll()
@@ -78,6 +83,7 @@ define([
           @$el.append @calendar_cache.el
           Binder.setNewContentHeight()
         , @
+      @viewChange('calendar')
 
     showDoctor: ->
       @doctor.render $.proxy (v) ->
@@ -97,4 +103,5 @@ define([
           Binder.setNewContentHeight()
           cb.call @, @history_cache
         , @
+      @viewChange('history')
 )

@@ -10,9 +10,10 @@ define([
     goto: (e) ->
       e.preventDefault()
       target = $(e.currentTarget)
-      @removeActiveClass()
-      target.parent().addClass('active')
+      @activateItem(target.attr('data-view'))
       Router.instance().navigate(target.attr('href'), true)
 
-    removeActiveClass: -> @$el.find('li').removeClass('active')
+    activateItem: (item) ->
+      @$el.find('li').removeClass('active')
+      @$el.find("a[data-view=#{item}]").parent().addClass('active')
 )

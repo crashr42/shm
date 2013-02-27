@@ -73,31 +73,31 @@
       <div class="nav-collapse sidebar-nav">
         <ul class="nav nav-tabs nav-stacked main-menu" id="menu">
           <li>
-            <a href="<%= url_for cabinet_patient_path %>">
+            <a href="<%= url_for cabinet_patient_path %>" data-view="index">
               <i class="icon-home"></i>
               <span class="hidden-tablet">Домашняя</span>
             </a>
           </li>
           <li>
-            <a href="<%= url_for cabinet_patient_calendar_index_path %>">
+            <a href="<%= url_for cabinet_patient_calendar_index_path %>" data-view="calendar">
               <i class="icon-calendar"></i>
               <span class="hidden-tablet">Календарь</span>
             </a>
           </li>
           <li>
-            <a href="<%= url_for cabinet_patient_appointment_index_path %>">
+            <a href="<%= url_for cabinet_patient_appointment_index_path %>" data-view="appointment">
               <i class="icon-file-alt"></i>
               <span class="hidden-tablet">Запись</span>
             </a>
           </li>
           <li>
-            <a href="<%= url_for :controller => 'cabinet/patient/event', :action => :history %>">
+            <a href="<%= url_for :controller => 'cabinet/patient/event', :action => :history %>" data-view="history">
               <i class="icon-file-alt"></i>
               <span class="hidden-tablet">История</span>
             </a>
           </li>
           <li>
-            <a href="<%= url_for cabinet_patient_parameter_index_path %>">
+            <a href="<%= url_for cabinet_patient_parameter_index_path %>" data-view="parameter">
               <i class="icon-tasks"></i>
               <span class="hidden-tablet">Параметры</span>
             </a>
