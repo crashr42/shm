@@ -87,7 +87,7 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
       rescue Exception => exp
         flash[:error] = exp.message
         f.html do
-          redirect_to new_cabinet_doctor_appointment_path()
+          redirect_to "cabinet/doctor/appointment/new/#{params[:patient_id]}"
         end
       end
 
