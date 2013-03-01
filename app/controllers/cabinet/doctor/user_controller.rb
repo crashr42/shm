@@ -10,6 +10,14 @@ class Cabinet::Doctor::UserController < ApplicationController
       f.json { render :json => @users.to_json }
     end
   end
+
+  def find_for_set
+    @users = User.searh_patients_by_email params[:name]
+    respond_to do |f|
+      f.html { render :layout => false }
+      f.json { render :json => @users.to_json }
+    end
+  end
   
   #find doctor
   def find_doctor

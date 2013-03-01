@@ -12,4 +12,10 @@ class Cabinet::Doctor::PatientController < Cabinet::DoctorController
   def show
     @patient = PatientUser.find params[:id]
   end
+
+  def new
+    respond_to {|f|
+      f.html{}
+    }
+  end
 end

@@ -52,6 +52,11 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
 
   end
 
+  #TODO Refactor this action and route
+  def get_patient_searching_form_2
+
+  end
+
   #create new appontment
   def create
     @event = AppointmentEvent.new params[:appointment_event]
