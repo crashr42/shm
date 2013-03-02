@@ -40,7 +40,7 @@ Shm::Application.routes.draw do
       match 'appointment/me/(:id)' => 'appointment#index', :via => :get
       match 'appointments/for/(:id)' => 'appointment#get_free_appointments_for'
       match 'appointment/new/get_form' => 'appointment#get_patient_searching_form'
-      match 'appointment/new/get_form2' => 'appointment#get_patient_searching_form_2'
+      match 'appointment/new/get_form2' => 'appointment#searching_form_for_appt_assig'
       match 'appointment/new' => 'appointment#new_appointment'
 
       match 'appointment/colleague/(:id)' => 'user#index', :via => :get

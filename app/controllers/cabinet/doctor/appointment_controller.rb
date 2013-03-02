@@ -52,8 +52,8 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
 
   end
 
-  #TODO Refactor this action and route
-  def get_patient_searching_form_2
+  #It return patients searching form for appointment setting
+  def searching_form_for_appt_assig
 
   end
 
