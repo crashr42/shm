@@ -16,7 +16,7 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
 
   def get_free_appointments_for
     @doctor_id = params[:id] == "me" ? User.current.id : params[:id]
-    @appntEvents = DoctorUser.find(@doctor_id).appointment_events.where("events.status = 'free'").order("events.date_start DESC")
+    @appntEvents = DoctorUser.find(@doctor_id).appointment_events.where('events.status = \'free\'').order('events.date_start DESC')
 
     respond_to{|f|
       f.html { render :layout => false }
@@ -91,7 +91,7 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
       end
 
       f.json do
-        render :text => 'The Appointment was created successfully'
+        render text: 'The Appointment was created successfully', layout: false
       end
     end
   end
