@@ -1,6 +1,6 @@
 <h3>Добавление нового приема</h3>
   <strong>Please, enter patient name: <small>(now search is available by email only)</small></strong>
-  <%= form_tag({:controller => :'cabinet/doctor/user/find', :action => :find}, :class => 'form-search-large', :id => 'user-main-search-form') do %>
+  <%= form_tag({:controller => :'/cabinet/doctor/user', :action => :find}, :class => 'form-search-large', :id => 'user-main-search-form') do %>
       <input type="text" id="name" name="name" placeholder="Enter user name">
   <% end %>
   <div id="user-main-list">

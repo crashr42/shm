@@ -34,11 +34,14 @@ Shm::Application.routes.draw do
       
       match 'user/find' => 'user#find', :via => :post
       match 'user/find_doctor' => 'user#find_doctor', :via => :post
+      match 'user/find_for_set' => 'user#find_for_set', :via => :post
 
       match 'appointment/confirm' => 'appointment#confirm', :via => :post
       match 'appointment/me/(:id)' => 'appointment#index', :via => :get
       match 'appointments/for/(:id)' => 'appointment#get_free_appointments_for'
       match 'appointment/new/get_form' => 'appointment#get_patient_searching_form'
+      match 'appointment/new/get_form2' => 'appointment#searching_form_for_appt_assig'
+      match 'appointment/new' => 'appointment#new_appointment'
 
       match 'appointment/colleague/(:id)' => 'user#index', :via => :get
       match 'users/doctors' => 'user#get_doctors'

@@ -43,7 +43,7 @@
           <ul class="dropdown-menu">
             <%= link_to_active_wrapper 'List of my', :li, :controller => :patient, :action => :index %>
             <%= link_to_active_wrapper 'Set to app-nt', :li, :controller => :patient, :action => :new %>
-            <%= link_to_active_wrapper 'Create app-nt', :li, cabinet_manager_rule_parameter_input_index_path %>
+            <%= link_to_active_wrapper 'Create app-nt', :li, '/cabinet/doctor/appointment/new' %>
           </ul>
           </li>
           <%= link_to_active_wrapper 'My Appointments', :li, cabinet_doctor_appointments_path %>
