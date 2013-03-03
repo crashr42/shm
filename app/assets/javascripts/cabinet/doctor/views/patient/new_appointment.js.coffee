@@ -1,7 +1,9 @@
 define([
   'jquery',
   'backbone',
-], ($, Backbone) ->
+  'notification',
+  'routers/router'
+], ($, Backbone, Notification, Router) ->
   Backbone.View.extend
 
     #Patients searching
@@ -9,6 +11,7 @@ define([
       'keyup #name': 'search'
       'click .createApptnt': 'getAppointmentCreatingForm'
       'change .controls.required': 'checkDateStartAndEnd'
+      'click .btn-success': 'createAppointment'
 
     search: (e) ->
       form = $(e.currentTarget).parent()
@@ -20,10 +23,22 @@ define([
     checkDateStartAndEnd: ->
       alert('hi')
 
+    createAppointment: (e) ->
+      e.preventDefault()
+      form = @$el.find('#new_appointment_event')
+
+      post_result = $.post(form.attr('action'), form.serialize(),
+      (response) ->
+        Router.instance().navigate('/cabinet/doctor/appointments', true)
+        Notification.success(response)
+      )
+
+      console.log(post_result)
+
+
     getAppointmentCreatingForm: (e) ->
       e.preventDefault()
       element = $(e.currentTarget)
-
       infoAboutPatient = '<h4>You are creating appointment for <small>' + @$el.find('.user-info#' + element.attr('id')).html() + '</small></h4>'
       @$el.find('#user-main-list').empty()
       @$el.find('#appointment-form-place').empty()

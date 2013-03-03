@@ -64,38 +64,35 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
     raise 'Not @event object' if @event.nil?
 
     respond_to do |f|
-      begin
 
-        raise "There'nt patient_id" if params['patient_id'].blank?
 
-        #Getting appointment which collision with new app-t
-        app_nts_by_date_start = DoctorUser.current.appointment_events.where(:date_start => (@event.date_start)..(@event.date_end))
-        app_nts_by_date_end = DoctorUser.current.appointment_events.where(:date_end => (@event.date_start)..(@event.date_end))
+      raise "There'nt patient_id" if params['patient_id'].blank?
 
-        if app_nts_by_date_end.count > 0 or app_nts_by_date_start.count > 0
-          raise 'Incorrect appointment duration'
-        end
+      #Getting appointment which collision with new app-t
+      app_nts_by_date_start = DoctorUser.current.appointment_events.where(:date_start => (@event.date_start)..(@event.date_end))
+      app_nts_by_date_end = DoctorUser.current.appointment_events.where(:date_end => (@event.date_start)..(@event.date_end))
 
-        @event.user = DoctorUser.current
-        @event.save!
-
-        @at_doctor = AttendingDoctorAttendee.create({:user => DoctorUser.current, :event => @event})
-
-        @at_patient = PatientAttendee.create({:user => PatientUser.find(params['patient_id']), :event => @event})
-
-        @at_doctor.save
-        @at_patient.save
-
-        f.html do
-          redirect_to :controller => 'cabinet/doctor/appointment', :action => 'index'
-        end
-      rescue Exception => exp
-        flash[:error] = exp.message
-        f.html do
-          redirect_to "/cabinet/doctor/appointment/new/#{params[:patient_id]}"
-        end
+      if app_nts_by_date_end.count > 0 or app_nts_by_date_start.count > 0
+        raise 'Incorrect appointment duration'
       end
 
+      @event.user = DoctorUser.current
+      @event.save!
+
+      @at_doctor = AttendingDoctorAttendee.create({:user => DoctorUser.current, :event => @event})
+
+      @at_patient = PatientAttendee.create({:user => PatientUser.find(params['patient_id']), :event => @event})
+
+      @at_doctor.save
+      @at_patient.save
+
+      f.html do
+        redirect_to :controller => 'cabinet/doctor/appointment', :action => 'index'
+      end
+
+      f.json do
+        render :text => 'The Appointment was created successfully'
+      end
     end
   end
 
