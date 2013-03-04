@@ -1,38 +1,43 @@
 class Handler
   # Присоединение клиента к какому-либо каналу
-  def join(ws, clients, rooms, message)
-    unless clients[ws][:rooms].key?(message[:room])
-      clients[ws][:rooms][message[:room]] = {
+  def join(socket, clients, rooms, message)
+    unless clients[socket][:rooms].key?(message[:room])
+      clients[socket][:rooms][message[:room]] = {
           :channel => rooms[message[:room]],
-          :sid => rooms[message[:room]].subscribe { |msg| ws.send msg }
+          :sid => rooms[message[:room]].subscribe { |msg| socket.send msg }
       }
-      message(ws, clients, rooms, message)
+      message(socket, clients, rooms, message)
     end
   end
 
   # отправка сообщения
-  def message(ws, clients, rooms, message)
-    if !message.nil? && message.key?(:room)
-      clients[ws][:rooms][message[:room]][:channel].push(message.to_json)
+  def message(socket, clients, rooms, message)
+    if room_message?(message)
+      rooms[message[:room]].push(message.to_json)
     else
-      clients[ws][:rooms].each_value { |r| r[:channel].push((message || {}).to_json) }
+      clients.each_key { |s| s.send(message.to_json) }
     end
   end
 
   # исключение клиента из канала
-  def leave(ws, clients, rooms, message)
-    if clients.key?(ws)
-      if !message.nil? && message.key?(:room)
-        room = clients[ws][:rooms][message[:room]]
+  def leave(socket, clients, rooms, message)
+    if clients.key?(socket)
+      if room_message?(message)
+        room = clients[socket][:rooms][message[:room]]
         room[:channel].unsubscribe(room[:sid])
-        message(ws, clients, rooms, {:room => message[:room], :event => :leave})
+        message(socket, clients, rooms, {:room => message[:room], :event => :leave})
       else
-        clients[ws][:rooms].each do |n, r|
-          r[:channel].unsubscribe(r[:sid])
-          message(ws, clients, rooms, {:room => n, :event => :leave})
+        clients[socket][:rooms].each do |room_name, room|
+          room[:channel].unsubscribe(room[:sid])
+          message(socket, clients, rooms, {:room => room_name, :event => :leave})
         end
-        clients.delete(ws)
+        clients.delete(socket)
       end
     end
+  end
+
+  private
+  def room_message?(message)
+    !message.nil? && message.key?(:room) && message[:room] != 'all'
   end
 end
