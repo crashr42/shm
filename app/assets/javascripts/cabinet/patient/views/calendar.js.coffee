@@ -1,11 +1,14 @@
 define([
   'jquery',
   'backbone',
+  'wsclient',
   'fullcalendar',
   'bootstrap'
-], ($, Backbone) ->
+], ($, Backbone, Client) ->
   Backbone.View.extend
     render: (callback) ->
+      Client.userOn('attendee.create', (data) -> console.log(data))
+
       $.get('/cabinet/patient/calendar', $.proxy((response) ->
         @$el.html(response)
         callback(@)

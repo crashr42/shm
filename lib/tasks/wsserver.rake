@@ -23,11 +23,11 @@ task :wsserver => :environment do
           decoded_message = json_parser.parse(message)
           puts decoded_message
           # Получаем запрашиваемое действие
-          event = decoded_message[:event]
+          event = decoded_message[:type]
           # Выполняем запрашиваемое действие
           @handler.send(event.to_sym, ws, @clients, @rooms, decoded_message)
         rescue => e
-          ws.send({:event => :error, :message => e.message}.to_json)
+          ws.send({:type => :message, :room => :error, :message => e.message}.to_json)
         end
       end
 

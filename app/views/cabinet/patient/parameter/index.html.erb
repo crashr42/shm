@@ -1,18 +1,17 @@
-<table class="table table-striped">
-  <tr>
-    <th>Параметр</th>
-    <th>Значение</th>
-  </tr>
-  <% @parameters.each do |p| %>
-      <tr>
-        <td><%= p.name %></td>
-        <td class="parameter">
-          <%= simple_form_for :storage, :url => cabinet_patient_parameter_index_path, :html => {:class => 'form-inline'} do |f| %>
-              <%= f.input :parameter_id, :as => :hidden, :input_html => {:value => p.id} %>
-              <%= render :partial => p.class.name.underscore, :locals => {:f => f, :p => p} %>
-              <%= f.submit 'Enter', :class => 'btn' %>
-          <% end %>
-        </td>
-      </tr>
-  <% end %>
-</table>
+<div class="row-fluid">
+  <h1>Данные о состоянии здоровья</h1>
+  <table class="table">
+    <% @parameters.each do |p| %>
+        <tr>
+          <td><%= p.name %></td>
+          <td class="parameter">
+            <%= form_for :storage, :url => cabinet_patient_parameter_index_path, :html => {:class => 'form-inline'} do |f| %>
+                <%= f.hidden_field :parameter_id, :value => p.id %>
+                <%= render :partial => p.class.name.underscore, :locals => {:f => f, :p => p} %>
+                <%= f.submit 'Сохранить значение', :class => 'btn' %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+  </table>
+</div>

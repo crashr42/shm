@@ -7,7 +7,7 @@ end
 describe Event do
   it 'default status for event - free' do
     e = create(:event)
-    e.status.should eq('free')
+    e.status.should eq(:free)
   end
 
   # Проверяем что события с всеми возможными статусами - являются валидными
@@ -24,23 +24,23 @@ describe Event do
   # при этом статус события не меняется явным образом
   it 'change status to busy if duration change to 0' do
     e = create(:free_event)
-    e.status.should eq('free')
+    e.status.should eq(:free)
     e.duration.should_not eq(0)
     e.duration = 0
     e.should_not_receive(:change_status_free_to_busy)
     e.save!
-    e.status.should eq('busy')
+    e.status.should eq(:busy)
   end
 
   # Если событие меняет статус с busy на free -> продолжительность события вычилсяется как разница в секундах 
   # между датой окончания и датой начала события
   it 'change duration to equal difference between date_end and date_start if status change from busy to free' do
     e = create(:busy_event)
-    e.status.should eq('busy')
+    e.status.should eq(:busy)
     e.duration.should eq(0)
-    e.status = 'free'
+    e.status = :free
     e.save!
-    e.status.should eq('free')
+    e.status.should eq(:free)
     e.duration.should eq((e.date_end - e.date_start).to_i)
   end
 
@@ -51,17 +51,17 @@ describe Event do
     e.duration = 2
     e.save!
     e.duration.should eq(2)
-    e.status.should eq('free')
+    e.status.should eq(:free)
   end
 
   # Изменение статуса приоритетнее чем изменение продолжительности события
   it 'change in the status of priority than change duration' do
     e = create(:free_event)
     e.duration = 2
-    e.status = 'busy'
+    e.status = :busy
     e.save!
     e.duration.should eq(0)
-    e.status.should eq('busy')
+    e.status.should eq(:busy)
   end
 
   # Для новой сущности продолжительность вычисляется автоматически как 
@@ -110,14 +110,14 @@ describe Event do
     ef = e.events.first
 
     equal_duration = e.duration - ef.duration
-    ef.status = 'busy'
+    ef.status = :busy
     ef.save!
     e.reload
-    ef.status.should eq('busy')
+    ef.status.should eq(:busy)
     e.duration.should eq(equal_duration)
 
     equal_duration = e.duration + (ef.date_end - ef.date_start)
-    ef.status = 'free'
+    ef.status = :free
     ef.save!
     e.reload
     e.duration.should eq(equal_duration)
@@ -127,13 +127,13 @@ describe Event do
   context 'not available change status from busy' do
     it 'to close' do
       e = create(:busy_event)
-      e.status = 'close'
+      e.status = :close
       e.should_not be_valid
     end
   end
 
   context 'not available change status from process' do
-    %w(busy free).each do |s|
+    [:busy, :free].each do |s|
       it "to #{s}" do
         e = create(:process_event)
         e.status = s
@@ -143,17 +143,17 @@ describe Event do
   end
 
   context 'not available change status from close' do
-    %w(process busy free).each do |s|
+    [:process, :busy, :free].each do |s|
       it "to #{s}" do
         e = create(:close_event)
-        e.status = e
+        e.status = s
         e.should_not be_valid
       end
     end
   end
 
   context 'not available change status from free' do
-    %w(process close).each do |s|
+    [:process, :close].each do |s|
       it "to #{s}" do
         e = create(:free_event)
         e.status = s

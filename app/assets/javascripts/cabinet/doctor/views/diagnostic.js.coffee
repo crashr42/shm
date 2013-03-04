@@ -9,7 +9,6 @@ define([
   Backbone.View.extend
     events:
       'click .parameter': 'showParameterDiagnostic'
-      'click .toogleData': 'toogleData'
 
     postData: ->
       from = moment(@$el.find('.start-date').val(), 'DD.MM.YYYY')
@@ -21,25 +20,16 @@ define([
       to: to / 1000
 
     showParameterDiagnostic: (e) ->
-      @$el.find('.data').slideUp().html('')
-      @$el.find('.toogleData').removeClass('active')
-      @selected_parameter_id = $(e.currentTarget).attr('data-id')
-      @loadedRawData = false
-      $.post('/cabinet/doctor/diagnostic/chart', @postData(), $.proxy((response) ->
-        @renderChart(response)
-        @$el.find('.toogleData').show()
-      , @))
-
-    toogleData: (e) ->
       el = $(e.currentTarget)
-      unless @loadedRawData
-        el.button('loading')
-        $.post("/cabinet/doctor/diagnostic/raw/#{@patient_id}", @postData(), $.proxy((response) ->
-          @loadedRawData = true
-          @$el.find('.data').html(response)
-          el.button('reset')
-        , @))
-      @$el.find('.data').slideToggle();
+      el.parent().parent().find('li').removeClass('active')
+      el.parent().addClass('active')
+      @selected_parameter_id = el.attr('data-id')
+      $.post '/cabinet/doctor/diagnostic/chart', @postData(), $.proxy (response) ->
+        @renderChart(response)
+        $.post '/cabinet/doctor/diagnostic/raw', @postData(), $.proxy (response) ->
+          @$el.find('.data').html(response).parent().removeClass('hide')
+        , @
+      , @
 
     render: (callback, id) ->
       @patient_id = id

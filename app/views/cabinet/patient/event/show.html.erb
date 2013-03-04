@@ -1,7 +1,7 @@
 <div class="row-fluid">
   <h3><%= t "event.type.#{@event.type}" %></h3>
 
-  <p>Организатор: <%= @event.user.email %></p>
+  <p>Организатор: <%= @event.user.shortname %></p>
 
   <% if @event.summary.present? %>
       <p>Краткое описание: <%= @event.summary %></p>
@@ -23,7 +23,7 @@
       <p>Документы: </p>
       <ul class="documents">
         <% @event.documents.each do |d| %>
-            <li><%= link_to d.type, {:controller => :document, :action => :show, :id => d.id}, {:'data-id' => d.id} %></li>
+            <li><%= link_to t("document.type.#{d.type}"), {:controller => :document, :action => :show, :id => d.id}, {:'data-id' => d.id} %></li>
         <% end %>
       </ul>
   <% end %>

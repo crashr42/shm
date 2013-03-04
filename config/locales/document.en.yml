@@ -1,0 +1,5 @@
+en:
+  document:
+    type:
+      Document: Документ
+      AppointmentDocument: Приемный лист

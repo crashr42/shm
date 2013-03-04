@@ -2,11 +2,11 @@ module Notification
   class Broadcast
     # Отправка сообщения на wsserver
     # Доступные event => [:message, :join, :leave] см. класс lib/handler.rb
-    def self.send(message, channel = :all, event = :message)
+    def self.message(message, room = :all)
       sending_message = {
-          :room => channel,
-          :event => event,
-          :data => message
+          :room => room,
+          :type => :message,
+          :message => message
       }.to_json
 
       # Check the reactor already running
@@ -28,8 +28,8 @@ module Notification
 
       # Handle errors
       conn.errback do |e|
-        puts e
         conn.close_connection
+        raise e
       end
 
       # Close connection to websocket server

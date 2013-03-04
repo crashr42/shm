@@ -1,16 +1,12 @@
 define([
   'jquery',
   'backbone',
-  'highcharts',
+  'highstock',
   'underscore',
   'text!templates/history.html',
   'routers/router'
 ], ($, Backbone, Highcharts, _, Body, Router) ->
   Backbone.View.extend
-    initialize: ->
-      @offset = 0
-      @limit = 10
-
     events:
       'click .documents a': 'showDocumentInfoEvent'
 
@@ -48,7 +44,7 @@ define([
 
     renderTimeLine: (data) ->
       view = @
-      @chart = new Highcharts.Chart(
+      @chart = new Highcharts.StockChart(
         chart:
           renderTo: 'chart'
           type: 'line'
@@ -66,6 +62,31 @@ define([
             point:
               events:
                 click: -> view.showEventInfo(this.id)
+        rangeSelector:
+          inputEnabled: false
+          buttons: [
+              type: "week"
+              count: 1
+              text: "1 н"
+            ,
+              type: "month"
+              count: 1
+              text: "1 м"
+            ,
+              type: "month"
+              count: 3
+              text: "3 м"
+            ,
+              type: "month"
+              count: 6
+              text: "6 м"
+            ,
+              type: "year"
+              count: 1
+              text: "1 г"
+          ]
+        navigator:
+          enabled: false
         xAxis:
           title:
             text: 'Выберите событие для просмотра информации'
@@ -87,7 +108,7 @@ define([
           enabled: false
         tooltip:
           enabled: true
-          formatter: -> '<b>' + @point.type + '</b><br />' + @point.dateStart + ' - ' + @point.dateEnd
+          formatter: -> '<b>' + @points[0].point.type + '</b><br />' + @points[0].point.dateStart + ' - ' + @points[0].point.dateEnd
         series: [name: 'События', data: data]
       )
 )

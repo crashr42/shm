@@ -1,31 +1,35 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span3">
-      <h3>Patient parameters</h3>
-      <ul>
+      <h1><%= @patient.shortname %></h1>
+      <ul class="nav nav-pills nav-stacked">
         <% @patient.parameters.each do |p| %>
             <% unless p.is_a?(StringParameter) %>
                 <li>
-                  <button class="parameter btn btn-link" data-id="<%= p.id %>"><%= p.name %></button>
+                  <a class="parameter btn btn-link" data-id="<%= p.id %>"><%= p.name %></a>
                 </li>
             <% end %>
         <% end %>
       </ul>
-      <h3>Options</h3>
+      <h3>Фильтр</h3>
       <div>
-        <label>Start date</label>
+        <label>Начальная дата</label>
         <input type="text" class="start-date datepicker" placeholder="start date" value="<%= l 7.days.ago.to_date, :format => :short %>" />
-        <label>End date</label>
+        <label>Конечная дата</label>
         <input type="text" class="end-date datepicker" placeholder="end date" value="<%= l 1.day.ago.to_date, :format => :short %>" />
       </div>
     </div>
     <div class="span9">
-      <div class="chart">
+      <div class="chart"></div>
+      <div class="box span12 hide">
+        <div class="box-header">
+          <h2><i class="icon-list"></i><span class="break"></span>Данные</h2>
 
-      </div>
-      <button class="btn toogleData hide full-width" data-loading-text="Loading..." data-toggle="button">Toogle data</button>
-      <div class="data hide">
-
+          <div class="box-icon">
+            <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
+          </div>
+        </div>
+        <div class="box-content data"></div>
       </div>
     </div>
   </div>

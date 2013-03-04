@@ -1,4 +1,6 @@
 class Event < ActiveRecord::Base
+  include Workflow
+
   # Организатор события
   belongs_to :user
   # Родительское событие/процесс
@@ -12,7 +14,7 @@ class Event < ActiveRecord::Base
   # Документы характеризующие события
   has_many :documents
 
-  before_validation :calculate_duration, :watch_status_changed, :watch_duration_changed
+  before_validation :calculate_duration, :watch_duration_changed
   before_create :register_organizer
   after_initialize :default_values, :if => :new_record?
 
@@ -20,7 +22,7 @@ class Event < ActiveRecord::Base
   accepts_nested_attributes_for :attendees, :allow_destroy => true
   accepts_nested_attributes_for :event
 
-  validates :status, :inclusion => {:in => %w(free busy process close)}, :presence => true
+  validates :status, :inclusion => {:in => [:free, :busy, :process, :close]}, :presence => true
   validates :date_end, :presence => true, :timeliness => {:type => :date, :on_or_after => :date_start}
   validates :date_start, :presence => true, :timeliness => {:type => :date, :on_or_before => :date_end}
   validates :type, :presence => true
@@ -47,7 +49,7 @@ class Event < ActiveRecord::Base
   # - process - событие в процессе
   # - close   - событие завершилось
   def self.statuses
-    %w(free busy process close)
+    [:free, :busy, :process, :close]
   end
 
   # Указывает что данный тип событий имеет дочерние события события.
@@ -67,7 +69,7 @@ class Event < ActiveRecord::Base
   # Arguments examples:
   #   child_events :some_child_event, :predicted_time => 15.minutes
   #   child_events [:some_child_event_class, :other_child_event_class], :predicted_time => 15.minutes
-  def self.child_events processes, options = {}
+  def self.child_events(processes, options = {})
     raise 'Predicred time not passed!' unless options[:predicted_time].present?
     process_array(processes, options[:predicted_time]) if processes.is_a? Array
     process(processes.to_s.classify.constantize, options[:predicted_time]) if processes.is_a? Symbol
@@ -86,8 +88,8 @@ class Event < ActiveRecord::Base
   # === Arguments
   # [id]
   #   Идентификатор пользователя которого нужно отписать от события.
-  # Результатом метода должно быть булевое значение или исключение.
-  def unsubsribe id
+  # Результатом метода должно быть булевое значение.
+  def unsubsribe(id)
     false
   end
 
@@ -97,42 +99,42 @@ class Event < ActiveRecord::Base
         :busy => 'badge badge-important',
         :process => 'badge badge-info',
         :close => 'badge'
-    }[self.status.to_sym]
+    }[self.status]
   end
 
   private
   def default_values
-    self.status ||= 'free'
-    self.type   ||= 'Event'
+    self.status ||= :free
+    self.type ||= 'Event'
   end
 
   def validate_duration
-    if self.status == 'free' && self.duration.to_i == 0
-      self.errors.add(:duaration, 'duration.must_be.greater.than.0')
+    if self.status == :free && self.duration.to_i == 0
+      self.errors.add(:duaration, 'duration.must_be.greater_than.0')
     end
-    if %w(busy process close).include?(self.status) && self.duration.to_i > 0
-      self.errors.add(:status, 'duration.must.be.equal.to.0')
+    if [:busy, :process, :close].include?(self.status) && self.duration.to_i > 0
+      self.errors.add(:status, 'duration.must_be.equal_to.0')
     end
   end
 
-  # Закрываем событи для записи если у него исчерпано свободное время
+  # Закрываем событие для записи если у него исчерпано свободное время
   def watch_duration_changed
     unless self.status_changed? && self.new_record?
       if self.duration_changed?
         if self.duration.to_i == 0
-          self.status = 'busy'
+          self.status = :busy
         else
-          self.status = 'free'
+          self.status = :free
         end
       end
     end
   end
 
-  def self.process_array processes, predicted_time
+  def self.process_array(processes, predicted_time)
     processes.each { |p| process(p.to_s.classify.constantize, predicted_time) }
   end
 
-  def self.process p, predicted_time
+  def self.process(p, predicted_time)
     after_create do
       Range.new(self.date_start.to_i, self.date_end.to_i, true).step(predicted_time) do |new_time|
         e = p.new
@@ -149,14 +151,14 @@ class Event < ActiveRecord::Base
   # Организатор события - текущий авторизованный пользователь
   def register_organizer
     if User.current.present?
-      self.user_id = User.current.id
+      self.user_id ||= User.current.id
     end
   end
 
   # Вычисляем продолжительность события
   def calculate_duration
     if self.new_record?
-      if self.status == 'free'
+      if self.status == :free
         self.duration = self.date_end - self.date_start
       else
         self.duration = 0
@@ -164,37 +166,23 @@ class Event < ActiveRecord::Base
     end
   end
 
-  # Отслеживаем изменение статуса события
-  def watch_status_changed
-    if self.status_changed? && !self.new_record? && !self.status_was.nil?
-      signal = "change_status_#{status_was}_to_#{status}"
-      if self.respond_to? signal, true
-        self.send(signal)
-      else
-        self.errors.add(:status, "status.cannot.be.change.from.#{self.status_was}.to.#{self.status}")
+  # Возможные переходы для статуса события
+  workflow :status do
+    flow :busy => :process
+    flow :process => :close
+
+    flow :free => :busy do
+      if self.event.present?
+        self.event.duration -= self.date_end - self.date_start
       end
+      self.duration = 0
     end
-  end
 
-  def change_status_free_to_busy
-    if self.event.present?
-      self.event.duration -= self.date_end - self.date_start
+    flow :busy => :free do
+      if self.event.present?
+        self.event.duration += self.date_end - self.date_start
+      end
+      self.duration = self.date_end - self.date_start
     end
-    self.duration = 0
-  end
-
-  def change_status_busy_to_free
-    if self.event.present?
-      self.event.duration += self.date_end - self.date_start
-    end
-    self.duration = self.date_end - self.date_start
-  end
-
-  def change_status_busy_to_process
-
-  end
-
-  def change_status_process_to_close
-
   end
 end

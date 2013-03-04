@@ -39,14 +39,12 @@ class Cabinet::Patient::EventController < Cabinet::PatientController
   end
 
   def history
-    @offset = params[:offset] || 0
-    @limit = params[:limit] || 10
-    @history = current_user.events_history.offset(@offset).limit(@limit)
+    @history = current_user.events_history
 
     respond_to do |f|
       f.html { render :text => '' }
       f.json { render :json => @history.reverse.each_with_index.map { |e, i| {
-          x: i,
+          x: e.date_start.to_i * 1000,
           y: 1,
           name: t("event.type.#{e.type}"),
           id: e.id,
