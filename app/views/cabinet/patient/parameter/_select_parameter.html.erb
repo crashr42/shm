@@ -1,1 +1,1 @@
-<%= f.input :value, :collection => p.metadata[:values], :selected => p.metadata[:default] %>
+<%= f.select :value, options_for_select(p.metadata[:values]), :selected => p.metadata[:default] %>
