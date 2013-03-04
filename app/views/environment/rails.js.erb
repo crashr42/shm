@@ -1,0 +1,6 @@
+define(function () {
+    return {
+        env: '<%= Rails.env %>',
+        user: <%= user_signed_in? ? current_user.id : 'undefined' %>
+    }
+});

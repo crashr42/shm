@@ -17,6 +17,8 @@ Shm::Application.routes.draw do
   match '/admin(/:path)', :to => redirect { |params, request| "/cabinet/admin/#{params[:path]}" }
   match '/manager(/:path)', :to => redirect { |params, request| "/cabinet/manager/#{params[:path]}" }
 
+  match '/assets/rails' => 'environment#rails'
+
   namespace :cabinet do
     namespace :doctor do
       root :to => 'index#index'
