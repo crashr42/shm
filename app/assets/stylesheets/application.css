@@ -73,11 +73,6 @@ body {
     background-image: none;
 }
 
-.data {
-    overflow-y: scroll;
-    height: 300px;
-}
-
 .full-width {
     width: 100%;
 }
