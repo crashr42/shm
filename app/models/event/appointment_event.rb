@@ -20,4 +20,14 @@ class AppointmentEvent < Event
     a = self.patient_attendees.where(:user_id => u.id).first
     a.destroy.destroyed? ? EventMailer::unsubscribe(self, u).deliver : false
   end
+
+  def start_appointment
+    self.status= 'process'
+    save
+  end
+
+  def finish_appointment
+    self.status= :close
+    save
+  end
 end
