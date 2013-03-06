@@ -11,6 +11,16 @@ define([
       @_list = _.template(AppointmentListTemplate)
       @_row = _.template(AppointmentListRowTemplate)
 
+    events:
+      'click .start-appointment': 'start_appointment'
+
+    start_appointment: (e) ->
+      e.preventDefault()
+      element = $(e.currentTarget)
+      $.get "appointment/start_appointment/#{element.attr('id')}", (response) ->
+        alert(response)
+
+
     render: (callback, id) ->
       document.patient_id = id
       $.getJSON '/cabinet/doctor/appointments', $.proxy((response) ->
