@@ -8,4 +8,8 @@ class DoctorUser < User
   default_scope where("roles.name = 'doctor'")
   default_scope :readonly => false
 
+  def is_attending?
+    appointment_events.where('events.status = ?', 'process').order('date_start DESC').count != 0 ? true : false
+  end
+
 end
