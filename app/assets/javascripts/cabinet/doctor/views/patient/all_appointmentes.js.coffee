@@ -19,6 +19,7 @@ define([
       element = $(e.currentTarget)
       $.get "appointment/start_appointment/#{element.attr('id')}", (response) ->
         alert(response)
+        location.reload()
 
 
     render: (callback, id) ->
