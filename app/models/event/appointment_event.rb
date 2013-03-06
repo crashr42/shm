@@ -22,12 +22,21 @@ class AppointmentEvent < Event
   end
 
   def start_appointment
-    self.status= 'process'
-    save
+    raise 'You have one appointment processing already' if DoctorUser.current.is_attending?
+    if self.status == :busy
+      self.status= :process
+      save
+    else
+      raise 'Cannot start appointment with different status from busy'
+    end
   end
 
   def finish_appointment
-    self.status= :close
-    save
+    if self.status == :process
+      self.status= :close
+      save
+    else
+      raise 'Cannot stop appointment with different status from process'
+    end
   end
 end
