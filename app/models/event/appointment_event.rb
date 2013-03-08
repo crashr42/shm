@@ -39,4 +39,8 @@ class AppointmentEvent < Event
       raise 'Cannot stop appointment with different status from process'
     end
   end
+
+  def is_processing?
+    self.status == 'process' ? true : false
+  end
 end
