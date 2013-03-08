@@ -25,6 +25,7 @@ class AppointmentEvent < Event
     raise 'You have one appointment processing already' if DoctorUser.current.is_attending?
     if self.status == 'busy'
       self.status= 'process'
+      self.real_start_time = DateTime.now
       save
     else
       raise 'Cannot start appointment with different status from busy'
@@ -34,6 +35,7 @@ class AppointmentEvent < Event
   def finish_appointment
     if self.status == 'process'
       self.status= 'close'
+      self.real_start_end = DateTime.now
       save
     else
       raise 'Cannot stop appointment with different status from process'
