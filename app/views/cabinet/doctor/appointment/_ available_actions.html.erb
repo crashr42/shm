@@ -1,0 +1,5 @@
+<% if @a.is_processing? %>
+    <a id="<%= @a.id  %>" class="btn btn-success stop-appointment">Complete this appointment</a>
+<% else %>
+    <a id="<%= @a.id %>" class="btn btn-warning start-appointment">Begin this appointment</a>
+<% end %>

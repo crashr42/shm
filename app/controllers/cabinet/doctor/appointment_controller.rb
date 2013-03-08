@@ -114,4 +114,13 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
       }
     }
   end
+
+  def stop_appointment
+    respond_to do |f|
+      f.json do
+        AppointmentEvent.find(params[:id]).finish_appointment
+        render text: "Appointment ##{params[:id]} has been completed success".to_json, layout: false
+      end
+    end
+  end
 end

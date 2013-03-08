@@ -10,11 +10,17 @@ define([
 
     stop_appointment: (e) ->
       e.preventDefault()
-      alert 'you clicked stop button!'
+      target = $(e.currentTarget)
+      $.get "/cabinet/doctor/appointment/stop_appointment/#{target.attr('id')}", (response) ->
+        alert(response)
+        location.reload()
 
     start_appointment: (e) ->
       e.preventDefault()
-      alert 'you clicked start button!'
+      element = $(e.currentTarget)
+      $.get "/cabinet/doctor/appointment/start_appointment/#{element.attr('id')}", (response) ->
+        alert(response)
+        location.reload()
 
     render: (callback, id) ->
       $.get("/cabinet/doctor/appointments/#{id}", $.proxy((response) ->
