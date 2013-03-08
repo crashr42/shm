@@ -9,7 +9,11 @@ class DoctorUser < User
   default_scope :readonly => false
 
   def is_attending?
-    appointment_events.where('events.status = ?', 'process').order('date_start DESC').count != 0 ? true : false
+    appointment_events.where('events.status = ?', 'process').count != 0 ? true : false
+  end
+
+  def processing_appointment
+    appointment_events.where('events.status = ?', 'process').select('events.id').first
   end
 
 end
