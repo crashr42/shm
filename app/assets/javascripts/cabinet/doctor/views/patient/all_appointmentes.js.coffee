@@ -12,14 +12,19 @@ define([
       @_row = _.template(AppointmentListRowTemplate)
 
     events:
-      'click .start-appointment': 'start_appointment'
+      'click .show-appointment': 'show_appointment'
 
-    start_appointment: (e) ->
+    show_appointment: (e) ->
       e.preventDefault()
-      element = $(e.currentTarget)
-      $.get "appointment/start_appointment/#{element.attr('id')}", (response) ->
-        alert(response)
-        location.reload()
+      target = $(e.currentTarget)
+      Router.instance().navigate(target.attr('href'), true)
+
+#    start_appointment: (e) ->
+#      e.preventDefault()
+#      element = $(e.currentTarget)
+#      $.get "appointment/start_appointment/#{element.attr('id')}", (response) ->
+#        alert(response)
+#        location.reload()
 
 
     render: (callback, id) ->

@@ -9,7 +9,7 @@ define([
   'views/patient/all_appointmentes'
   'views/patient/new_appointment',
   'views/patient/new_appointment_for',
-  'views/patient/new_appointment_show'
+  'views/patient/appointment_show'
   'views/diagnostic'
 ], ($, Backbone, Index, PatientIndex, AppointmentMe, AppointmentColl, AppointmentSet, AppointmentesAll, AppointmentNew, AppointmentFor, AppointmentShow, Diagnostic) ->
   Backbone.View.extend

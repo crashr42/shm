@@ -14,7 +14,7 @@ define([
       'cabinet/doctor/appointments': 'appointmentesAll'
       'cabinet/doctor/appointment/new': 'appointmentNew'
       'cabinet/doctor/appointment/new/:id': 'appointmentNewFor'
-      '/cabinet/doctor/appointments/:id': 'appointmentShow'
+      'cabinet/doctor/appointments/:id': 'appointmentShow'
       'cabinet/doctor/diagnostic/:id': 'diagnostic'
 
     index: -> @app.content.showIndex()
