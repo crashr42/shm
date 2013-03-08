@@ -49,12 +49,11 @@
           <%= link_to_active_wrapper 'My Appointments', :li, cabinet_doctor_appointments_path %>
           <%= link_to_active_wrapper 'Document Archive', :li, cabinet_doctor_documents_path %>
           <%= link_to_active_wrapper 'Log out', :li, destroy_user_session_path, :method => :delete %>
-          <li>
-            <%= render partial: '/layouts/cabinet/doctor/appointment_processing' %>
-          </li>
+
         </ul>
         <ul class="nav pull-right">
           <li>
+
             <a href="javascript:void(0)" id="search-user">
               <i class="icon-search"></i>
               Search Patient
@@ -63,8 +62,7 @@
         </ul>
       </div>
       <!--/.nav-collapse -->
-
-
+        <%= render partial: '/layouts/cabinet/doctor/appointment_processing' %>
     </div>
   </div>
 </div>
