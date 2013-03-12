@@ -1,10 +1,10 @@
 <tr>
-<td><%= a.id %></td>
+<td><a href="<%= '/cabinet/doctor/appointments/' + a.id %>"  id="<%= a.id %>" class="btn btn-link show-appointment"><%= a.id %></a></td>
 <td><%= a.date_start %></td>
 <td><%= a.date_end %></td>
 <td><%= a.description %></td>
 <td><%= a.summary %></td>
 <td><%= a.duration %></td>
-<td><span class='<%= cssStatus %>'><%= a.status %></a></span></td>
+<td><span class='<%= cssStatus %>'><%= a.status %></span></td>
 </tr>
 

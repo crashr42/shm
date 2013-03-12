@@ -11,6 +11,22 @@ define([
       @_list = _.template(AppointmentListTemplate)
       @_row = _.template(AppointmentListRowTemplate)
 
+    events:
+      'click .show-appointment': 'show_appointment'
+
+    show_appointment: (e) ->
+      e.preventDefault()
+      target = $(e.currentTarget)
+      Router.instance().navigate(target.attr('href'), true)
+
+#    start_appointment: (e) ->
+#      e.preventDefault()
+#      element = $(e.currentTarget)
+#      $.get "appointment/start_appointment/#{element.attr('id')}", (response) ->
+#        alert(response)
+#        location.reload()
+
+
     render: (callback, id) ->
       document.patient_id = id
       $.getJSON '/cabinet/doctor/appointments', $.proxy((response) ->

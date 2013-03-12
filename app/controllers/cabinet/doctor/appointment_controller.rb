@@ -101,8 +101,26 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
     #Get appointment
     @a = AppointmentEvent.find_by_id(params[:id]) if params[:id].present?
     unless @a.present? then
-      flash[:error] = "Cannot appointment for this id"
+      flash[:error] = 'Cannot appointment for this id'
       redirect_to cabinet_doctor_appointments_path()
+    end
+  end
+
+  def start_appointment
+    respond_to {|f|
+      f.json{
+        AppointmentEvent.find(params[:id]).start_appointment
+        render text: "Appointment ##{params[:id]} is processing".to_json, layout: false
+      }
+    }
+  end
+
+  def stop_appointment
+    respond_to do |f|
+      f.json do
+        AppointmentEvent.find(params[:id]).finish_appointment
+        render text: "Appointment ##{params[:id]} has been completed success".to_json, layout: false
+      end
     end
   end
 end

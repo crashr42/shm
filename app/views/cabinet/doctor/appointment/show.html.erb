@@ -3,13 +3,10 @@
 <% end  %>
 
 <div class="page-header">
-<h4>Reviewing appointment # <strong> <%= @a.id %> </strong><br/>
- <small>Created by </small> <%= get_appointment_organizer(@a) %>
+<h4><small>Reviewing appointment</small> # <strong> <%= @a.id %> </strong><br/>
+ <small>Created by </small> <%= get_appointment_organizer(@a)  %>
+  <small>Created at  </small> <%= @a.created_at.strftime("%v") %>
 </h4>
-
-<h5>
-	Created_at: <small><%= @a.created_at.strftime("%v") %></small>
-</h5>
 </div>
 
 <h5>
@@ -30,3 +27,5 @@
    </tr>
  <% end %>
 </table>
+
+<%= render :partial => ' available_actions' %>

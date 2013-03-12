@@ -46,6 +46,8 @@ Shm::Application.routes.draw do
       match 'appointment/new' => 'appointment#new_appointment'
 
       match 'appointment/colleague/(:id)' => 'user#index', :via => :get
+      match 'appointment/start_appointment/(:id)' => 'appointment#start_appointment', via: :get
+      match 'appointment/stop_appointment/(:id)' => 'appointment#stop_appointment', via: :get
       match 'users/doctors' => 'user#get_doctors'
     end
     namespace :patient do

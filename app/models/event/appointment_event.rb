@@ -20,4 +20,29 @@ class AppointmentEvent < Event
     a = self.patient_attendees.where(:user_id => u.id).first
     a.destroy.destroyed? ? EventMailer::unsubscribe(self, u).deliver : false
   end
+
+  def start_appointment
+    raise 'You have one appointment processing already' if DoctorUser.current.is_attending?
+    if self.status == 'busy'
+      self.status= 'process'
+      self.real_start_time = DateTime.now
+      save
+    else
+      raise 'Cannot start appointment with different status from busy'
+    end
+  end
+
+  def finish_appointment
+    if self.status == 'process'
+      self.status= 'close'
+      self.real_start_end = DateTime.now
+      save
+    else
+      raise 'Cannot stop appointment with different status from process'
+    end
+  end
+
+  def is_processing?
+    self.status == 'process' ? true : false
+  end
 end
