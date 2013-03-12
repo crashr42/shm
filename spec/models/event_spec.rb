@@ -27,7 +27,6 @@ describe Event do
     e.status.should eq(:free)
     e.duration.should_not eq(0)
     e.duration = 0
-    e.should_not_receive(:change_status_free_to_busy)
     e.save!
     e.status.should eq(:busy)
   end

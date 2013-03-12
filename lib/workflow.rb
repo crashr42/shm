@@ -49,37 +49,54 @@ module Workflow
     end
   end
 
-  module ClassMethods
-    def workflow(field, &block)
-      workflows[field] = block
-    end
-
+  class << self
     def workflows
       @__workflows ||= {}
+    end
+
+    def add(klass, name, fields, flow)
+      self.workflows[klass] ||= {}
+      fields.each do |f|
+        self.workflows[klass][f] ||= {}
+        self.workflows[klass][f][name] = flow
+      end
+    end
+  end
+
+  module ClassMethods
+    def workflow(work, klass = self, &block)
+      work = work.is_a?(Hash) ? work : {work => work}
+      name = work.keys[0]
+      fields = Array.wrap(work.values[0])
+
+      Workflow.add(klass, name, fields, block)
     end
   end
 
   included do
     after_initialize do |record|
-      self.class.workflows.each do |field, block|
-        record.workflows[field] = Flow.new(record, field, &block)
-
-        record.class_eval do
-          attr_accessor field
-
-          define_method field do
-            read_attribute(field).present? ? read_attribute(field).to_sym : read_attribute(field)
+      executed_workflows = [
+          (Workflow.workflows[self.class] || {}),
+          (Workflow.workflows[self.class.superclass] || {})
+      ]
+      defined_fields = []
+      executed_workflows.each do |execute|
+        execute.each do |field, flows|
+          flows.each do |name, block|
+            unless record.workflows.include?("#{self.class.name.underscore}_#{field}_#{name}")
+              record.workflows["#{self.class.name.underscore}_#{field}_#{name}"] = Flow.new(record, field, &block)
+            end
           end
-
-          define_method :"#{field}=" do |value|
-            write_attribute(field, value)
+          unless defined_fields.include?(field)
+            record.class_eval do
+              define_method field do
+                read_attribute(field).try(:to_sym)
+              end
+            end
+            defined_fields << field
           end
         end
       end
-    end
-
-    def work(flow, work)
-      self.workflows[flow].work(work)
     end
 
     def workflows

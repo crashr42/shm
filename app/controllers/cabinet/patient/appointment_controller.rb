@@ -6,7 +6,7 @@ class Cabinet::Patient::AppointmentController < Cabinet::PatientController
     @event = AppointmentEvent.find params[:id]
 
     respond_to do |f|
-      if PatientAttendee.create({:user => current_user, :event => @event})
+      if PatientAttendee.new({:user => current_user, :event => @event}).save
         f.html { redirect_to({:action => :show, :id => @event.id}, :notice => 'Appointment created.') }
       else
         f.html { redirect_to({:action => :index}, :error => 'Appointment not created.') }
