@@ -28,7 +28,7 @@
         <% end %>
       </ul>
   <% end %>
-  <% if @event.is_a?(AppointmentEvent) and @event.status == 'busy' %>
+  <% if @event.is_a?(AppointmentEvent) and @event.status == :busy %>
       <%= link_to 'Не принимать участие', {:controller => :'cabinet/patient/event', :action => :unsubscribe, :id => @event.id}, {:class => 'btn'} %>
   <% end %>
 </div>
