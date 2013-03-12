@@ -18,7 +18,9 @@ module Workflow
           @record.errors.add(@field, "#{@field}.cannot_be_change.from.#{old_value}.to.#{new_value}")
         else
           flow = {old_value => new_value}
-          @record.instance_eval(&@flows[flow]) if @flows.key?(flow) && !@flows[flow].nil?
+          @flows[flow].each do |_, block|
+            @record.instance_eval(&block) if @flows.key?(flow) && !@flows[flow].nil?
+          end
         end
       end
     end
@@ -44,8 +46,9 @@ module Workflow
     end
 
     # Добавляет возможный переход для значения
-    def flow(flow, &block)
-      @flows[flow] = block
+    def flow(name, flow, &block)
+      @flows[flow] ||= {}
+      @flows[flow][name] = block
     end
   end
 

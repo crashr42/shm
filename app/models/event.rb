@@ -168,17 +168,17 @@ class Event < ActiveRecord::Base
 
   # Возможные переходы для статуса события
   workflow :status do
-    flow :busy => :process
-    flow :process => :close
+    flow :default, :busy => :process
+    flow :default, :process => :close
 
-    flow :free => :busy do
+    flow :reset_duration, :free => :busy do
       if self.event.present?
         self.event.duration -= self.date_end - self.date_start
       end
       self.duration = 0
     end
 
-    flow :busy => :free do
+    flow :reset_duration, :busy => :free do
       if self.event.present?
         self.event.duration += self.date_end - self.date_start
       end
