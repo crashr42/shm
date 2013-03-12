@@ -1,21 +1,31 @@
 <h3>Запись к <%= @doctor.shortname %> (<%= @doctor.specialty.name %>) на <%= l @date, :format => :short %></h3>
-<table class="table table-striped">
-  <tr>
-    <th>Дата начала</th>
-    <th>Дата окончания</th>
-    <th>Статус</th>
-    <th>Доктор</th>
-    <th></th>
-  </tr>
-  <% @appointments.each do |a| %>
+<% if @appointments.any? %>
+    <table class="table table-striped">
       <tr>
-        <td><%= l a.date_start, :format => :long %></td>
-        <td><%= l a.date_end, :format => :long %></td>
-        <td><%= t("event.statuses.#{a.status}") %></td>
-        <td><%= @doctor.email %></td>
-        <td>
-          <button class="btn btn-link subscribe-appointment" data-id="<%= a.id %>">Записаться</button>
-        </td>
+        <th>Дата начала</th>
+        <th>Дата окончания</th>
+        <th>Статус</th>
+        <th>Доктор</th>
+        <th></th>
       </tr>
-  <% end %>
-</table>
+      <% @appointments.each do |a| %>
+          <tr>
+            <td><%= l a.date_start, :format => :long %></td>
+            <td><%= l a.date_end, :format => :long %></td>
+            <td><%= t("event.statuses.#{a.status}") %></td>
+            <td><%= @doctor.email %></td>
+            <td>
+              <button class="btn btn-link subscribe-appointment" data-id="<%= a.id %>">Записаться</button>
+            </td>
+          </tr>
+      <% end %>
+    </table>
+<% else %>
+    <tr>
+      <td colspan="5">
+        <div class="alert alert-info">
+          На <%= l @date, :format => :short %> нет записей. Выберите другую дату или другого доктора.
+        </div>
+      </td>
+    </tr>
+<% end %>

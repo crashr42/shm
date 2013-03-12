@@ -3,31 +3,49 @@ define([
   'binder',
   'notification'
 ], ($, Binder, Notification) ->
-  getLoader = ->
-    loader = $('.loader')
-    unless loader.length > 0
-      loader = $('<div class="loader"><span>Загрузка...</span></div>')
-      $('body').append(loader)
-    loader
+  class Loader
+    constructor: ->
+      $('body').append(@loader())
+      @bind()
 
-#  $(document).ajaxStart (e) -> getLoader().stop().fadeIn('fast')
+    loader: ->
+      loader = $('.loader')
+      unless loader.length > 0
+        loader = $('<div class="loader"><span>Загрузка...</span></div>')
+      loader
 
-  $(document).ajaxError (event, xhr, settings, error) ->
-    console.log(
-      event: event
-      xhr: xhr
-      settings: settings
-      error: error
-    )
-    getLoader().stop().fadeOut('fast')
-    Notification.error(error)
+    show: ->
+      @loader().show()
 
-  $(document).ajaxSuccess ->
-    getLoader().stop().fadeOut('fast')
-    Binder.bind()
+    hide: ->
+      @loader().hide()
 
-  $(document).ajaxComplete ->
-    getLoader().stop().fadeOut('fast')
+    bind: ->
+      $(document).ajaxStart $.proxy (e) ->
+        @show()
+      , @
 
-  $.ajaxSetup beforeSend: (xhr) -> xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+      $(document).ajaxError $.proxy (event, xhr, settings, error) ->
+        console.log
+          event: event
+          xhr: xhr
+          settings: settings
+          error: error
+
+        @hide()
+        Notification.error(error)
+      , @
+
+      $(document).ajaxSuccess $.proxy ->
+        @hide()
+        Binder.bind()
+      , @
+
+      $(document).ajaxComplete $.proxy ->
+        @hide()
+      , @
+
+      $.ajaxSetup beforeSend: (xhr) -> xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+
+  new Loader()
 )

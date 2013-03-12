@@ -1,11 +1,10 @@
-<h3>You subscribe to appointment</h3>
-Date start: <%= @event.date_start %>
-Date end: <%= @event.date_end %>
+<h3>Вы присоединились в событию</h3>
+<p>Дата начала: <%= l @event.date_start, :format => :long %></p>
+<p>Дата окончания: <%= l @event.date_end, :format => :long %></p>
 
-Attendees:
-
+<p>Участники:</p>
 <ul>
   <% @event.attendees.each do |a| %>
-      <li><%= a.user.email %> (<%= a.user.roles.map(&:name).join(', ') %>)</li>
+      <li><%= a.user.shortname %> (<%= a.user.email %>)</li>
   <% end %>
 </ul>
