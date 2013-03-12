@@ -11,9 +11,11 @@
       <tr>
         <td><%= l a.date_start, :format => :long %></td>
         <td><%= l a.date_end, :format => :long %></td>
-        <td><%= a.status %></td>
+        <td><%= t("event.statuses.#{a.status}") %></td>
         <td><%= @doctor.email %></td>
-        <td><button class="btn btn-link subscribe-appointment" data-id="<%= a.id %>">Записаться</button></td>
+        <td>
+          <button class="btn btn-link subscribe-appointment" data-id="<%= a.id %>">Записаться</button>
+        </td>
       </tr>
   <% end %>
 </table>

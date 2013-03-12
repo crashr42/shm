@@ -15,9 +15,9 @@
         </div>
         <div class="box-content">
           <ul class="dashboard-list">
-            <% current_user.coming_free_events.each do |e| %>
+            <% current_user.coming_free_events.limit(10).each do |e| %>
                 <li>
-                  <a href="<%= url_for :controller => 'cabinet/patient/event', :action => :history, :id => e.id %>" class="hajax">
+                  <a href="<%= url_for :controller => 'cabinet/patient/calendar', :action => :show, :id => e.id %>" class="hajax">
                     <i class="icon-arrow-up green"></i>
                     <%= t("event.type.#{e.type}") %>
                     <span class="pull-right green"><%= l e.date_start, :format => :short %></span>

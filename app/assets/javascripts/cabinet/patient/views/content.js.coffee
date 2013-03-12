@@ -6,7 +6,6 @@ define([
   'views/parameter',
   'views/calendar',
   'views/doctor',
-  'views/history',
   'binder'
 ], (
   $,
@@ -16,7 +15,6 @@ define([
   Parameter,
   Calendar,
   Doctor,
-  History,
   Binder
 ) ->
   Backbone.View.extend
@@ -26,82 +24,40 @@ define([
       @parameter = new Parameter()
       @calendar = new Calendar()
       @doctor = new Doctor()
-      @history = new History()
 
     viewChange: (view) -> throw 'Implementation error'
 
-    hideAll: ->
-      @$el.children('div').hide()
-
     showIndex: ->
-      @hideAll()
-      if @index_cache
-        @index_cache.$el.show()
+      @index.render $.proxy (v) ->
+        @$el.html v.el
         Binder.setNewContentHeight()
-      else
-        @index.render $.proxy (v) ->
-          @index_cache = v
-          @$el.append @index_cache.el
-          Binder.setNewContentHeight()
-        , @
+      , @
       @viewChange('index')
 
     showAppointment: ->
-      @hideAll()
-      if @appointment_cache
-        @appointment_cache.$el.show()
+      @appointment.render $.proxy (v) ->
+        @$el.html v.el
         Binder.setNewContentHeight()
-      else
-        @appointment.render $.proxy (v) ->
-          @appointment_cache = v
-          @$el.append @appointment_cache.el
-          Binder.setNewContentHeight()
-        , @
+      , @
       @viewChange('appointment')
 
     showParameter: ->
-      @hideAll()
-      if @parameter_cache
-        @parameter_cache.$el.show()
+      @parameter.render $.proxy (v) ->
+        @$el.html v.el
         Binder.setNewContentHeight()
-      else
-        @parameter.render $.proxy (v) ->
-          @parameter_cache = v
-          @$el.append @parameter_cache.el
-          Binder.setNewContentHeight()
-        , @
+      , @
       @viewChange('parameter')
 
-    showCalendar: ->
-      @hideAll()
-      if @calendar_cache
-        @calendar_cache.$el.show()
+    showCalendar: (cb) ->
+      @calendar.render $.proxy (v) ->
+        @$el.html v.el
         Binder.setNewContentHeight()
-      else
-        @calendar.render $.proxy (v) ->
-          @calendar_cache = v
-          @$el.append @calendar_cache.el
-          Binder.setNewContentHeight()
-        , @
+        cb.call(@, v) if cb
+      , @
       @viewChange('calendar')
 
     showDoctor: ->
       @doctor.render $.proxy (v) ->
         @$el.html v.el
       , @
-
-    showHistory: (cb) ->
-      @hideAll()
-      if @history_cache
-        @history_cache.$el.show()
-        Binder.setNewContentHeight()
-        cb.call @, @history_cache
-      else
-        @history.render $.proxy (v) ->
-          @history_cache = v
-          @$el.append @history_cache.el
-          Binder.setNewContentHeight()
-          cb.call @, @history_cache
-        , @
-      @viewChange('history')
 )

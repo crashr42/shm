@@ -1,5 +1,5 @@
 <div class="row-fluid">
-  <h3><%= t "event.type.#{@event.type}" %></h3>
+  <h2><%= t "event.type.#{@event.type}" %></h2>
 
   <p>Организатор: <%= @event.user.shortname %></p>
 
@@ -7,7 +7,8 @@
       <p>Краткое описание: <%= @event.summary %></p>
   <% end %>
 
-  <p>Дата: с <%= l @event.date_start, :format => :long %> по <%= l @event.date_end, :format => :long %></p>
+  <p>Дата начала: <%= l @event.date_start, :format => :long %></p>
+  <p>Дата окончания: <%= l @event.date_end, :format => :long %></p>
   <% if @event.description.present? %>
       <p>Описание: <%= @event.description %></p>
   <% end %>

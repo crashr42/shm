@@ -12,3 +12,8 @@ en:
     type:
       Event: Событие
       AppointmentEvent: Прием у врача
+    statuses:
+      free: свободно
+      busy: занято
+      process: в процессе
+      close: завершено

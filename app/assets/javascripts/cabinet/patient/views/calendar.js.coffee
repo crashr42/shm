@@ -15,6 +15,19 @@ define([
         @bindCalendar()
       , @))
 
+    setMenuLink: (link) -> $('a[data-view=calendar]').attr('href', link)
+
+    showEventInfo: (id) ->
+      @setMenuLink('/cabinet/patient/calendar/' + id)
+      $.get '/cabinet/patient/event/show/' + id, $.proxy (request) ->
+        calendar = @$el.find('#calendar')
+        calendar.parent().removeClass('span12').addClass('span8')
+        event_info = @$el.find('#event-info')
+        event_info.parent().addClass('span4').removeClass('hide')
+        event_info.html(request)
+        calendar.fullCalendar('option', 'height', calendar.parent().width());
+      , @
+
     bindCalendar: ->
       that = @
       @$el.find('#calendar').fullCalendar
@@ -26,10 +39,20 @@ define([
           error: -> alert 'there was an error while fetching events!'
           }
         ]
-        eventDrop: (event, delta) -> that.$el.find('#calendar').fullCalendar 'updateEvent', event
-        eventClick: (event, element) ->
-          $.get '/cabinet/patient/event/show/' + event.id, (request) ->
-            modal = that.$el.find('.modal')
-            modal.find('.modal-body').first().html(request)
-            modal.modal('show')
+        eventDrop: (event, delta) -> that.$el.find('#calendar').fullCalendar('updateEvent', event)
+        eventClick: (event, element) -> that.showEventInfo(event.id)
+        monthNames: ['Январь','Февраль','Март','Апрель','Май','οюнь','οюль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь']
+        monthNamesShort: ['Янв.','Фев.','Март','Апр.','Май','οюнь','οюль','Авг.','Сент.','Окт.','Ноя.','Дек.']
+        dayNames: ["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"]
+        dayNamesShort: ["ВС","ПН","ВТ","СР","ЧТ","ПТ","СБ"]
+        buttonText:
+          prev: "&nbsp;&#9668;&nbsp;"
+          next: "&nbsp;&#9658;&nbsp;"
+          prevYear: "&nbsp;&lt;&lt;&nbsp;"
+          nextYear: "&nbsp;&gt;&gt;&nbsp;"
+          today: "Сегодня"
+          month: "Месяц"
+          week: "Неделя"
+          day: "День"
+      $('')
 )

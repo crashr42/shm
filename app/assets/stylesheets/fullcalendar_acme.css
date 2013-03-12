@@ -220,26 +220,26 @@ html .fc,
     border-bottom-style: none;
     border-left-style: solid;
     border-right-style: solid;
-    border-color: #ddd;
+    border-color: transparent;
     background: transparent;
     color: #646464;
 }
 
 .fc-state-hover,
 .fc-state-hover .fc-button-inner {
-    border-color: #ddd;
+    border-color: transparent;
     background: #fafafa;
 }
 
 .fc-state-down,
 .fc-state-down .fc-button-inner {
-    border-color: #ddd;
+    border-color: transparent;
     background: transparent;
 }
 
 .fc-state-active,
 .fc-state-active .fc-button-inner {
-    border-color: #ddd;
+    border-color: transparent;
     background: #fff;
     color: #646464;
     border-bottom: 1px solid #fff;
@@ -248,7 +248,7 @@ html .fc,
 .fc-state-disabled,
 .fc-state-disabled .fc-button-inner {
     color: #999;
-    border-color: #ddd;
+    border-color: transparent;
 }
 
 .fc-state-disabled {
