@@ -2,9 +2,10 @@ define([
   'jquery',
   'backbone',
   'wsclient',
+  'routers/router',
   'fullcalendar',
   'bootstrap'
-], ($, Backbone, Client) ->
+], ($, Backbone, Client, Router) ->
   Backbone.View.extend
     render: (callback) ->
       Client.userOn('attendee.create', (data) -> console.log(data))
@@ -18,7 +19,9 @@ define([
     setMenuLink: (link) -> $('a[data-view=calendar]').attr('href', link)
 
     showEventInfo: (id) ->
-      @setMenuLink('/cabinet/patient/calendar/' + id)
+      link = '/cabinet/patient/calendar/' + id
+      Router.instance().navigate(link, false)
+      @setMenuLink(link)
       $.get '/cabinet/patient/event/show/' + id, $.proxy (request) ->
         calendar = @$el.find('#calendar')
         calendar.parent().removeClass('span12').addClass('span8')

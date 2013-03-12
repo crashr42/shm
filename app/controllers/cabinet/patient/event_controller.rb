@@ -30,7 +30,7 @@ class Cabinet::Patient::EventController < Cabinet::PatientController
   def unsubscribe
     @event = Event.find params[:id]
     respond_to do |f|
-      if @event.unsubsribe current_user.id
+      if @event.unsubsribe(current_user.id)
         f.html { redirect_to({:controller => :'cabinet/patient/calendar', :action => :index}, :notice => 'You unsubscribe from event.') }
       else
         f.html { redirect_to({:controller => :'cabinet/patient/calendar', :action => :index}, :notice => 'Can\'t unsubscribe from event.') }
@@ -38,20 +38,12 @@ class Cabinet::Patient::EventController < Cabinet::PatientController
     end
   end
 
-  def history
-    @history = current_user.events_history
+  def info
+    @event = Event.find params[:id]
 
     respond_to do |f|
-      f.html { render :text => '' }
-      f.json { render :json => @history.reverse.each_with_index.map { |e, i| {
-          x: e.date_start.to_i * 1000,
-          y: 1,
-          name: t("event.type.#{e.type}"),
-          id: e.id,
-          type: t("event.type.#{e.type}"),
-          dateStart: l(e.date_start, :format => :short),
-          dateEnd: l(e.date_end, :format => :short)
-      } }.to_json.html_safe }
+      f.html
+      f.json { render :json => @event }
     end
   end
 end
