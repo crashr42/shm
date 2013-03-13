@@ -1,8 +1,27 @@
-<h3>Public user profile</h3>
-<p><%= User.human_attribute_name :email %>: <%= @user.email %></p>
-<p><%= User.human_attribute_name :first_name %>: <%= @user.first_name %></p>
-<p><%= User.human_attribute_name :last_name %>: <%= @user.last_name %></p>
-<% if @user.third_name.present? %>
-    <p><%= User.human_attribute_name :third_name %>: <%= @user.third_name %></p>
-<% end %>
-<p>Roles: <%= @user.roles.map(&:name).join(', ') %></p>
+<div class="row-fluid">
+  <h3>Профиль пользователя <%= @user.fullname %></h3>
+</div>
+<div class="row-fluid">
+  <div class="span3">
+    <div class="row-fluid">
+      <div class="icon-user span12" style="font-size: 16em; text-align: center;">
+
+      </div>
+    </div>
+  </div>
+  <div class="span9">
+    <% @user.roles.each do |r| %>
+        <span class="badge badge-success"><%= r.name %></span>
+    <% end %>
+    <h4>Данные пользователя</h4>
+
+    <p><%= User.human_attribute_name :email %>: <%= @user.email %></p>
+
+    <p><%= User.human_attribute_name :first_name %>: <%= @user.first_name %></p>
+
+    <p><%= User.human_attribute_name :last_name %>: <%= @user.last_name %></p>
+    <% if @user.third_name.present? %>
+        <p><%= User.human_attribute_name :third_name %>: <%= @user.third_name %></p>
+    <% end %>
+  </div>
+</div>
