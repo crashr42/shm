@@ -6,7 +6,15 @@ define([
   Backbone.View.extend
 
     events:
-      'keyup #diagnose-name': 'search'
+      'click .start-search': 'search'
+      'click .add-link': 'addDiagnose'
+
+    addDiagnose: (e)->
+      e.preventDefault()
+      element = $(e.currentTarget)
+
+      @$('#existing-diagnoses').append(@$el.find(".diagnose##{element.attr('id')}"))
+      @$('#existing-diagnoses').append('<br />')
 
     search: (e)->
       form = $(e.currentTarget).parent()
