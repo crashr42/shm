@@ -19,7 +19,9 @@ module Workflow
         else
           flow = {old_value => new_value}
           @flows[flow].each do |_, block|
-            @record.instance_eval(&block) if @flows.key?(flow) && !@flows[flow].nil?
+            if block.is_a?(Proc)
+              @record.instance_eval(&block) if @flows.key?(flow) && !@flows[flow].nil?
+            end
           end
         end
       end
