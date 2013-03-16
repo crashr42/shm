@@ -16,6 +16,7 @@ define([
       'cabinet/doctor/appointment/new/:id': 'appointmentNewFor'
       'cabinet/doctor/appointments/:id': 'appointmentShow'
       'cabinet/doctor/diagnostic/:id': 'diagnostic'
+      'cabinet/doctor/diagnoses/:id': 'diagnosesAll'
 
     index: -> @app.content.showIndex()
     patientIndex: -> @app.content.showPatientIndex()
@@ -27,6 +28,7 @@ define([
     appointmentNewFor: (id) -> @app.content.showApoointmentFor(id)
     appointmentShow: (id) -> @app.content.showAppointmentShow(id)
     diagnostic: (id) -> @app.content.showDiagnostic(id)
+    diagnosesAll: (id) -> @app.content.showDiagnosesAll(id)
 
   Router.instance = (options) -> @_instance || (@_instance = new Router(options))
 

@@ -18,4 +18,16 @@ class Cabinet::Doctor::PatientController < Cabinet::DoctorController
       f.html{}
     }
   end
+
+  def all_diagnoses
+    respond_to {|f|
+      f.html{
+
+      }
+
+      f.json{
+        render text: 'that is working', layout: false
+      }
+    }
+  end
 end

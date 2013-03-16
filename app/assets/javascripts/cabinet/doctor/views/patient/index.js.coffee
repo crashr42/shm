@@ -15,6 +15,12 @@ define([
       'click .appointment-coll': 'gotoAppointmentColleguae'
       'click .appointment-new': 'gotoAppointmentNew'
       'click .diagnostic': 'gotoDiagnostic'
+      'click .diagnoses': 'gotoDiagnoses'
+
+    gotoDiagnoses: (e) ->
+      e.preventDefault()
+      element = $(e.currentTarget)
+      Router.instance().navigate(element.attr('href'), true)
 
     gotoAppointmentMe: (e) ->
       e.preventDefault()

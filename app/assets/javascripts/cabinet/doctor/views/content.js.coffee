@@ -11,7 +11,8 @@ define([
   'views/patient/new_appointment_for',
   'views/patient/appointment_show'
   'views/diagnostic'
-], ($, Backbone, Index, PatientIndex, AppointmentMe, AppointmentColl, AppointmentSet, AppointmentesAll, AppointmentNew, AppointmentFor, AppointmentShow, Diagnostic) ->
+  'views/diagnosis/index'
+], ($, Backbone, Index, PatientIndex, AppointmentMe, AppointmentColl, AppointmentSet, AppointmentesAll, AppointmentNew, AppointmentFor, AppointmentShow, Diagnostic, DiagnosesIndex) ->
   Backbone.View.extend
     initialize: ->
       @index = new Index()
@@ -24,6 +25,7 @@ define([
       @appointmentFor = new AppointmentFor()
       @appointmentShow = new AppointmentShow()
       @diagnosticIndex = new Diagnostic()
+      @diagnosesIndex = new DiagnosesIndex()
 
     showIndex: -> @index.render $.proxy(((v) -> @$el.html(v.el)), @)
     showPatientIndex: -> @patientIndex.render $.proxy(((v) -> @$el.html(v.el)), @)
@@ -35,4 +37,5 @@ define([
     showApoointmentFor: (id) -> @appointmentFor.render $.proxy(((v) -> @$el.html(v.el)), @), id
     showAppointmentShow: (id) -> @appointmentShow.render $.proxy(((v) -> @$el.html(v.el)), @), id
     showDiagnostic: (id) -> @diagnosticIndex.render $.proxy(((v) -> @$el.html(v.el)), @), id
+    showDiagnosesAll: (id) -> @diagnosesIndex.render $.proxy(((v) -> @$el.html(v.el)), @), id
 )
