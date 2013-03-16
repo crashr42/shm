@@ -30,4 +30,14 @@ class Cabinet::Doctor::PatientController < Cabinet::DoctorController
       }
     }
   end
+
+  def diagnoses_assigning
+    respond_to {|f|
+      f.html{}
+    }
+  end
+
+  def find_diagnose
+
+  end
 end
