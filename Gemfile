@@ -92,3 +92,6 @@ gem 'momentjs-rails'
 gem 'yajl-ruby'
 gem 'modernizr-rails'
 gem 'gritter', '1.0.3'
+
+#parse Excel spreadsheets
+gem 'spreadsheet'
