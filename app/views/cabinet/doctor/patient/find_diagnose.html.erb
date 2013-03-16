@@ -1,0 +1,5 @@
+<% @diagnoses.each do |diagnose| %>
+    <div id="<%= diagnose.id %>" class="diagnose">
+      <%= diagnose.code_name %>
+    </div>
+<% end %>

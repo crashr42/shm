@@ -1,4 +1,6 @@
 class Cabinet::Doctor::PatientController < Cabinet::DoctorController
+  layout 'cabinet/doctor/layout'
+
   def index
     @patients = current_user.patient_users
     respond_to do |f|
@@ -38,6 +40,11 @@ class Cabinet::Doctor::PatientController < Cabinet::DoctorController
   end
 
   def find_diagnose
+    respond_to {|f|
+      f.html{
+        @diagnoses = Diagnosis.custom_find_by_name(params[:name])
+      }
+    }
 
   end
 end

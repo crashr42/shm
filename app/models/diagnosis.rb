@@ -8,4 +8,8 @@ class Diagnosis < ActiveRecord::Base
   validates :block_name, :presence => true
   validates :code_name, :presence => true
   validates :code, :presence => true
+
+  def self.custom_find_by_name diagnose_name
+    Diagnosis.where('code_name ILIKE ?', "%#{diagnose_name}%")
+  end
 end

@@ -1,6 +1,6 @@
 <h4><small>Diagnoses for </small><%= PatientUser.find(params[:id]).shortname() %> </h4>
 
-<%= form_tag('/cabinet/doctor/diagnoses/find', :method => 'post', class: 'form-search-large', id: 'diagnoses-search' ) do %>
+<%= form_tag('/cabinet/doctor/diagnoses/find-by-name', :method => 'post', class: 'form-search-large', id: 'diagnoses-search' ) do %>
     <input type="text" id="diagnose-name" name="name" placeholder="Enter diagnose name">
 <% end %>
 
