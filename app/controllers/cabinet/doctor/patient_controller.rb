@@ -49,6 +49,12 @@ class Cabinet::Doctor::PatientController < Cabinet::DoctorController
   end
 
   def confirm_diagnoses
-    puts params
+    params[:item].each {|i|
+      new_patient_to_diagnose = PatientToDiagnoses.new
+      new_patient_to_diagnose.user_id = params[:patient_id]
+      new_patient_to_diagnose.diagnosis_id = i
+
+      new_patient_to_diagnose.save
+    }
   end
 end
