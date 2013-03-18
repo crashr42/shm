@@ -51,6 +51,8 @@ Shm::Application.routes.draw do
       match 'users/doctors' => 'user#get_doctors'
 
       match 'diagnoses/find-by-name' => 'patient#find_diagnose', :via => :post
+      match 'diagnoses/confirm' => 'patient#confirm_diagnoses', :via => :post
+
       match 'diagnoses/patient/(:id)' => 'patient#all_diagnoses'
       match 'diagnoses/get-form/patient/(:id)' => 'patient#diagnoses_assigning'
     end

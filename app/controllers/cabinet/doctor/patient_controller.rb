@@ -47,4 +47,8 @@ class Cabinet::Doctor::PatientController < Cabinet::DoctorController
     }
 
   end
+
+  def confirm_diagnoses
+    puts params
+  end
 end

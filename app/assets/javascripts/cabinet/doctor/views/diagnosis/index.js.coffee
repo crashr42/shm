@@ -8,12 +8,16 @@ define([
     events:
       'click .start-search': 'search'
       'click .add-link': 'addDiagnose'
+      'click .send': 'saveDiagnoses'
 
     addDiagnose: (e)->
       e.preventDefault()
       element = $(e.currentTarget)
 
-      @$('#existing-diagnoses').append(@$el.find(".diagnose##{element.attr('id')}"))
+      inserted_text = @$el.find(".diagnose##{element.attr('id')}").html()
+
+      @$('#existing-diagnoses').append('<p><input type="checkbox" checked="checked"  name="item[]" value="' + element.attr('id') + '" />')
+      @$('#existing-diagnoses').append("#{inserted_text} </p>")
       @$('#existing-diagnoses').append('<br />')
 
     search: (e)->
@@ -22,6 +26,15 @@ define([
       $.post form.attr('action'), form.serialize(), $.proxy((request) ->
         @$el.find('#diagnoses-list').html(request)
       , @)
+
+    saveDiagnoses: (e)->
+      e.preventDefault()
+      form = $(e.currentTarget).parent().parent()
+
+      $.post form.attr('action'), form.serialize(), $.proxy((request) ->
+        alert(request)
+      , @)
+
 
 
     render: (callback, id) ->

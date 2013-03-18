@@ -1,8 +1,20 @@
 <h4><small>Diagnoses for </small><%= PatientUser.find(params[:id]).shortname() %> </h4>
 
-<div id="existing-diagnoses">
+<%= form_tag('/cabinet/doctor/diagnoses/confirm', :method => 'post', class: 'form-horizontal', id: 'diagnoses-form' ) do %>
+    <legend>Please type diagnose name into search field and click Start searching. After this select diagnoses and click Save.
+      If you need cancel some diagnoses for patient, please unchecked those flags.
+    </legend>
 
-</div>
+    <input type="hidden" value="<%= params[:id] %>" name="patient_id">
+    <div id="existing-diagnoses">
+
+    </div>
+
+    <div class="form-actions">
+      <a class="btn send">Save</a>
+    </div>
+
+<% end %>
 
 <%= form_tag('/cabinet/doctor/diagnoses/find-by-name', :method => 'post', class: 'form-search-large', id: 'diagnoses-search' ) do %>
     <input type="text" id="diagnose-name" name="name" placeholder="Enter diagnose name">
