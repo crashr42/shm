@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130308130429) do
+ActiveRecord::Schema.define(:version => 20130318183534) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "event_id"
@@ -99,6 +99,13 @@ ActiveRecord::Schema.define(:version => 20130308130429) do
   create_table "parameters_to_patients", :force => true do |t|
     t.integer  "user_id"
     t.integer  "parameter_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "patient_to_diagnoses", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "diagnosis_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
@@ -214,6 +221,9 @@ ActiveRecord::Schema.define(:version => 20130308130429) do
 
   add_foreign_key "parameters_to_patients", "parameters", :name => "parameters_to_patients_parameter_id_fk"
   add_foreign_key "parameters_to_patients", "users", :name => "parameters_to_patients_user_id_fk"
+
+  add_foreign_key "patient_to_diagnoses", "diagnoses", :name => "patient_to_diagnoses_diagnosis_id_fk"
+  add_foreign_key "patient_to_diagnoses", "users", :name => "patient_to_diagnoses_user_id_fk"
 
   add_foreign_key "recurrence_rules", "events", :name => "recurrence_rules_event_id_fk"
 
