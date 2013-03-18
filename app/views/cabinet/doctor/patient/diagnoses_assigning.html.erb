@@ -7,7 +7,9 @@
 
     <input type="hidden" value="<%= params[:id] %>" name="patient_id">
     <div id="existing-diagnoses">
-
+      <% @diagnoses.each do |diagnose| %>
+          <p><input type="checkbox" checked="checked"  name="item[]" value="<%= diagnose.id %>" /><%= diagnose.code_name %></p>
+    <% end %>
     </div>
 
     <div class="form-actions">

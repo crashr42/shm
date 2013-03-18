@@ -33,6 +33,7 @@ define([
 
       $.post form.attr('action'), form.serialize(), $.proxy((request) ->
         alert(request)
+        location.reload()
       , @)
 
 
