@@ -84,4 +84,24 @@ class Cabinet::Doctor::PatientController < Cabinet::DoctorController
       }
     }
   end
+
+  def find_medicament
+    respond_to { |f|
+      f.html {
+        @medicaments = Medicament.custom_find_by_name(params[:name])
+      }
+    }
+  end
+
+  def confirm_medicaments
+    respond_to {|f|
+      f.html {
+        render text: 'I am confirming', layout: false
+      }
+
+      f.json{
+
+      }
+    }
+  end
 end

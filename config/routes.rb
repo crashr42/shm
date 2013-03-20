@@ -55,6 +55,9 @@ Shm::Application.routes.draw do
 
       match 'diagnoses/patient/(:id)' => 'patient#all_diagnoses'
       match 'diagnoses/get-form/patient/(:id)' => 'patient#diagnoses_assigning'
+
+      match 'medicament/find' => 'patient#find_medicament', :via => :post
+      match 'medicament/confirm' => 'patient#confirm_medicaments'
     end
     namespace :patient do
       root :to => 'index#index'
