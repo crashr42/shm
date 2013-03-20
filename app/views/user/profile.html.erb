@@ -28,12 +28,14 @@
         <h5><small>The following medical information for </small>doctor only</h5>
         <h4>Diagnoses</h4>
         <% @user.diagnosis.each do |diagnose| %>
-            <p><input type="checkbox" checked="checked"  name="item[]" value="<%= diagnose.id %>" /><%= diagnose.code_name %></p>
+            <i class=" icon-arrow-right"></i>&nbsp&nbsp<p style="display: inline;"><%= diagnose.code_name %></p>
+            <br />
         <% end %>
 
         <h4>Medicaments</h4>
         <% @user.medicaments.each do |medicament| %>
-            <p><input type="checkbox" checked="checked"  name="item[]" value="<%= medicament.id %>" /><%= medicament.commercial_name %></p>
+            <i class=" icon-arrow-right"></i>&nbsp&nbsp<p style="display: inline;"><%= medicament.commercial_name %></p>
+            <br />
         <% end %>
       </div>
     <% end %>
