@@ -17,6 +17,9 @@ class PatientUser < User
   has_many :patient_attendees, :foreign_key => :user_id
   has_many :appointment_events, :through => :patient_attendees, :foreign_key => :user_id
 
+  has_many :patient_to_medicamentss, :foreign_key => :medicaments_id
+  has_many :medicaments, :through => :patient_to_medicamentss
+
   default_scope :joins => :roles
   default_scope where("roles.name = 'patient'")
   default_scope :readonly => false
