@@ -7,7 +7,9 @@
 
     <input type="hidden" value="<%= @a.patient_user.first.id %>" name="patient_id">
     <div id="existing-medicaments">
-
+      <% @a.patient_user.first.medicaments.each do |medicament| %>
+          <p><input type="checkbox" checked="checked"  name="item[]" value="<%= medicament.id %>" /><%= medicament.commercial_name %></p>
+      <% end %>
     </div>
 
     <div class="form-actions">

@@ -96,7 +96,33 @@ class Cabinet::Doctor::PatientController < Cabinet::DoctorController
   def confirm_medicaments
     respond_to {|f|
       f.html {
-        render text: 'I am confirming', layout: false
+        checkboxes = params[:item]
+        medicaments = PatientUser.find(params[:patient_id]).medicaments
+
+        if medicaments.count > 0
+          medicaments.each { |medicament|
+            if checkboxes.present? && checkboxes.include?(medicament.id)
+              #If patient stay still with this medicament
+              checkboxes.reject! { |chbx| chbx == medicament.id }
+            else
+              #If doctor unchecked this medicament
+              deleted = PatientToMedicaments.where('users_id = ? AND medicaments_id = ?', params[:patient_id], medicament.id).first
+              deleted.delete
+            end
+          }
+        end
+
+        if checkboxes.present?
+          checkboxes.each { |i|
+            new_patient_to_medicaments = PatientToMedicaments.new
+            new_patient_to_medicaments.users_id = params[:patient_id]
+            new_patient_to_medicaments.medicaments_id = i
+
+            new_patient_to_medicaments.save
+          }
+        end
+
+        render text: 'I had been confirmed successfully!', layout: false
       }
 
       f.json{
