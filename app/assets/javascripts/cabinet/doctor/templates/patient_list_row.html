@@ -1,6 +1,6 @@
 <tr>
     <td><%= p.id %></td>
-    <td><%= p.first_name %></td>
+    <td><a href="/user/profile/<%= p.id %>"><%= p.first_name %></a></td>
     <td><%= p.last_name %></td>
     <td><i class="icon-eye-open"></i><a href="/cabinet/doctor/appointment/me/<%= p.id %>" class="appointment-me">app-nt</a> &nbsp
     <i class=" icon-user"></i><a href="/cabinet/doctor/appointment/colleague/<%= p.id %>" class="appointment-coll">to colleguae</a> &nbsp
