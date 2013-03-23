@@ -1,0 +1,33 @@
+<div>
+  <table class="table" id="appointment-list">
+    <tr>
+      <th>Время (продолжительность)</th>
+      <th>Описание</th>
+      <th>Состояние</th>
+    </tr>
+
+    <% @appntEvents.each do |appointment| %>
+      <tr>
+        <td>
+          С <%= appointment.date_start.strftime('%d.%m.%Y %H:%M:%S') %><br>
+          по <%= appointment.date_end.strftime('%d.%m.%Y %H:%M:%S') %> <br>
+          <small>(<%= appointment.duration_to_text %>)</small>
+        </td>
+        <td>
+          <%= appointment.summary %>
+          <small>
+            <%= appointment.description %> <br>
+            <% if appointment.status == :busy  %>
+              <%= link_to appointment.patient_user.first.shortname, "/user/profile/#{appointment.patient_user.first.id}" %>
+                <br>
+              <%= link_to 'Подробнее',  "/cabinet/doctor/appointments/#{appointment.id}", class: 'btn btn-info' %>
+            <% end %>
+          </small>
+        </td>
+        <td>
+          <span class='<%= appointment.status_to_css %>'><%= appointment.status %></span>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

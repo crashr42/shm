@@ -1,8 +1,6 @@
-<strong>Medicament assigning</strong>
-
 <%= form_tag('/cabinet/doctor/medicament/confirm', :method => 'post', class: 'form-horizontal', id: 'diagnoses-form' ) do %>
-    <legend>Please type medicament name into search field and click Start searching. After this select medicament and click Save.
-      If you need cancel some diagnoses for patient, please unchecked those flags.
+    <legend>
+      Здесь вы можете назначить медикаменты, которые принимает пациент
     </legend>
 
     <input type="hidden" value="<%= @a.patient_user.first.id %>" name="patient_id">

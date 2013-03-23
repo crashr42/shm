@@ -4,19 +4,26 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
 
   #get appointment index page (search and select patient)
   def index
-    respond_to { |f|
-      @appntEvents = DoctorUser.current.appointment_events.order("date_start DESC")
+    #respond_to { |f|
+    #  @appntEvents = DoctorUser.current.appointment_events.order("date_start DESC")
+    #
+    #  f.json {
+    #    render :json => @appntEvents.to_json
+    #  }
+    #  f.html {}
+    #}
 
-      f.json {
-        render :json => @appntEvents.to_json
-      }
-      f.html {}
-    }
+    @appntEvents = DoctorUser.current.appointment_events.where('events.status <> ?', 'free').order("date_start DESC")
   end
 
   def get_free_appointments_for
     @doctor_id = params[:id] == "me" ? User.current.id : params[:id]
     @appntEvents = DoctorUser.find(@doctor_id).appointment_events.where('events.status = \'free\'').order('events.date_start DESC')
+
+    @appntEvents.map!{|a|
+      a.date_start = a.date_start.strftime('%d.%m.%Y %H:%M:%S')
+      a
+    }
 
     respond_to{|f|
       f.html { render :layout => false }

@@ -1,5 +1,5 @@
 <% if @a.is_processing? %>
-    <a id="<%= @a.id  %>" class="btn btn-success stop-appointment">Complete this appointment</a>
+    <a id="<%= @a.id  %>" class="btn btn-success stop-appointment">Считать данный прием оконченным</a>
 <% else %>
-    <a id="<%= @a.id %>" class="btn btn-warning start-appointment">Begin this appointment</a>
+    <a id="<%= @a.id %>" class="btn btn-warning start-appointment">Начать прием</a>
 <% end %>

@@ -39,7 +39,8 @@ module Workflow
 
     # Меняло ли поле значение?
     def field_changed?
-      @record.send("#{@field}_changed?")
+      #@record.send("#{@field}_changed?")
+      old_value != new_value
     end
 
     # Проверяет корректность смены значения поля

@@ -135,7 +135,7 @@ StringParameter.create({:name => '2х2', :metadata => {
   u.email = Faker::Internet.email
   u.password = u.email
   u.doctor_user = DoctorUser.first(:offset => rand(DoctorUser.count))
-  u.diagnosis = Diagnosis.first(:offset => rand(Diagnosis.count))
+  #u.diagnosis = Diagnosis.first(:offset => rand(Diagnosis.count))
   u.save!
   UsersToRoles.create({:user => u, :role => Role.find_by_name('patient')})
 

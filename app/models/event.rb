@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Event < ActiveRecord::Base
   include Workflow
 
@@ -100,6 +101,13 @@ class Event < ActiveRecord::Base
         :process => 'badge badge-info',
         :close => 'badge'
     }[self.status]
+  end
+
+  def duration_to_text
+    hour = duration < 3600 ? 0 : duration / 3600
+    min = duration < 60 ? 0 : duration / 60
+    sec = duration - (min * 60 + hour*3600)
+    "#{hour} ч #{min} мин #{sec} сек"
   end
 
   private

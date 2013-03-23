@@ -3,9 +3,9 @@
 <% end  %>
 
 <div class="page-header">
-<h4><small>Reviewing appointment</small> # <strong> <%= @a.id %> </strong><br/>
- <small>Created by </small> <%= get_appointment_organizer(@a)  %>
-  <small>Created at  </small> <%= @a.created_at.strftime("%v") %>
+<h4><small>Вы просматриваете прием</small> № <strong> <%= @a.id %> </strong><br/>
+ <small>Прием создан </small> <%= get_appointment_organizer(@a)  %>
+  <small>от  </small> <%= @a.created_at.strftime("%v") %>
 </h4>
 </div>
 
@@ -14,11 +14,11 @@
  <small><%= @a.description  %></small>
 </h5>
 
-<h5>Attendees:</h5>
+<h5>Участники данного приема:</h5>
 <table class="table">
 <tr>
-  <th>FIO</th>
-  <th>Type</th>
+  <th>ФИО</th>
+  <th>Тип участника</th>
 </tr>
  <% @a.attendees.each do |attendee|%>
    <tr>

@@ -51,7 +51,7 @@ define([
           $(row(a: appointment, dAId: element.attr('id'))).insertAfter("tr#" + element.attr('id')) for appointment in response
         row_render(@$el, @_row)
         element.attr("class", "btn btn-inverse hideExpand")
-        element.html("Hide them")
+        element.html("Скрыть")
       , @)
 
     hideDoctorAppointmentsList: (e) ->
@@ -59,12 +59,13 @@ define([
        element = $(e.currentTarget)
        $('.doctorAppointmentsId' + element.attr('id')).remove()
        element.attr("class", "btn btn-primary expand")
-       element.html("Get App-ts")
+       element.html("Назначить")
 
     render: (callback, id) ->
       document.patient_id = id
       $.getJSON '/cabinet/doctor/users/doctors', $.proxy((response) ->
         @$el.html(@_doctors_list)
+
         #Rendering appointment list
         row_render = (el, row) ->
           el.find('#doctors-list').append row(d: doctor) for doctor in response
