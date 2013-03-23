@@ -9,24 +9,24 @@
 <body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
 <div class="container-fluid">
   <div class="navbar navbar-fixed-top">
+
     <div class="navbar-inner">
       <div class="container">
-        <a class="brand" href="/">SHM</a>
+        <img class="logo" src="logo.jpg" style="float: left;" />
+        <a class="brand" href="/">Дистанционноый мониторинг<br/>пациентов с ВПС</a>
         <ul class="nav">
           <li><%= link_to 'Admin panel', '/admin' if User.current.present? && User.current.role?(:admin) %></li>
           <% if user_signed_in? %>
-              <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+              <li><%= link_to('Выйти', destroy_user_session_path, :method => :delete) %></li>
           <% else %>
-              <li><%= link_to('Login', new_user_session_path) %></li>
+              <li><%= link_to('Войти', new_user_session_path) %></li>
           <% end %>
-          <li><%= link_to 'Bid', new_bid_path %></li>
-          <%= render :partial => '/cabinets_list' %>
         </ul>
       </div>
     </div>
   </div>
   <div class="container">
-    <div class="row-fluid">
+    <div class="row-fluid" style="margin-top: 15px;">
       <div class="">
         <%= yield %>
       </div>

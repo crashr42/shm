@@ -1,0 +1,30 @@
+<% if user_signed_in? %>
+    <li><%= link_to('Выйти', destroy_user_session_path, :method => :delete) %></li>
+
+
+    <%= link_to 'Зарегестрироваться', new_bid_path %>
+    <%= render :partial => '/cabinets_list' %>
+<% else %>
+
+    <div class="hero-unit">
+      <h1>Начать работу</h1>
+      <p>Войдите в личный кабинет, чтобы начать работу с системой в своем личном кабинете</p>
+      <p>
+        <a class="btn btn-primary btn-large" href="<%= new_user_session_path() %>">
+          Войти
+        </a>
+      </p>
+    </div>
+
+    <div class="hero-unit">
+      <h1>Впервые на сайте?</h1>
+      <p>В случае если вы являетесь пациентом медицинского учреждения. вы можете заполнить регистрационные данные
+      и отправить заявку. Персонал больницы в ближайшее время рассмотрит ее и связавшись с Ваши лечащим врачом подтвердит
+      Ваше право пользования системой</p>
+      <p>
+        <a class="btn btn-primary btn-large" href="<%= new_bid_path() %>">
+          Регистрация
+        </a>
+      </p>
+    </div>
+<% end %>
