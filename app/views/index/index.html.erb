@@ -1,14 +1,13 @@
 <% if user_signed_in? %>
-    <li><%= link_to('Выйти', destroy_user_session_path, :method => :delete) %></li>
+    <h1>Начать работу</h1>
+    <p>В личном кабинете вы можете:</p>
 
-
-    <%= link_to 'Зарегестрироваться', new_bid_path %>
     <%= render :partial => '/cabinets_list' %>
 <% else %>
 
     <div class="hero-unit">
       <h1>Начать работу</h1>
-      <p>Войдите в личный кабинет, чтобы начать работу с системой в своем личном кабинете</p>
+      <p>Войдите в систему, чтобы начать работу с системой в своем личном кабинете</p>
       <p>
         <a class="btn btn-primary btn-large" href="<%= new_user_session_path() %>">
           Войти

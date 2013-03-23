@@ -13,20 +13,18 @@
     <div class="navbar-inner">
       <div class="container">
         <img class="logo" src="logo.jpg" style="float: left;" />
-        <a class="brand" href="/">Дистанционноый мониторинг<br/>пациентов с ВПС</a>
+        <a class="brand" href="/"><font size="7">Дистанционноый мониторинг</font><br><br><font size="6">пациентов с ВПС</font></a>
         <ul class="nav">
           <li><%= link_to 'Admin panel', '/admin' if User.current.present? && User.current.role?(:admin) %></li>
           <% if user_signed_in? %>
               <li><%= link_to('Выйти', destroy_user_session_path, :method => :delete) %></li>
-          <% else %>
-              <li><%= link_to('Войти', new_user_session_path) %></li>
           <% end %>
         </ul>
       </div>
     </div>
   </div>
   <div class="container">
-    <div class="row-fluid" style="margin-top: 15px;">
+    <div class="row-fluid" style="margin-top: 55px;">
       <div class="">
         <%= yield %>
       </div>

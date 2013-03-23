@@ -1,7 +1,39 @@
 <% if User.current.present? %>
     <% if User.current.roles.count == 1 %>
         <% User.current.roles.each do |r| %>
-            <li><%= link_to 'Cabinet', :use_route => "cabinet_#{r.name}_root" %></li>
+            <style>
+                i.icon-arrow-right{
+                    display: block;
+                    margin-top: 5px;
+                    padding: 5px;
+                }
+            </style>
+            <% if r.name == 'doctor' %>
+
+                <i class="icon-arrow-right"> просмотреть медицинские данные своих пациентов</i>
+                <i class="icon-arrow-right"> создавать и назначать врачебные приемы</i>
+                <i class="icon-arrow-right"> вносить данные по <b>результатам</b> медицинскокго приема</i>
+                <i class="icon-arrow-right"> Назначать и отменять диагнозы</i>
+                <i class="icon-arrow-right"> Назначить пациенту рецепт</i>
+                <i class="icon-arrow-right"> Просмотреть профайл пациента</i>
+
+            <% elsif r.name == 'patient'%>
+                <i class="icon-arrow-right"> Просмотреть свое расписание и записаться на прием</i>
+                <i class="icon-arrow-right"> сменить лечащего врача</i>
+                <i class="icon-arrow-right"> указать свои медицинские данные</i>
+                <i class="icon-arrow-right"> просмотреть назначенные лекарства</i>
+
+            <% elsif r.name == 'manager'%>
+                <i class="icon-arrow-right"> Управлять учетными записями пользователей</i>
+                <i class="icon-arrow-right"> Рассматривать заявки на регистрацию</i>
+
+            <% elsif r.name == 'admin'%>
+                <i class="icon-arrow-right"> Администрирование</i>
+            <% end %>
+
+            <p>
+              <%= link_to 'Войти в кабинет', {use_route:"cabinet_#{r.name}_root"},  class: 'btn btn-primary btn-large' %>
+            </p>
         <% end %>
     <% else %>
         <li class="dropdown">
