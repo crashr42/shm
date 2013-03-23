@@ -27,39 +27,31 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <%= link_to_active 'Shm', {:controller => :'/index', :action => :index}, :class => 'brand' %>
+      <%= link_to_active 'Вернуться на главную страницу', {:controller => :'/index', :action => :index}, :class => 'brand' %>
 
       <!--here is top menu-->
 
       <div class="container nav-collapse">
         <ul class="nav" id="menu">
-          <%= link_to_active_wrapper 'Dashboard', :li, :controller => :index, :action => :index %>
+          <%#= link_to_active_wrapper 'Dashboard', :li, :controller => :index, :action => :index %>
           <% if controller.controller_name == 'patient' %>
               <li class="dropdown active">
           <% else %>
               <li class="dropdown">
           <% end %>
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Patients <b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Пациенты <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <%= link_to_active_wrapper 'List of my', :li, :controller => :patient, :action => :index %>
-            <%= link_to_active_wrapper 'Set to app-nt', :li, :controller => :patient, :action => :new %>
-            <%= link_to_active_wrapper 'Create app-nt', :li, '/cabinet/doctor/appointment/new' %>
+            <%= link_to_active_wrapper 'Все пациенты', :li, :controller => :patient, :action => :index %>
+            <%= link_to_active_wrapper 'Назначить на прием', :li, :controller => :patient, :action => :new %>
+            <%= link_to_active_wrapper 'Создать новый прием', :li, '/cabinet/doctor/appointment/new' %>
           </ul>
           </li>
-          <%= link_to_active_wrapper 'My Appointments', :li, cabinet_doctor_appointments_path %>
-          <%= link_to_active_wrapper 'Document Archive', :li, cabinet_doctor_documents_path %>
-          <%= link_to_active_wrapper 'Log out', :li, destroy_user_session_path, :method => :delete %>
+          <%= link_to_active_wrapper 'Мои приемы', :li, cabinet_doctor_appointments_path %>
+          <%= link_to_active_wrapper 'Архив документов', :li, cabinet_doctor_documents_path %>
+          <%= link_to_active_wrapper 'Выйти из системы', :li, destroy_user_session_path, :method => :delete %>
 
         </ul>
-        <ul class="nav pull-right">
-          <li>
 
-            <a href="javascript:void(0)" id="search-user">
-              <i class="icon-search"></i>
-              Search Patient
-            </a>
-          </li>
-        </ul>
       </div>
       <!--/.nav-collapse -->
         <%= render '/layouts/cabinet/doctor/appointment_processing' %>

@@ -1,5 +1,4 @@
 <% if !DoctorUser.current.nil? && DoctorUser.current.is_attending? %>
- <a href="<%= "/cabinet/doctor/appointments/#{DoctorUser.current.processing_appointment.id}" %>" class="btn btn-warning current-appointment" style="margin-bottom: 5px;">You have processing appointment</a>
-<% else %>
-<span class="label label-success">No processing appointments!</span>
+ <a href="<%= "/cabinet/doctor/appointments/#{DoctorUser.current.processing_appointment.id}" %>" class="btn btn-warning current-appointment" style="margin-bottom: 5px;">
+  У вас сейчас прием</a>
 <% end %>
