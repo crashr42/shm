@@ -29,7 +29,7 @@ define([
 
     saveDiagnoses: (e)->
       e.preventDefault()
-      form = $(e.currentTarget).parent().parent()
+      form = $(e.currentTarget).parent()
 
       $.post form.attr('action'), form.serialize(), $.proxy((request) ->
         alert(request)

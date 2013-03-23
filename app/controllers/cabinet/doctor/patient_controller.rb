@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Cabinet::Doctor::PatientController < Cabinet::DoctorController
   layout 'cabinet/doctor/layout'
 
@@ -78,9 +79,9 @@ class Cabinet::Doctor::PatientController < Cabinet::DoctorController
         }
       end
 
-      f.html {}
+      f.html {render text: 'Диагнозы успешно обновлены'}
       f.json {
-        render text: 'Diagnoses successfully updated', layout: false
+        render text: 'Диагнозы успешно обновлены', layout: false
       }
     }
   end
@@ -122,7 +123,7 @@ class Cabinet::Doctor::PatientController < Cabinet::DoctorController
           }
         end
 
-        render text: 'I had been confirmed successfully!', layout: false
+        render text: 'Медикаменты успешно назначены', layout: false
       }
 
       f.json{
