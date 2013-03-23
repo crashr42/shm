@@ -1,7 +1,13 @@
-<%= form_tag('/cabinet/doctor/medicament/confirm', :method => 'post', class: 'form-horizontal', id: 'diagnoses-form' ) do %>
+<%= form_tag('/cabinet/doctor/medicament/confirm', :method => 'post', class: 'form-horizontal', id: 'medicament-form' ) do %>
     <legend>
-      Здесь вы можете назначить медикаменты, которые принимает пациент
+      Здесь вы можете назначить медикаменты, которые принимает пациент.
     </legend>
+
+    <small>Для этого
+      вам сперва необходимо ввести название лекарства в поле ввода и нажать кнопку "Начать поиск". После этого в списке лекарств выберите
+      те которые хотите <b>назначить</b> пациенту и напротив каждого из них щелкните ссылку "Добавить". Для того чтобы
+      отменить прием лекарства пациентом снимите галочку напротив лекарства.
+    </small>
 
     <input type="hidden" value="<%= @a.patient_user.first.id %>" name="patient_id">
     <div id="existing-medicaments">
@@ -10,15 +16,11 @@
       <% end %>
     </div>
 
-    <div class="form-actions">
-      <a class="btn send">Save</a>
-    </div>
-
 <% end %>
 
 <%= form_tag('/cabinet/doctor/medicament/find', :method => 'post', class: 'form-search-large', id: 'medicament-search' ) do %>
-    <input type="text" id="medicament-name" name="name" placeholder="Enter medicament name">
-    <a class="btn btn-primary start-search">Start searching</a>
+    <input type="text" id="medicament-name" name="name" placeholder="Введите название лекарства">
+    <a class="btn btn-primary start-search">Начать поиск</a>
 <% end %>
 
 <div id="medicaments-list">

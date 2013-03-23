@@ -38,6 +38,11 @@ define([
       , @)
 
     stop_appointment: (e) ->
+      form = $('#medicament-form')
+      $.post form.attr('action'), form.serialize(), $.proxy((request) ->
+        console.log(request)
+
+      , @)
       e.preventDefault()
       target = $(e.currentTarget)
       $.get "/cabinet/doctor/appointment/stop_appointment/#{target.attr('id')}", (response) ->
