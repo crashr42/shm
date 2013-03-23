@@ -27,7 +27,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <%= link_to_active 'Вернуться на главную страницу', {:controller => :'/index', :action => :index}, :class => 'brand' %>
+      <img class="logo" src="/logo.jpg" style="float: left;" />
+      <a class="brand" href="/"><font size="7">Дистанционноый мониторинг</font><br><br><font size="6">пациентов с ВПС</font></a>
 
       <!--here is top menu-->
 
@@ -48,19 +49,19 @@
           </li>
           <%= link_to_active_wrapper 'Мои приемы', :li, cabinet_doctor_appointments_path %>
           <%= link_to_active_wrapper 'Архив документов', :li, cabinet_doctor_documents_path %>
+          <%= render '/layouts/cabinet/doctor/appointment_processing' %>
           <%= link_to_active_wrapper 'Выйти из системы', :li, destroy_user_session_path, :method => :delete %>
 
         </ul>
 
       </div>
       <!--/.nav-collapse -->
-        <%= render '/layouts/cabinet/doctor/appointment_processing' %>
     </div>
   </div>
 </div>
 
-<div class="container-fluid">
-  <div class="content">
+<div class="container-fluid" >
+  <div class="content" style="margin-top: 55px;">
     <div id="notification">
 
     </div>

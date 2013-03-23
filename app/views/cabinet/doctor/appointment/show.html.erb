@@ -6,6 +6,7 @@
 <h4><small>Вы просматриваете прием</small> № <strong> <%= @a.id %> </strong><br/>
  <small>Прием создан </small> <%= get_appointment_organizer(@a)  %>
   <small>от  </small> <%= @a.created_at.strftime("%v") %>
+  <small>Пациент </small> <%= link_to @a.patient_user.first.shortname, "/user/profile/#{@a.patient_user.first.id}"  %>
 </h4>
 </div>
 
@@ -13,19 +14,6 @@
  <%= @a.summary  %><br/>
  <small><%= @a.description  %></small>
 </h5>
-
-<h5>Участники данного приема:</h5>
-<table class="table">
-<tr>
-  <th>ФИО</th>
-  <th>Тип участника</th>
-</tr>
- <% @a.attendees.each do |attendee|%>
-   <tr>
-     <td><%= User.find_by_id(attendee.user_id).shortname %></td>
-     <td><%= attendee.type  %></td>
-   </tr>
- <% end %>
 </table>
 
 <% if @a.is_processing? %>
