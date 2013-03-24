@@ -54,14 +54,21 @@
   <div class="box span4">
     <div class="box-header">
       <h2><i class="icon-list"></i><span class="break"></span>Назначенные лекарства</h2>
-
       <div class="box-icon">
         <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
       </div>
     </div>
     <div class="box-content">
       <ul class="dashboard-list">
+        <% medicaments = User.current.medicaments if User.current.present? %>
+        <% if medicaments.present?
 
+           medicaments.each do |medicament|
+        %>
+        <li>
+          <%= medicament.commercial_name %>
+        </li>
+        <% end end %>
       </ul>
     </div>
   </div>
