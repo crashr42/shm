@@ -40,7 +40,7 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
     @new_Attendee.event_id=@appointment_id
 
     @new_Attendee.save!
-    render :text => "Status of event has been changed. Now is #{@new_Attendee.event.status}"
+    render :text => "Статус события изменен на #{@new_Attendee.event.status}"
   end
 
   #get form create appointments event
@@ -117,7 +117,7 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
     respond_to {|f|
       f.json{
         AppointmentEvent.find(params[:id]).start_appointment
-        render text: "Appointment ##{params[:id]} is processing".to_json, layout: false
+        render text: "Прием ##{params[:id]} успешно начан".to_json, layout: false
       }
     }
   end
@@ -126,7 +126,7 @@ class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
     respond_to do |f|
       f.json do
         AppointmentEvent.find(params[:id]).finish_appointment
-        render text: "Appointment ##{params[:id]} has been completed success".to_json, layout: false
+        render text: "Прием ##{params[:id]} успешно завершен".to_json, layout: false
       end
     end
   end
