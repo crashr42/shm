@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Cabinet::Doctor::AppointmentController < Cabinet::DoctorController
 
   layout 'cabinet/doctor/layout'

@@ -1,0 +1,60 @@
+<div style="margin: 10px;">
+  <% if @is_stub #Make stub form document %>
+    <small>
+      Внимание это тестовая форма документа
+    </small>
+      <div class="page-header-block">
+        <div><a href="/content/base/part/376770">ФОРМА N 027/У ВЫПИСКА ИЗ МЕДИЦИНСКОЙ КАРТЫ АМБУЛАТОРНОГО, СТАЦИОНАРНОГО БОЛЬНОГО (ПОДЧЕРКНУТЬ)</a>
+          <a name="fea73"></a></div></div><a name="fea73"></a><tt><pre><p align=left><a name="b868a"></a>
+    Код формы по ОКУД <input name="code_form" style="float: right;" /><lb>
+    Код учреждения по ОКПО <input name="code_enterprise" style="float: right;" /><lb> <br/>
+    <lb>
+    Министерство здравоохранения             Медицинская документация<lb>
+    СССР                               Форма N 027/у<lb>
+    <input class="name_enterprise" width="60" />           Утверждена Минздравом СССР<lb>
+    наименование учреждения                  04.10.80 г. N 1030<lb>
+    <lb>
+      ВЫПИСКА<lb>
+      из медицинской карты амбулаторного, стационарного больного<lb>
+      <a name="c7acf"></a>                          (подчеркнуть)<lb>
+      <lb>
+    В <input name="name_out_depart[]" style="width: 550px; float: right;" /><lb>
+        название и адрес учреждения, куда направляется выписка<lb>
+        <input name="name_out_depart[]" style="width: 550px; float: right;" /><lb>
+        <input name="name_out_depart[]" style="width: 550px; float: right;" /><lb>
+        1. Фамилия, имя, отчество больного <input name="FIO[]" style="width: 170px; float: right;" /><lb>
+        <input name="FIO[]" style="width: 550px; float: right;"/><lb>
+        2. Дата рождения <input name="birthday" style="width: 300px; float: right;" /><lb>
+        <a name="be9fc"></a>3. Домашний адрес <input name="address[]" style="width: 300px; float: right;" /><lb>
+        <input name="address[]" style="width: 550px; float: right;" /><lb>
+        4. Место работы и род занятий  <input name="work[]" style="width: 170px; float: right;" /><lb>
+        <input name="work[]" style="width: 550px; float: right;" /><lb>
+        5. Даты: а) по амбулатории: заболевания <input name="disease_date" style="width: 160px; float: right;" /><lb><br>
+        направления в стационар <input name="disease_hospital" style="width: 160px; float: right;"  /><lb> <br>
+        б) по стационару: поступления <input name="coming_to_hospital" style="width: 160px; float: right;" /><lb><br>
+        <a name="dd002"></a>         выбытия <input name="out_hospital_date" style="width: 160px; float: right;"  /><lb><br>
+        <a name="65fce"></a>6. Полный диагноз (основное заболевание, сопутствующее осложнение)<lb>
+        <textarea rows="7" name="diagnose_full" style="width: 550px; float: right;"> </textarea><lb>
+        <lb>
+      Для типографии!<lb>
+      при изготовлении документа<lb>
+      формат А5<lb>
+      <lb>
+        Обор. сторона ф. N 027/у<lb>
+        <lb>
+          7. Краткий анамнез, диагностические исследования, течение болезни,<lb>
+          проведенное лечение, состояние при направлении, при выписке<lb>
+          <textarea rows="7" name="anamnesis" style="width: 550px; float: right;"> </textarea><lb>
+          Лечебные и трудовые рекомендации: <lb>
+          <textarea rows="7" name="recommends" style="width: 550px; float: right;"> </textarea><lb
+          <lb>
+            &quot;<input name="date_day" style="width: 30px;" />&quot; <input name="date_month" style="width: 150px;" /> 19 <input name="date_year" style="width: 30px;" /> г.<lb>
+            <lb>
+              Лечащий врач <input name="subscribe" style="width: 150px;" /><lb>
+              <lb>
+</tt></pre></p>
+
+
+
+  <% end %>
+</div>

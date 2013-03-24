@@ -10,6 +10,13 @@ define([
       'click .add-link': 'addMedicament'
       'click .start-search': 'search'
       'click .send': 'saveMedicaments'
+      'click .open-doc-form': 'openDocForm'
+
+    openDocForm: (e)->
+      e.preventDefault()
+      $.get '/cabinet/doctor/document/form/-1', $.proxy((response)->
+        @$el.find('.document-body').html(response)
+      , @)
 
     addMedicament: (e)->
       e.preventDefault()

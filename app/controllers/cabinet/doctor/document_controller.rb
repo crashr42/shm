@@ -60,4 +60,11 @@ class Cabinet::Doctor::DocumentController < ApplicationController
   def destroy
   end
 
+  def get_form_body
+    #Вставляем заглушку
+    if params[:id] == '-1'
+      @is_stub = true
+    end
+  end
+
 end
