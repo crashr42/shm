@@ -20,7 +20,7 @@ module Workflow
           flow = {old_value => new_value}
           @flows[flow].each do |_, block|
             if block.is_a?(Proc)
-              @record.instance_eval(&block) if @flows.key?(flow) && !@flows[flow].nil?
+              @record.instance_eval(&block) if @flows.key?(flow) && @flows[flow].present?
             end
           end
         end
@@ -29,17 +29,16 @@ module Workflow
 
     # Старое значение поля
     def old_value
-      @record.send("#{@field}_was").nil? ? nil : @record.send("#{@field}_was").to_sym
+      @record.send("#{@field}_was").try(:to_sym)
     end
 
     # Новое значение поля
     def new_value
-      @record.send(@field).nil? ? nil : @record.send(@field).to_sym
+      @record.send(@field).try(:to_sym)
     end
 
     # Меняло ли поле значение?
     def field_changed?
-      #@record.send("#{@field}_changed?")
       old_value != new_value
     end
 
