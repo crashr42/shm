@@ -1,14 +1,14 @@
-<h3>New bid</h3>
+<h3>Пожалуйста укажите верные личные данные</h3>
 <%= simple_form_for @bid, :url => {:controller => :bid, :action => :create}, :html => {:multipart => true, :class => 'form-horizontal'} do |f| %>
-    <%= f.input :first_name, :placeholder => 'enter first name' %>
-    <%= f.input :last_name,  :placeholder => 'enter last name' %>
-    <%= f.input :third_name, :placeholder => 'enter third name' %>
-    <%= f.input :email,      :placeholder => 'enter email address' %>
-    <%= f.input :address,    :placeholder => 'enter address' %>
-    <%= f.input :policy,     :placeholder => 'enter policy' %>
-    <%= f.input :passport_scan, :as => :file %>
+    <%= f.input :first_name, :placeholder => 'enter first name', :label => 'Имя' %>
+    <%= f.input :last_name,  :placeholder => 'enter last name', :label => 'Фамилия' %>
+    <%= f.input :third_name, :placeholder => 'enter third name', :label => 'Отчество' %>
+    <%= f.input :email,      :placeholder => 'enter email address', :label => 'Email' %>
+    <%= f.input :address,    :placeholder => 'enter address', :label => 'Адрес' %>
+    <%= f.input :policy,     :placeholder => 'enter policy', :label => 'Номер страхового полиса' %>
+    <%= f.input :passport_scan, :as => :file, :label => 'Скан паспорта' %>
     <div class="form-actions">
-      <%= f.button :submit, 'Send bid', :class => 'btn-success' %>
-      <%= link_to 'Back', :back, :class => 'btn' %>
+      <%= f.button :submit, 'Отправить заявку', :class => 'btn-success' %>
+      <%= link_to 'Назад', :back, :class => 'btn' %>
     </div>
 <% end %>
